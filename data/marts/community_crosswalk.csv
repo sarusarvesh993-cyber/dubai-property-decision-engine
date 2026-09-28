@@ -1,25 +1,27 @@
 district,community,method,projects,contracts,share
-Al Yufrah 3,Madinat Hind 4,project-overlap,3.0,4.0,1.0
-Jumeirah First,La Mer,project-overlap,4.0,28.0,0.7777777777777778
-Wadi Al Safa 2,Liwan,project-overlap,4.0,76.0,1.0
-Al Barsha South Fifth,Jumeirah Village Triangle,verified seed,3.0,28.0,1.0
-Al Barsha South Fourth,Jumeirah Village Circle,verified seed,67.0,567.0,1.0
-Al Barshaa South Second,Dubai Science Park,verified seed,3.0,34.0,1.0
-Al Barshaa South Third,Arjan,verified seed,23.0,196.0,1.0
-Al Hebiah Fourth,Dubai Sports City,verified seed,24.0,220.0,0.8461538461538461
-Al Hebiah Second,Dubai Studio City,verified seed,5.0,40.0,1.0
-Al Hebiah Third,Damac Hills,verified seed,11.0,156.0,0.975
-Al Jadaf,Dubai Healthcare City - Phase 2,verified seed,3.0,36.0,0.7058823529411765
+Al Safouh First,Sufouh Gardens,project-overlap,4.0,93.0,1.0
+Al Yufrah 2,Madinat Hind 4,project-overlap,16.0,74.0,1.0
+Al Yufrah 3,Madinat Hind 4,project-overlap,7.0,37.0,1.0
+Saih Shuaib 2,Dubai Industrial City,project-overlap,4.0,177.0,1.0
+Wadi Al Safa 6,Arabian Ranches I,project-overlap,5.0,62.0,1.0
+Al Barsha South Fifth,Jumeirah Village Triangle,verified seed,21.0,1321.0,0.8812541694462975
+Al Barsha South Fourth,Jumeirah Village Circle,verified seed,215.0,13402.0,0.9973210299151659
+Al Barshaa South Second,Dubai Science Park,verified seed,6.0,576.0,1.0
+Al Barshaa South Third,Arjan,verified seed,48.0,4673.0,0.989832662571489
+Al Hebiah Fourth,Dubai Sports City,verified seed,,,
+Al Hebiah Second,Dubai Studio City,verified seed,10.0,1161.0,0.9931565440547476
+Al Hebiah Third,Damac Hills,verified seed,,,
+Al Jadaf,Dubai Healthcare City - Phase 2,verified seed,,,
 Al Khairan First,Dubai Creek Harbour,verified seed,,,
-Al Thanayah Fourth,Emirate Living,verified seed,8.0,62.0,1.0
-Al Thanyah Fifth,Jumeirah Lakes Towers,verified seed,20.0,171.0,0.9243243243243243
-Al Thanyah First,Barsha Heights,verified seed,,,
-Al Warsan First,International City Ph 1,verified seed,7.0,104.0,0.8813559322033898
-Al Yelayiss 2,Town Square,verified seed,9.0,186.0,0.8017241379310345
-Hadaeq Sheikh Mohammed Bin Rashid,Dubai Hills,verified seed,15.0,154.0,0.8105263157894737
+Al Thanayah Fourth,Emirate Living,verified seed,15.0,1483.0,1.0
+Al Thanyah Fifth,Jumeirah Lakes Towers,verified seed,,,
+Al Thanyah First,Barsha Heights,verified seed,7.0,1112.0,1.0
+Al Warsan First,International City Ph 1,verified seed,19.0,2378.0,0.8886397608370703
+Al Yelayiss 2,Town Square,verified seed,,,
+Hadaeq Sheikh Mohammed Bin Rashid,Dubai Hills,verified seed,,,
 Jabal Ali Industrial Second,Down Town Jabal Ali,verified seed,,,
 Madinat Al Mataar,Dubai South,verified seed,,,
 Marsa Dubai,Dubai Marina,verified seed,,,
-Me'Aisem First,Dubai Production City,verified seed,8.0,300.0,0.9404388714733543
-Nadd Hessa,Silicon Oasis,verified seed,,,
-Warsan Fourth,International City Ph 2 & 3,verified seed,4.0,17.0,1.0
+Me'Aisem First,Dubai Production City,verified seed,,,
+Nadd Hessa,Silicon Oasis,verified seed,29.0,2657.0,0.9996237772761475
+Warsan Fourth,International City Ph 2 & 3,verified seed,15.0,573.0,1.0

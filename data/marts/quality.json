@@ -1,15 +1,15 @@
 {
-  "generated_at_utc": "2026-09-28T15:03:45+00:00",
+  "generated_at_utc": "2026-09-28T19:10:30+00:00",
   "checks": [
     {
       "check": "Transactions loaded",
       "status": "PASS",
-      "detail": "7,014 rows, 2026-09-14 -> 2026-09-28"
+      "detail": "163,262 rows, 2026-01-01 -> 2026-09-28"
     },
     {
       "check": "Rent contracts loaded",
       "status": "PASS",
-      "detail": "35,796 rows, 2026-09-15 -> 2026-09-27"
+      "detail": "607,326 rows, 2026-01-01 -> 2026-09-27"
     },
     {
       "check": "Transactions freshness \u2264 3 days",
@@ -23,8 +23,8 @@
     },
     {
       "check": "Transaction duplicates < 0.5%",
-      "status": "PASS",
-      "detail": "0.47% duplicate rows on id+price+size+procedure"
+      "status": "WARN",
+      "detail": "1.15% duplicate rows on id+price+size+procedure"
     },
     {
       "check": "Sale price completeness \u2265 99%",
@@ -39,78 +39,83 @@
     {
       "check": "Benchmark-eligible share of sales 60\u2013100%",
       "status": "PASS",
-      "detail": "96.7% of sales eligible after bulk/plausibility/outlier filters"
+      "detail": "96.8% of sales eligible after bulk/plausibility/outlier filters"
     },
     {
       "check": "Sales outlier rate < 5%",
       "status": "PASS",
-      "detail": "2.86% flagged by robust z-score"
+      "detail": "2.52% flagged by robust z-score"
     },
     {
       "check": "Rents ROOMS null (known gateway gap; size bands used instead)",
       "status": "PASS",
-      "detail": "95% null"
+      "detail": "96% null"
     },
     {
       "check": "Bulk leases share < 15%",
       "status": "PASS",
-      "detail": "4.8% of contracts cover >1 property"
+      "detail": "5.7% of contracts cover >1 property"
     },
     {
       "check": "Benchmark-eligible share of residential rents \u2265 60%",
       "status": "PASS",
-      "detail": "88.9% eligible"
+      "detail": "88.5% eligible"
     },
     {
       "check": "Sales in communities with rent coverage \u2265 70% (after crosswalk)",
       "status": "PASS",
-      "detail": "75.7% of sales can be matched to Ejari benchmarks"
+      "detail": "73.9% of sales can be matched to Ejari benchmarks"
+    },
+    {
+      "check": "Weekly volume within 50\u2013200% of median (last full week)",
+      "status": "PASS",
+      "detail": "last full week 2,321 vs median 3,000"
     }
   ],
   "profile": {
     "transactions": {
-      "rows": 7014,
-      "sales": 4598,
-      "mortgages": 1942,
-      "areas": 184,
-      "projects": 1529,
-      "offplan_share_of_sales": 0.6246193997390169,
+      "rows": 163262,
+      "sales": 119105,
+      "mortgages": 34275,
+      "areas": 250,
+      "projects": 3012,
+      "offplan_share_of_sales": 0.6862684186222241,
       "procedures": {
-        "Sell - Pre registration": 2872,
-        "Sale": 1372,
-        "Mortgage Registration": 1364,
-        "Delayed Sell": 334,
-        "Grant": 237,
-        "Delayed Mortgage": 205,
-        "Portfolio Mortgage Registration": 161,
-        "Modify Mortgage": 91,
-        "Grant Pre-Registration": 71,
-        "Development Registration Pre-Registration": 68
+        "Sell - Pre registration": 81738,
+        "Sale": 28764,
+        "Mortgage Registration": 23164,
+        "Delayed Sell": 8319,
+        "Grant": 5022,
+        "Delayed Mortgage": 3267,
+        "Portfolio Mortgage Registration": 3088,
+        "Development Registration Pre-Registration": 1661,
+        "Modify Mortgage": 1289,
+        "Portfolio Mortgage Modification": 1073
       }
     },
     "rents": {
-      "rows": 35796,
-      "renewal_share": 0.4931556598502626,
-      "areas": 179,
+      "rows": 607326,
+      "renewal_share": 0.561441466362382,
+      "areas": 196,
       "usage": {
-        "Residential": 28700,
-        "Commercial": 6870,
-        "Industrial": 49,
-        "Storage": 13,
-        "Educational facility": 9,
-        "Health Facility": 1
+        "Residential": 457489,
+        "Commercial": 145790,
+        "Industrial": 1190,
+        "Storage": 117,
+        "Educational facility": 84,
+        "Health Facility": 79
       },
       "sub_types": {
-        "Flat": 24888,
-        "Office": 3813,
-        "Villa": 2637,
-        "Shop": 2095,
-        "Labor Camps": 781,
-        "Hotel": 344,
-        "Warehouse": 324,
-        "Studio ": 283
+        "Flat": 396655,
+        "Office": 84071,
+        "Shop": 45731,
+        "Villa": 40071,
+        "Labor Camps": 14245,
+        "Warehouse": 6349,
+        "Hotel": 4908,
+        "Studio ": 4626
       }
     }
   },
-  "warnings": 0
+  "warnings": 1
 }
