@@ -169,8 +169,8 @@ export function rentCheck(benchmarks: RentBenchmark[], inp: RentInput): RentResu
   const verdictText =
     belowMarketPct <= 0.10
       ? belowMarketPct < -0.10
-        ? "Your rent is above the market median — no increase is permitted and you have a case to negotiate down."
-        : "Your rent is within 10% of the market median — no increase is permitted at renewal."
-      : `Your rent is ${(belowMarketPct * 100).toFixed(0)}% below the market median — the landlord may raise it by at most ${(slabPct * 100).toFixed(0)}%.`;
+        ? "Your rent is above the market median. No increase is permitted and you have a case to negotiate down."
+        : "Your rent is within 10% of the market median. No increase is permitted at renewal."
+      : `Your rent is ${(belowMarketPct * 100).toFixed(0)}% below the market median, so the landlord may raise it by at most ${(slabPct * 100).toFixed(0)}%.`;
   return { bench, levelLabel: RENT_LEVEL_LABEL[bench.level], marketMedian, marketLow, marketHigh, belowMarketPct, slabPct, maxNewRent, verdictText };
 }

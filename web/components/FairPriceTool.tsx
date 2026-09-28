@@ -62,7 +62,7 @@ export default function FairPriceTool({ bands, rents, asOf, windowMonths }: { ba
           <label className="field">
             Project (optional)
             <select value={project} onChange={(e) => setProject(e.target.value)}>
-              <option value="">— any project in {area} —</option>
+              <option value="">any project in {area}</option>
               {projects.map((p) => <option key={p}>{p}</option>)}
             </select>
           </label>
@@ -77,14 +77,14 @@ export default function FairPriceTool({ bands, rents, asOf, windowMonths }: { ba
         </div>
         <p className="hint mt">
           Benchmarks: registered sales in the last {windowMonths} months to {asOf}; bulk deals, gifts, mortgages and statistical outliers removed. The engine
-          picks the most specific cell with enough evidence (project → community+type+bedrooms → community+type → community).
+          picks the most specific cell with enough evidence (project first, then community + type + bedrooms, then community + type, then community).
         </p>
       </div>
 
       <div className="card">
         <h2>Verdict</h2>
         {!res ? (
-          <p className="callout">No benchmark with at least the minimum sample size for this combination yet. Try “any bedrooms” (NA), the other status, or a nearby community.</p>
+          <p className="callout">No benchmark with at least the minimum sample size for this combination yet. Try "any bedrooms" (NA), the other status, or a nearby community.</p>
         ) : (
           <>
             <div className={`verdict ${verdictClass}`}>
@@ -92,7 +92,7 @@ export default function FairPriceTool({ bands, rents, asOf, windowMonths }: { ba
                 {fmtAed(price)} is <u>{res.verdict}</u>
               </div>
               <div>
-                {fmtInt(res.askingPpsqft)} AED/sqft vs community median {fmtInt(res.band.median)} AED/sqft ({fmtPct(res.gapPct, 1, true)}) ·
+                {fmtInt(res.askingPpsqft)} AED/sqft vs community median {fmtInt(res.band.median)} AED/sqft ({fmtPct(res.gapPct, 1, true)}) |
                 percentile {res.percentile.toFixed(0)}
               </div>
             </div>
@@ -107,19 +107,19 @@ export default function FairPriceTool({ bands, rents, asOf, windowMonths }: { ba
               <span>p90 {fmtInt(res.band.p90)}</span>
             </div>
             <ul className="list mt">
-              <li><span>Fair range for {fmtInt(size)} sqft (p25–p75)</span><strong>{fmtAed(res.fairLow)} – {fmtAed(res.fairHigh)}</strong></li>
+              <li><span>Fair range for {fmtInt(size)} sqft (p25-p75)</span><strong>{fmtAed(res.fairLow)} to {fmtAed(res.fairHigh)}</strong></li>
               <li><span>Market-median price for this size</span><strong>{fmtAed(res.fairMid)}</strong></li>
               <li><span>Gap to median</span><strong>{fmtAed(price - res.fairMid)}</strong></li>
-              <li><span>Evidence</span><strong>{res.band.n} sales · {res.levelLabel}</strong></li>
+              <li><span>Evidence</span><strong>{res.band.n} sales, {res.levelLabel}</strong></li>
               <li><span>Confidence</span><span className={`chip ${res.confidence === "high" ? "good" : res.confidence === "medium" ? "info" : "warn"}`}>{res.confidence}</span></li>
-              <li><span>Typical unit in this cell</span><strong>{fmtInt(res.band.median_size_sqft)} sqft · {fmtAed(res.band.median_price)}</strong></li>
+              <li><span>Typical unit in this cell</span><strong>{fmtInt(res.band.median_size_sqft)} sqft, {fmtAed(res.band.median_price)}</strong></li>
               <li>
                 <span>Gross yield at asking price</span>
                 <strong>{grossYield ? `${fmtPct(grossYield, 1)} (median rent ${fmtAed(rentBench!.level === "R3" ? rentBench!.median_rent_psqft * size : rentBench!.median)})` : "no rent benchmark"}</strong>
               </li>
             </ul>
             <p className="hint">
-              Negotiation anchor: offering at the p25 level equals {fmtAed(res.fairLow)}; the seller’s realistic ceiling (p75) is {fmtAed(res.fairHigh)}. Indicative only — not a
+              Negotiation anchor: offering at the p25 level equals {fmtAed(res.fairLow)}; the seller's realistic ceiling (p75) is {fmtAed(res.fairHigh)}. Indicative only, not a
               valuation.
             </p>
           </>

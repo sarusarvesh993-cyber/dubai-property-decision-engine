@@ -71,7 +71,7 @@ def test_sale_procedures_exclude_non_sales():
 
 @pytest.mark.parametrize("below,expected", [(0.05, 0.0), (0.10, 0.0), (0.15, 0.05), (0.25, 0.10), (0.35, 0.15), (0.50, 0.20), (-0.2, 0.0)])
 def test_rera_slabs_match_web_engine(below, expected):
-    # Mirror of web/lib/engine.ts::reraSlab — keeps the Python docs and the TS calculator in sync.
+    # Mirror of web/lib/engine.ts::reraSlab - keeps the Python docs and the TS calculator in sync.
     def rera_slab(b):
         return 0.0 if b <= 0.10 else 0.05 if b <= 0.20 else 0.10 if b <= 0.30 else 0.15 if b <= 0.40 else 0.20
     assert rera_slab(below) == expected

@@ -2,7 +2,7 @@ import AnomaliesTable from "@/components/AnomaliesTable";
 import { getAnomalies } from "@/lib/data";
 import { fmtDate } from "@/lib/format";
 
-export const metadata = { title: "Anomalies · Dubai Property Decision Engine" };
+export const metadata = { title: "Anomalies | Dubai Property Decision Engine" };
 
 export default function AnomaliesPage() {
   const a = getAnomalies();
@@ -13,7 +13,7 @@ export default function AnomaliesPage() {
           <h1>Price anomaly monitor</h1>
           <p className="sub">
             Registered residential sales in the last 60 days priced more than 35% away from the median of comparable units (same community, type, bedrooms and
-            status) · {a.total.toLocaleString()} flagged, top 100 shown · data to {fmtDate(a.as_of)}.
+            status) | {a.total.toLocaleString()} flagged, top 100 shown | data to {fmtDate(a.as_of)}.
           </p>
         </div>
       </div>

@@ -56,8 +56,8 @@ export default function CommunitiesTable({ areas, areaMonth, minN }: { areas: Ar
     <div className="grid" style={{ gridTemplateColumns: "minmax(0, 1.6fr) minmax(300px, 1fr)" }}>
       <div className="card">
         <div className="toolbar">
-          <input placeholder="Search community…" value={q} onChange={(e) => setQ(e.target.value)} />
-          <span className="small">{rows.length} communities · click a column to sort · click a row for detail</span>
+          <input placeholder="Search community..." value={q} onChange={(e) => setQ(e.target.value)} />
+          <span className="small">{rows.length} communities. Click a column to sort, click a row for detail.</span>
         </div>
         <div className="table-wrap">
           <table className="data">
@@ -71,7 +71,7 @@ export default function CommunitiesTable({ areas, areaMonth, minN }: { areas: Ar
                 {header("Signal", "signal")}
                 {header("Off-plan", "offplan_share_12w")}
                 {header("Median rent", "median_rent_12w", "Residential Ejari contracts, last 12 weeks")}
-                {header("Yield est.", "gross_yield_est", "Median rent per sqft ÷ median price per sqft")}
+                {header("Yield est.", "gross_yield_est", "Median rent per sqft divided by median price per sqft")}
               </tr>
             </thead>
             <tbody>
@@ -86,7 +86,7 @@ export default function CommunitiesTable({ areas, areaMonth, minN }: { areas: Ar
                     <span className={`chip ${SIGNAL_CLASS[a.signal] ?? "muted"}`}>{a.signal}</span>
                   </td>
                   <td>{fmtPct(a.offplan_share_12w, 0)}</td>
-                  <td>{(a.n_rent_bench_12w ?? 0) >= minN ? fmtAed(a.median_rent_12w) : <span className="small">—</span>}</td>
+                  <td>{(a.n_rent_bench_12w ?? 0) >= minN ? fmtAed(a.median_rent_12w) : <span className="small">n/a</span>}</td>
                   <td>{fmtPct(a.gross_yield_est, 1)}</td>
                 </tr>
               ))}
@@ -111,7 +111,7 @@ export default function CommunitiesTable({ areas, areaMonth, minN }: { areas: Ar
               <li><span>Ejari contracts</span><strong>{fmtInt(sel.rent_contracts_12w)}</strong></li>
               <li><span>Renewal share</span><strong>{fmtPct(sel.renewal_share_12w, 0)}</strong></li>
               <li><span>Median annual rent</span><strong>{fmtAed(sel.median_rent_12w)}</strong></li>
-              <li><span>Median rent AED/sqft/yr</span><strong>{sel.median_rent_psqft_12w?.toFixed(0) ?? "—"}</strong></li>
+              <li><span>Median rent AED/sqft/yr</span><strong>{sel.median_rent_psqft_12w?.toFixed(0) ?? "n/a"}</strong></li>
               <li><span>Gross yield estimate</span><strong>{fmtPct(sel.gross_yield_est, 1)}</strong></li>
             </ul>
             <h3 className="mt">Monthly median AED/sqft</h3>

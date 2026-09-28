@@ -77,7 +77,7 @@ def build_facts() -> dict:
 
 def rules_note(f: dict) -> str:
     c, p, d = f.get("last4w", {}), f.get("prev4w", {}), f.get("delta", {})
-    lines = [f"Dubai residential market note — data to {f['as_of']} (DLD open data, {f['weeks_available']} weeks loaded).", ""]
+    lines = [f"Dubai residential market note, data to {f['as_of']} (DLD open data, {f['weeks_available']} weeks loaded).", ""]
     if c:
         lines.append(f"Activity: {c['sales']:,} registered sales worth AED {c['value_aed'] / 1e9:,.2f}bn in the last four full weeks"
                      + (f" ({_pct(d.get('sales'))} vs the previous four weeks)." if p else "."))

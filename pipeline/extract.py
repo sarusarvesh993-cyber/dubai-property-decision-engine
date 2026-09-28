@@ -3,7 +3,7 @@
 Modes
   backfill : HISTORY_START -> today (≈30 min for 9 months; run in GitHub Actions)
   daily    : re-pull the last DAILY_LOOKBACK_DAYS and merge (late registrations are common)
-  smoke    : last SMOKE_DAYS — quick local verification
+  smoke    : last SMOKE_DAYS - quick local verification
 
 Partitions: data/raw/<command>/YYYY-MM.parquet keyed by the record's own date column,
 re-written with de-duplication so re-pulls are idempotent.

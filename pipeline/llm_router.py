@@ -8,17 +8,17 @@ Design goals (from the project brief):
 
 How it works
 ------------
-1. Discovery  — every provider exposes an OpenAI-compatible `/models` endpoint. OpenRouter
+1. Discovery  - every provider exposes an OpenAI-compatible `/models` endpoint. OpenRouter
    additionally publishes pricing, modalities and `expiration_date`, so we can filter to
    free, text-in/text-out, non-expired chat models without any hard-coded list.
-2. Ranking    — a transparent heuristic score (model family, parameter count, context
+2. Ranking    - a transparent heuristic score (model family, parameter count, context
    length, penalties for special-purpose models). Env var LLM_MODEL can pin a favourite.
-3. Execution  — try candidates in order; classify failures:
+3. Execution  - try candidates in order; classify failures:
       401/403          -> provider key invalid: skip provider for this run
       404 / bad model  -> model retired: blacklist 24h
       429              -> rate limited: cool down 5 min
       5xx / timeouts   -> transient: cool down 2 min
-4. Memory     — discovered models + blacklist persisted to data/llm_cache/models.json
+4. Memory     - discovered models + blacklist persisted to data/llm_cache/models.json
    (TTL configurable) so restarts don't hammer the /models endpoints.
 
 Everything is plain `requests`; no vendor SDK lock-in.
@@ -83,7 +83,7 @@ class LLMResponse:
 
     @property
     def label(self) -> str:
-        return f"{self.provider} · {self.model} · {self.latency_s:.1f}s"
+        return f"{self.provider} | {self.model} | {self.latency_s:.1f}s"
 
 
 class LLMUnavailable(RuntimeError):

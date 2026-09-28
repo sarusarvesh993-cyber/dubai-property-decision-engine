@@ -42,7 +42,7 @@ KEEP_COLUMNS = {
                      "PROP_TYPE_EN", "PROP_SB_TYPE_EN", "ROOMS_EN", "PARKING",
                      "TRANS_VALUE", "PROCEDURE_AREA", "ACTUAL_AREA", "PARCEL_ID",
                      "NEAREST_METRO_EN", "NEAREST_MALL_EN", "NEAREST_LANDMARK_EN"],
-    # NOTE: the public rents feed is anonymised — CONTRACT_NUMBER / PROPERTY_ID / PARCEL_ID are null or 0,
+    # NOTE: the public rents feed is anonymised - CONTRACT_NUMBER / PROPERTY_ID / PARCEL_ID are null or 0,
     # and ROOMS is ~96% null. There is no contract key; rows are de-duplicated on the full record.
     "rents": ["VERSION_EN", "REGISTRATION_DATE", "START_DATE", "END_DATE", "TOTAL_PROPERTIES",
               "IS_FREE_HOLD_EN", "USAGE_EN", "AREA_EN", "PROJECT_EN", "MASTER_PROJECT_EN", "PROP_TYPE_EN",

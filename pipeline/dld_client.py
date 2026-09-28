@@ -2,7 +2,7 @@
 
 Facts learned the hard way (and verified 2026-09-28):
 * POST JSON to  https://gateway.dubailand.gov.ae/open-data/<command>
-* EVERY declared P_* parameter must be present (empty string if unused) — otherwise the
+* EVERY declared P_* parameter must be present (empty string if unused) - otherwise the
   gateway returns an HTML 500 page. A body of {} returns responseCode 420 INVALID_REQUEST.
 * Dates are MM/DD/YYYY. Paging via P_TAKE / P_SKIP; each row carries TOTAL for the window.
 * No API key. Be polite: small concurrency, retries with back-off, weekly windows.

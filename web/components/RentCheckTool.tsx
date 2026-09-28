@@ -68,15 +68,15 @@ export default function RentCheckTool({ benchmarks, asOf, windowMonths }: { benc
             </div>
             <ul className="list mt">
               <li><span>Market median for comparable units</span><strong>{fmtAed(res.marketMedian)}</strong></li>
-              <li><span>Typical range (p25–p75)</span><strong>{fmtAed(res.marketLow)} – {fmtAed(res.marketHigh)}</strong></li>
+              <li><span>Typical range (p25-p75)</span><strong>{fmtAed(res.marketLow)} to {fmtAed(res.marketHigh)}</strong></li>
               <li><span>Your rent vs median</span><strong className={res.belowMarketPct > 0 ? "up" : "down"}>{fmtPct(-res.belowMarketPct, 1, true)}</strong></li>
               <li><span>Ceiling for the new rent</span><strong>{fmtAed(res.maxNewRent)}</strong></li>
-              <li><span>Evidence</span><strong>{fmtInt(res.bench.n)} contracts · {res.levelLabel}</strong></li>
+              <li><span>Evidence</span><strong>{fmtInt(res.bench.n)} contracts, {res.levelLabel}</strong></li>
               <li><span>Median rent per sqft in cell</span><strong>{res.bench.median_rent_psqft.toFixed(0)} AED/sqft/yr</strong></li>
             </ul>
             <div className="callout mt">
-              Slabs per Decree 43/2013: 0% if rent is up to 10% below market; 5% (11–20% below); 10% (21–30%); 15% (31–40%); 20% (more than 40% below).
-              The official RERA Rental Index calculator is the legally binding reference — use this tool to prepare, not to litigate.
+              Slabs per Decree 43/2013: 0% if rent is up to 10% below market; 5% (11-20% below); 10% (21-30%); 15% (31-40%); 20% (more than 40% below).
+              The official RERA Rental Index calculator is the legally binding reference; use this tool to prepare, not to litigate.
             </div>
           </>
         )}

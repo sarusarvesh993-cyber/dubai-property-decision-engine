@@ -14,7 +14,7 @@ export default function AnomaliesTable({ items }: { items: Anomaly[] }) {
   return (
     <div className="card">
       <div className="toolbar">
-        <input placeholder="Filter by community or project…" value={q} onChange={(e) => setQ(e.target.value)} />
+        <input placeholder="Filter by community or project..." value={q} onChange={(e) => setQ(e.target.value)} />
         <select value={dir} onChange={(e) => setDir(e.target.value as typeof dir)} style={{ font: "inherit", padding: "0.45rem" }}>
           <option value="all">Above &amp; below</option>
           <option value="above">Priced above cell median</option>
@@ -34,7 +34,7 @@ export default function AnomaliesTable({ items }: { items: Anomaly[] }) {
               <tr key={a.transaction_id + a.price_aed}>
                 <td>{fmtDate(a.date)}</td>
                 <td>{a.area}</td>
-                <td>{a.project ?? "—"}</td>
+                <td>{a.project ?? " - "}</td>
                 <td>{a.sub_type}</td>
                 <td>{a.rooms}</td>
                 <td>{a.is_offplan ? "Off-plan" : "Ready"}</td>
@@ -43,7 +43,7 @@ export default function AnomaliesTable({ items }: { items: Anomaly[] }) {
                 <td>{fmtInt(a.price_per_sqft)}</td>
                 <td>{fmtInt(a.cell_median_ppsqft)}</td>
                 <td className={a.direction === "above" ? "down" : "up"}>{fmtPct(a.deviation_pct, 0, true)}</td>
-                <td className="small">n={a.cell_n} · {a.cell_level}</td>
+                <td className="small">n={a.cell_n} | {a.cell_level}</td>
               </tr>
             ))}
           </tbody>
