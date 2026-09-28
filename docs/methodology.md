@@ -19,14 +19,14 @@ Gateway facts verified on 2026-09-28: keyless; every declared `P_*` parameter mu
 
 | Rule | Detail |
 |---|---|
-| Sale flag | `procedure ∈ {Sale, Sell - Pre registration, Delayed Sell, Sale On Payment Plan}` - mortgages, grants, development registrations and lease-to-own are **not** sales. |
+| Sale flag | procedure is one of Sale, Sell - Pre registration, Delayed Sell, Sale On Payment Plan. Mortgages, grants, development registrations and lease-to-own are **not** sales. |
 | Size | `ACTUAL_AREA` (sqm), fallback `PROCEDURE_AREA`; sqft = sqm x 10.7639. |
 | Rooms | normalised to Studio / 1-4 B/R / 5+ B/R / NA. |
 | Size bands (sqm) | <40, 40-60, 60-85, 85-120, 120-170, 170-250, 250-400, 400+ - used for rents because `ROOMS` is ~96 % null in the Ejari feed. |
 | Plausibility | sales: 50k <= price <= 500m AED and 15 <= sqm <= 20,000; rents: residential, 8k <= annual <= 5m AED, 15 <= sqm <= 5,000, 6-36-month term. |
 | Bulk | transactions sharing a transaction number; leases with `TOTAL_PROPERTIES > 1`. |
 | Outliers | modified z-score of log(price or rent per sqm) within community x sub-type (x off-plan for sales); \|z\| > 3.5 flagged. |
-| Benchmark-eligible | plausible ∧ not outlier ∧ not bulk. |
+| Benchmark-eligible | plausible, not an outlier and not bulk. |
 
 ## 4. Community name resolution (crosswalk)
 
@@ -58,15 +58,26 @@ Cells with fewer than `MIN_CELL_N = 8` records are never published.
 * **Fair price verdict** by percentile of asking AED/sqft within the chosen cell: < 15 well below | 15-35 below | 35-65 in line | 65-85 above | > 85 well above. Confidence: high (project/bedroom-level cell with n >= 20), medium, low (community-level or n < 12).
 * **Rent increase** (Decree 43/2013): gap = 1 - current rent / market median. 0 % if gap <= 10 %; 5 % if 11-20 %; 10 % if 21-30 %; 15 % if 31-40 %; 20 % if > 40 %. The official RERA index is authoritative; this tool is for preparation.
 * **Heat signal**: 12-week change in median AED/sqft: cooling below -5 %, softening -5 % to -1.5 %, stable within 1.5 %, warming +1.5 % to +5 %, heating above +5 % (needs >= 8 eligible sales in both windows).
-* **Gross yield estimate** = median rent per sqft ÷ median price per sqft in the same community and window (not net of service charges or vacancy).
+* **Gross yield estimate** = median rent per sqft divided by median price per sqft in the same community and window (not net of service charges or vacancy).
 
 ## 7. AI layer
 
 `pipeline/llm_router.py` discovers currently available free models (OpenRouter's public catalogue plus keyed providers Groq / Gemini / Cerebras), scores them, and tries candidates in order with cool-downs for rate limits and 24-hour blacklists for retired models. `market_note.py` passes only pipeline-computed facts and instructs the model never to invent figures; if no model responds, a deterministic rules-based note is written. Keys are supplied as environment variables / repository secrets only.
 
+### 7.1 Ask the data (search and questions)
+
+The site's question box (`web/app/api/ask/route.ts`) follows the same principle: retrieval first, language model second, and never a number that was not computed by the pipeline.
+
+1. `parseQuestion` (`web/lib/ask.ts`) extracts communities (exact names plus an alias table: JVC, JLT, JVT, Downtown, Marina, JBR, Creek Harbour, Dubai Hills, and the Ejari district names from the crosswalk), property type (flat, villa, office, hotel apartment), bedrooms, size in sqft or sqm, off-plan or ready, and money amounts (a price such as "1.5m" or a rent such as "90,000"). It also assigns intents: price, rent, yield, trend, rank, anomaly, compare, profile or overview.
+2. `retrieve` collects only the cells that matter: the community summary rows, the matching price bands and rent benchmarks, and, when a price or rent and a size were given, the same fair-price or rent-check verdict the calculators produce (`web/lib/engine.ts`). Rankings use the community summary with minimum sample sizes (30 eligible sales or 30 rent contracts). Unknown communities return "did you mean" suggestions.
+3. `composeAnswer` writes a deterministic answer from those facts with the sample sizes and fallback level stated.
+4. If a free-tier key is configured, `web/lib/llm.ts` (a TypeScript port of `pipeline/llm_router.py`, with the same discovery, ordering, cool-downs and blacklists) asks the model to rewrite the rules answer in plain prose, under the instruction that every number must already appear in the facts block. If the model is unavailable, or its reply contains a number that is not in the facts, the rules answer is returned. The response states which path produced it, and the facts are shown under the answer.
+
+Questions are not stored. Requests are limited to 30 per 10 minutes per client on each serverless instance.
+
 ## 8. Known limitations
 
-* Registered data ≠ asking prices; timing lag between agreement and registration.
+* Registered data is not the same as asking prices; there is a timing lag between agreement and registration.
 * Off-plan "sales" include pre-registrations at launch; communities dominated by launches reflect developer pricing.
 * No bedrooms or unit identifiers in the Ejari feed; benchmarks by size band; repeat-sales indices are not possible from the public feed.
 * History from January 2026 only (earlier data requires Dubai Pulse bulk files).

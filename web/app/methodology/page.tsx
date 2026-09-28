@@ -47,6 +47,13 @@ export default function MethodologyPage() {
             currently available, ranks them, and falls back to the next one or to a rules-based writer on failure). The model receives only pre-computed facts and is
             instructed not to introduce numbers of its own.
           </p>
+          <p>
+            The Ask the data box works the same way in three steps. First the question is parsed for community (aliases such as JVC or Downtown are understood),
+            property type, bedrooms, size and amounts. Then the matching benchmark cells are retrieved from the published files, including the same fair-price
+            and rent-check verdicts the calculators produce. Finally a rules-based answer is written from those facts and, when a free-tier key is configured,
+            a model rewrites it in plainer prose; any reply that introduces a number not present in the facts is discarded in favour of the rules answer. The
+            facts used are shown under every answer, and questions are not stored.
+          </p>
           <h2>Limitations</h2>
           <ul>
             <li>Rentals feed has no bedrooms and no unit identifiers; benchmarks use size bands.</li>

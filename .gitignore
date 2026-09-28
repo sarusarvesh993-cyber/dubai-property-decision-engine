@@ -12,6 +12,7 @@ web/.next/
 web/out/
 web/next-env.d.ts
 web/.vercel/
+web/.env*.local
 web/tsconfig.tsbuildinfo
 
 # os / editors

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import AskBox from "@/components/AskBox";
 import { WeeklyRentsChart, WeeklySalesChart } from "@/components/Charts";
 import { getAreas, getMarketNote, getSummary } from "@/lib/data";
 import { delta, fmtAed, fmtBn, fmtDate, fmtInt, fmtPct } from "@/lib/format";
@@ -37,6 +38,12 @@ export default function Home() {
         </div>
         <span className="chip info">{fmtInt(s.rows.transactions)} transactions | {fmtInt(s.rows.rents)} rent contracts loaded</span>
       </div>
+
+      <section className="card hero mb">
+        <h2>Ask the data</h2>
+        <p className="small">Type a question about a community, a price or a rent. Answers come from the benchmarks below, never from guesswork.</p>
+        <AskBox mode="compact" />
+      </section>
 
       <section className="grid kpis mb">
         <div className="card kpi">
