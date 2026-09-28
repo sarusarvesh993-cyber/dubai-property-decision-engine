@@ -24,7 +24,7 @@
 | is_bulk | int | shares transaction number with other rows |
 | is_plausible | int | passes price/size plausibility bounds (sales only) |
 | is_outlier | int | robust z-score flag within community x sub-type x status |
-| benchmark_eligible | int | plausible ∧ not outlier ∧ not bulk |
+| benchmark_eligible | int | plausible, not an outlier and not bulk |
 | _pulled_at | timestamp | extraction time (UTC) |
 
 ## `data/clean/rents.parquet`
@@ -55,7 +55,8 @@
 | rent_benchmarks.json | rent benchmark cells (levels R1-R3) |
 | anomalies.json | top 100 flagged sales |
 | projects.json | top projects by sales, last 12 weeks |
-| crosswalk.json | district -> community mappings with evidence |
+| crosswalk.json | district to community mappings with evidence |
 | market_note.json | weekly note text, source model, facts used |
 | quality.json | data-quality checks and profile |
+| backtest.json | out-of-sample accuracy of the fair-price engine: test window, coverage, median and mean error, band calibration, baseline, splits by level and by off-plan or ready |
 | meta.json | build metadata and file sizes |

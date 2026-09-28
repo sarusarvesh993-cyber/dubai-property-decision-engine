@@ -1,0 +1,30 @@
+{
+  "description": "Evaluation set for the Ask the data copilot. Each case states what the parser must extract and, where the answer is data-independent, what the answer must contain. Run with: npm run eval:ask",
+  "pass_threshold": 0.8,
+  "cases": [
+    { "q": "Is AED 1.5m fair for a 750 sqft 1 bed in Business Bay?", "expect": { "areas": ["Business Bay"], "subType": "Flat", "rooms": "1 B/R", "sizeSqft": 750, "price": 1500000, "intents": ["price"], "facts": ["fair_price"], "answer": ["AED/sqft", "percentile"] } },
+    { "q": "Is 2,000,000 a good price for an 1100 sqft apartment in Dubai Marina", "expect": { "areas": ["Dubai Marina"], "subType": "Flat", "sizeSqft": 1100, "price": 2000000, "intents": ["price"], "facts": ["fair_price"] } },
+    { "q": "What is the rent for a 2 bed flat in JVC?", "expect": { "areas": ["Jumeirah Village Circle"], "subType": "Flat", "rooms": "2 B/R", "intents": ["rent"], "answer": ["Ejari", "Jumeirah Village Circle"] } },
+    { "q": "studio rent in international city", "expect": { "areas": ["International City Ph 1"], "rooms": "Studio", "intents": ["rent"], "answer": ["under 40 sqm"] } },
+    { "q": "1 bed rent downtown", "expect": { "areas": ["Burj Khalifa"], "rooms": "1 B/R", "intents": ["rent"], "answer": ["Burj Khalifa"] } },
+    { "q": "My rent in Dubai Marina is 90,000 for 900 sqft. Can the landlord increase it?", "expect": { "areas": ["Dubai Marina"], "sizeSqft": 900, "rent": 90000, "intents": ["rent"], "facts": ["rent_check"], "answer": ["RERA"] } },
+    { "q": "landlord wants 120k for my 110 sqm apartment in JLT, renewal. is that allowed?", "expect": { "areas": ["Jumeirah Lakes Towers"], "subType": "Flat", "sizeSqft": 1184, "rent": 120000, "intents": ["rent"], "facts": ["rent_check"] } },
+    { "q": "Best yield areas for apartments", "expect": { "areas": [], "subType": "Flat", "intents": ["yield", "rank"], "answer": ["yield"] } },
+    { "q": "what is the rental yield in Dubai Sports City", "expect": { "areas": ["Dubai Sports City"], "intents": ["yield"], "answer": ["yield"] } },
+    { "q": "Which communities are heating up?", "expect": { "areas": [], "intents": ["trend"], "answer_any": ["Heating", "heating"] } },
+    { "q": "is the market cooling in palm jumeirah", "expect": { "areas": ["Palm Jumeirah"], "intents": ["trend"], "answer": ["Palm Jumeirah"] } },
+    { "q": "cheapest areas to buy an apartment", "expect": { "areas": [], "subType": "Flat", "intents": ["price", "rank"], "answer": ["Lowest median"] } },
+    { "q": "most expensive communities per sqft", "expect": { "areas": [], "intents": ["price", "rank"], "answer_any": ["Highest median", "median"] } },
+    { "q": "Compare Dubai Hills vs Arabian Ranches villas", "expect": { "areas": ["Dubai Hills", "Arabian Ranches I"], "subType": "Villa", "intents": ["compare"], "answer": ["Dubai Hills", "Arabian Ranches I"] } },
+    { "q": "downtown", "expect": { "areas": ["Burj Khalifa"], "intents": ["profile"], "answer": ["Burj Khalifa"] } },
+    { "q": "tell me about business bay", "expect": { "areas": ["Business Bay"], "intents": ["profile"], "answer": ["Business Bay"] } },
+    { "q": "any anomalies in dubai marina", "expect": { "areas": ["Dubai Marina"], "intents": ["anomaly"], "answer_any": ["Dubai Marina", "anomal"] } },
+    { "q": "how is the market this week", "expect": { "areas": [], "intents": ["overview"], "answer": ["registered sales"] } },
+    { "q": "off plan prices in dubai creek harbour", "expect": { "areas": ["Dubai Creek Harbour"], "offplan": true, "intents": ["price"], "answer": ["Dubai Creek Harbour"] } },
+    { "q": "price of office in business bay", "expect": { "areas": ["Business Bay"], "subType": "Office", "intents": ["price"], "answer": ["office"] } },
+    { "q": "villa in palm jumeirah 4 bed price", "expect": { "areas": ["Palm Jumeirah"], "subType": "Villa", "rooms": "4 B/R", "intents": ["price"] } },
+    { "q": "what about mars colony prices", "expect": { "areas": [], "intents": ["price"] } },
+    { "q": "rent in al barsha south fourth", "expect": { "areas": ["Jumeirah Village Circle"], "intents": ["rent"] } },
+    { "q": "Is AED 3.2 million fair for a 2 bed 1,350 sq ft ready flat in Dubai Marina?", "expect": { "areas": ["Dubai Marina"], "subType": "Flat", "rooms": "2 B/R", "sizeSqft": 1350, "price": 3200000, "offplan": false, "intents": ["price"], "facts": ["fair_price"] } }
+  ]
+}

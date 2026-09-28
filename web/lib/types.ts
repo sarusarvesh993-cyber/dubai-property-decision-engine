@@ -171,3 +171,30 @@ export type CrosswalkRow = {
   share: number | null;
 };
 export type CrosswalkFile = { as_of: string; mappings: CrosswalkRow[] };
+
+export type BacktestMetrics = {
+  n_test: number;
+  n_covered: number;
+  coverage: number | null;
+  mdape?: number;
+  mape?: number;
+  within_p25_p75?: number;
+  within_p10_p90?: number;
+  median_bias?: number;
+  share_within_10pct?: number;
+  share_within_20pct?: number;
+  baseline_mdape?: number;
+  baseline_mape?: number;
+};
+export type BacktestFile = {
+  computed_at_utc: string;
+  test_window: { from: string; to: string; days: number };
+  train_window_months: number;
+  min_cell_n: number;
+  history_days_available: number;
+  overall: BacktestMetrics;
+  by_level: Record<string, BacktestMetrics>;
+  by_sub_type: Record<string, BacktestMetrics>;
+  by_offplan: Record<string, BacktestMetrics>;
+  notes: string[];
+};

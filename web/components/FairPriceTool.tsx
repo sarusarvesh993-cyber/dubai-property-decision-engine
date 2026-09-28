@@ -28,6 +28,34 @@ export default function FairPriceTool({ bands, rents, asOf, windowMonths }: { ba
   const grossYield = rentBench && price > 0 ? (rentBench.level === "R3" ? rentBench.median_rent_psqft * size : rentBench.median) / price : null;
 
   const verdictClass = res ? (res.verdict.includes("below") ? "good" : res.verdict === "in line with market" ? "" : res.verdict === "above market" ? "warn" : "bad") : "";
+  const [copied, setCopied] = useState(false);
+  const rentMedian = rentBench ? (rentBench.level === "R3" ? rentBench.median_rent_psqft * size : rentBench.median) : null;
+  const brief = res
+    ? [
+        `NEGOTIATION BRIEF (indicative, registered DLD data to ${asOf})`,
+        `Property: ${rooms === "NA" ? "" : rooms + " "}${effSub.toLowerCase()}, ${fmtInt(size)} sqft, ${area}${project ? ", " + project : ""}, ${offplan ? "off-plan" : "ready"}`,
+        `Asking price: ${fmtAed(price)} (${fmtInt(res.askingPpsqft)} AED/sqft)`,
+        `Evidence: ${res.band.n} registered sales, ${res.levelLabel}, last ${windowMonths} months (confidence ${res.confidence})`,
+        `Comparable AED/sqft: p10 ${fmtInt(res.band.p10)}, p25 ${fmtInt(res.band.p25)}, median ${fmtInt(res.band.median)}, p75 ${fmtInt(res.band.p75)}, p90 ${fmtInt(res.band.p90)}`,
+        `Verdict: ${res.verdict}, percentile ${res.percentile.toFixed(0)}, ${fmtPct(res.gapPct, 1, true)} versus the median`,
+        `Fair range for ${fmtInt(size)} sqft: ${fmtAed(res.fairLow)} to ${fmtAed(res.fairHigh)}; market-median price ${fmtAed(res.fairMid)}`,
+        `Buyer anchors: open at ${fmtAed(res.fairLow)} (p25), aim for ${fmtAed(res.fairMid)} (median), treat ${fmtAed(res.fairHigh)} (p75) as the ceiling`,
+        rentMedian
+          ? `Rent benchmark: median ${fmtAed(rentMedian)} a year, gross yield ${fmtPct(rentMedian / price, 1)} at asking and ${fmtPct(rentMedian / res.fairMid, 1)} at the market-median price`
+          : "Rent benchmark: none for this community and size band",
+        `Typical unit in this cell: ${fmtInt(res.band.median_size_sqft)} sqft at ${fmtAed(res.band.median_price)}`,
+        "Not a valuation or legal advice. Source: Dubai Land Department open data via dubai-property-decision-engine.vercel.app",
+      ].join("\n")
+    : "";
+  const copyBrief = async () => {
+    try {
+      await navigator.clipboard.writeText(brief);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      setCopied(false);
+    }
+  };
 
   return (
     <div className="grid two">
@@ -122,6 +150,11 @@ export default function FairPriceTool({ bands, rents, asOf, windowMonths }: { ba
               Negotiation anchor: offering at the p25 level equals {fmtAed(res.fairLow)}; the seller's realistic ceiling (p75) is {fmtAed(res.fairHigh)}. Indicative only, not a
               valuation.
             </p>
+            <details className="mt">
+              <summary className="small">Negotiation brief (one page to copy into an email or a note)</summary>
+              <pre className="facts">{brief}</pre>
+              <button type="button" className="btn" onClick={copyBrief}>{copied ? "Copied" : "Copy brief"}</button>
+            </details>
           </>
         )}
       </div>

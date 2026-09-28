@@ -3,7 +3,7 @@
     python pipeline/run.py --mode smoke     # last 14 days, quick local check
     python pipeline/run.py --mode daily     # re-pull last 10 days, rebuild everything (GitHub Actions cron)
     python pipeline/run.py --mode backfill  # everything since 2026-01-01 (first run / repair)
-    python pipeline/run.py --mode rebuild   # no download; re-run clean -> marts -> note -> export
+    python pipeline/run.py --mode rebuild   # no download; re-run clean, marts, backtest, quality, note, export
 """
 from __future__ import annotations
 
@@ -15,6 +15,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
+import backtest  # noqa: E402
 import build_marts  # noqa: E402
 import clean  # noqa: E402
 import export_web  # noqa: E402
@@ -35,7 +36,7 @@ def main() -> int:
     steps = []
     if args.mode != "rebuild":
         steps.append(("extract", lambda: extract.run(args.mode)))
-    steps += [("clean", clean.run), ("marts", build_marts.run), ("quality", quality.run)]
+    steps += [("clean", clean.run), ("marts", build_marts.run), ("backtest", backtest.run), ("quality", quality.run)]
     if not args.skip_note:
         steps.append(("market_note", market_note.run))
     steps.append(("export_web", export_web.run))

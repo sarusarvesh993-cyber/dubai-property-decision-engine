@@ -66,6 +66,7 @@ def run() -> dict:
     area_month = pd.read_parquet(MARTS / "mart_area_month.parquet")
     note = json.loads((MARTS / "market_note.json").read_text(encoding="utf-8")) if (MARTS / "market_note.json").exists() else None
     quality = json.loads((MARTS / "quality.json").read_text(encoding="utf-8")) if (MARTS / "quality.json").exists() else None
+    backtest = json.loads((MARTS / "backtest.json").read_text(encoding="utf-8")) if (MARTS / "backtest.json").exists() else None
 
     full = ws.iloc[:-1] if len(ws) > 2 else ws
     last4, prev4 = full.tail(4), (full.iloc[-8:-4] if len(full) >= 8 else pd.DataFrame())
@@ -125,6 +126,8 @@ def run() -> dict:
         sizes["market_note.json"] = _write("market_note.json", note)
     if quality:
         sizes["quality.json"] = _write("quality.json", quality)
+    if backtest:
+        sizes["backtest.json"] = _write("backtest.json", backtest)
     sizes["meta.json"] = _write("meta.json", {"exported_at_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"), **meta, "file_sizes": sizes})
     log.info("web artefacts: %s", {k: f"{v / 1024:.0f} KB" for k, v in sizes.items()})
     return sizes

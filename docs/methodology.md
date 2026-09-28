@@ -55,10 +55,22 @@ Cells with fewer than `MIN_CELL_N = 8` records are never published.
 
 ## 6. Decision rules
 
-* **Fair price verdict** by percentile of asking AED/sqft within the chosen cell: < 15 well below | 15-35 below | 35-65 in line | 65-85 above | > 85 well above. Confidence: high (project/bedroom-level cell with n >= 20), medium, low (community-level or n < 12).
-* **Rent increase** (Decree 43/2013): gap = 1 - current rent / market median. 0 % if gap <= 10 %; 5 % if 11-20 %; 10 % if 21-30 %; 15 % if 31-40 %; 20 % if > 40 %. The official RERA index is authoritative; this tool is for preparation.
-* **Heat signal**: 12-week change in median AED/sqft: cooling below -5 %, softening -5 % to -1.5 %, stable within 1.5 %, warming +1.5 % to +5 %, heating above +5 % (needs >= 8 eligible sales in both windows).
+* **Fair price verdict** by percentile of asking AED/sqft within the chosen cell: below 15 well below, 15 to 35 below, 35 to 65 in line, 65 to 85 above, over 85 well above. Confidence: high (project or bedroom-level cell with at least 20 sales), medium, low (community-level cell or fewer than 12 sales).
+* **Rent increase** (Decree 43/2013): gap = 1 minus current rent divided by market median. 0% if the gap is up to 10%; 5% if 11 to 20%; 10% if 21 to 30%; 15% if 31 to 40%; 20% if over 40%. The official RERA index is authoritative; this tool is for preparation.
+* **Heat signal**: 12-week change in median AED/sqft: cooling below -5%, softening -5% to -1.5%, stable within 1.5%, warming +1.5% to +5%, heating above +5% (needs at least 8 eligible sales in both windows).
 * **Gross yield estimate** = median rent per sqft divided by median price per sqft in the same community and window (not net of service charges or vacancy).
+
+### 6.1 Back-test of the fair-price engine (`pipeline/backtest.py`)
+
+The engine is checked out of sample on every refresh, and the result is published on the methodology page and in `web/public/data/backtest.json`.
+
+* Test set: benchmark-eligible residential sales registered in the most recent 28 days (7 days while fewer than 120 days of history are loaded).
+* Training set: eligible sales registered before the test window, in the same trailing 6-month window and with the same minimum cell size (8) the site uses.
+* Prediction: the median AED/sqft of the finest comparable cell that exists in the training set, with the site's fallback order (project, then community x type x bedrooms, then community x type, then community), always inside the same off-plan or ready group.
+* Baseline: one citywide median AED/sqft per off-plan or ready group.
+* Metrics: coverage, median and mean absolute percentage error, share of sales inside the published p25 to p75 and p10 to p90 bands (a calibrated band holds about 50% and 80%), median bias, and the same errors for the baseline. All metrics are also split by matching level and by off-plan or ready.
+
+Reading the result: the median error is the typical gap between the engine's estimate and the price that was actually registered. A verdict is only as good as the cell behind it, which is why the sample size and level are always shown next to it. Outlier flags come from the full data set, so the test set excludes extreme registrations.
 
 ## 7. AI layer
 
@@ -74,6 +86,10 @@ The site's question box (`web/app/api/ask/route.ts`) follows the same principle:
 4. If a free-tier key is configured, `web/lib/llm.ts` (a TypeScript port of `pipeline/llm_router.py`, with the same discovery, ordering, cool-downs and blacklists) asks the model to rewrite the rules answer in plain prose, under the instruction that every number must already appear in the facts block. If the model is unavailable, or its reply contains a number that is not in the facts, the rules answer is returned. The response states which path produced it, and the facts are shown under the answer.
 
 Questions are not stored. Requests are limited to 30 per 10 minutes per client on each serverless instance.
+
+### 7.2 Copilot evaluation set (`web/eval/ask_eval.json`)
+
+Twenty-four questions with the expected parse (community, type, bedrooms, size, amounts, intent), the expected retrieval (fair-price or rent-check verdict present) and, where the wording does not depend on the data, required phrases in the answer. `npm run eval:ask` runs them in CI without any model call, prints one line per case and fails below an 80% pass rate. The set is meant to grow: every misread question found in the logs or in user feedback becomes a new case.
 
 ## 8. Known limitations
 

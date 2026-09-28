@@ -3,6 +3,7 @@ import path from "node:path";
 import type {
   AnomaliesFile,
   AreasFile,
+  BacktestFile,
   CrosswalkFile,
   MarketNote,
   PriceBandsFile,
@@ -42,6 +43,13 @@ export const getQuality = (): QualityFile | null => {
 export const getCrosswalk = (): CrosswalkFile | null => {
   try {
     return load<CrosswalkFile>("crosswalk.json");
+  } catch {
+    return null;
+  }
+};
+export const getBacktest = (): BacktestFile | null => {
+  try {
+    return load<BacktestFile>("backtest.json");
   } catch {
     return null;
   }

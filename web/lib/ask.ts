@@ -163,8 +163,8 @@ export function parseQuestion(question: string): Parsed {
   else if (/\b(ready|secondary|resale|handed over|completed)\b/.test(q)) offplan = false;
 
   let sizeSqft: number | null = null;
-  const sf = q.match(/(\d{2,5}(?:,\d{3})?(?:\.\d+)?)\s*(sq\.?\s*ft|sqft|square feet|square foot|ft2|sft)\b/);
-  const sm = q.match(/(\d{2,5}(?:\.\d+)?)\s*(sqm|sq\.?\s*m|square met(?:er|re)s?|m2)\b/);
+  const sf = q.match(/(\d{1,3}(?:,\d{3})+|\d{2,5}(?:\.\d+)?)\s*(sq\.?\s*ft|sqft|square feet|square foot|ft2|sft)\b/);
+  const sm = q.match(/(\d{1,3}(?:,\d{3})+|\d{2,5}(?:\.\d+)?)\s*(sqm|sq\.?\s*m|square met(?:er|re)s?|m2)\b/);
   if (sf) sizeSqft = parseFloat(sf[1].replace(/,/g, ""));
   else if (sm) sizeSqft = Math.round(parseFloat(sm[1]) * 10.7639);
 
@@ -177,7 +177,7 @@ export function parseQuestion(question: string): Parsed {
   if (has(/\b(yield|yields|roi|return|returns|investment|invest|income)\b/)) intents.push("yield");
   if (has(/\b(heating|cooling|hot|hottest|trend|trends|trending|growth|growing|rising|falling|momentum|slowing|change|changed|up or down)\b/)) intents.push("trend");
   if (has(/\b(top|best|most|busiest|highest|lowest|cheapest|ranking|rank|which (communities|areas)|where should|where to)\b/)) intents.push("rank");
-  if (has(/\b(market|overview|summary|this week|pulse|how is|what happened|latest)\b/)) intents.push("overview");
+  if (has(/\b(overview|summary|this week|pulse|what happened|latest)\b/) || (areas.length === 0 && has(/\b(market|how is)\b/))) intents.push("overview");
   if (has(/\b(anomaly|anomalies|suspicious|mispriced|outlier|outliers|unusual)\b/)) intents.push("anomaly");
   if (areas.length >= 2 && has(/\b(vs|versus|compare|compared|or|better)\b/)) intents.push("compare");
 
@@ -396,8 +396,8 @@ export function composeAnswer(p: Parsed, f: Facts): string {
     }
     if (p.intents.includes("trend") || p.intents.includes("profile") || p.intents.includes("compare")) {
       parts.push(s.ppsqft_change_12w !== undefined && s.ppsqft_change_12w !== null
-        ? `Trend: median AED/sqft ${pct(s.ppsqft_change_12w, 1, true)} versus the previous 12 weeks (${s.signal}); ${int(s.sales_12w)} sales in the last 12 weeks, off-plan share ${pct(s.offplan_share_12w, 0)}.`
-        : `Trend: ${int(s.sales_12w)} registered sales in the last 12 weeks with off-plan share ${pct(s.offplan_share_12w, 0)}; the 12-week price change appears once 24 weeks of history are loaded.`);
+        ? `Trend for ${a.area}: median AED/sqft ${pct(s.ppsqft_change_12w, 1, true)} versus the previous 12 weeks (${s.signal}); ${int(s.sales_12w)} sales in the last 12 weeks, off-plan share ${pct(s.offplan_share_12w, 0)}.`
+        : `Trend for ${a.area}: ${int(s.sales_12w)} registered sales in the last 12 weeks with off-plan share ${pct(s.offplan_share_12w, 0)}; the 12-week price change appears once 24 weeks of history are loaded.`);
     }
     out.push(parts.join(" "));
   }
