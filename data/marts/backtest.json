@@ -1,0 +1,149 @@
+{
+  "computed_at_utc": "2026-09-28T19:24:01+00:00",
+  "test_window": {
+    "from": "2026-09-01",
+    "to": "2026-09-28",
+    "days": 28
+  },
+  "train_window_months": 6,
+  "min_cell_n": 8,
+  "history_days_available": 269,
+  "overall": {
+    "n_test": 8355,
+    "n_covered": 8340,
+    "coverage": 0.9982,
+    "mdape": 0.0617,
+    "mape": 0.1048,
+    "within_p25_p75": 0.4615,
+    "within_p10_p90": 0.7258,
+    "median_bias": 0.0079,
+    "share_within_10pct": 0.655,
+    "share_within_20pct": 0.8516,
+    "baseline_mdape": 0.2065,
+    "baseline_mape": 0.2848
+  },
+  "by_level": {
+    "L0 project": {
+      "n_test": 5501,
+      "n_covered": 5501,
+      "coverage": 1.0,
+      "mdape": 0.0453,
+      "mape": 0.0712,
+      "within_p25_p75": 0.4643,
+      "within_p10_p90": 0.728,
+      "median_bias": 0.0032,
+      "share_within_10pct": 0.7686,
+      "share_within_20pct": 0.932,
+      "baseline_mdape": 0.1797,
+      "baseline_mape": 0.2486
+    },
+    "L1 area x type x bedrooms": {
+      "n_test": 2670,
+      "n_covered": 2670,
+      "coverage": 1.0,
+      "mdape": 0.1223,
+      "mape": 0.1702,
+      "within_p25_p75": 0.4581,
+      "within_p10_p90": 0.7232,
+      "median_bias": 0.0348,
+      "share_within_10pct": 0.433,
+      "share_within_20pct": 0.6951,
+      "baseline_mdape": 0.2573,
+      "baseline_mape": 0.3424
+    },
+    "L2 area x type": {
+      "n_test": 165,
+      "n_covered": 165,
+      "coverage": 1.0,
+      "mdape": 0.1119,
+      "mape": 0.1477,
+      "within_p25_p75": 0.4303,
+      "within_p10_p90": 0.697,
+      "median_bias": 0.001,
+      "share_within_10pct": 0.4727,
+      "share_within_20pct": 0.7091,
+      "baseline_mdape": 0.3563,
+      "baseline_mape": 0.5197
+    },
+    "L3 area": {
+      "n_test": 4,
+      "n_covered": 4,
+      "coverage": 1.0,
+      "mdape": 0.3465,
+      "mape": 0.9358,
+      "within_p25_p75": 0.25,
+      "within_p10_p90": 0.5,
+      "median_bias": -0.2386,
+      "share_within_10pct": 0.25,
+      "share_within_20pct": 0.5,
+      "baseline_mdape": 0.719,
+      "baseline_mape": 1.8726
+    }
+  },
+  "by_sub_type": {
+    "Flat": {
+      "n_test": 7778,
+      "n_covered": 7763,
+      "coverage": 0.9981,
+      "mdape": 0.061,
+      "mape": 0.1036,
+      "within_p25_p75": 0.46,
+      "within_p10_p90": 0.7285,
+      "median_bias": 0.0076,
+      "share_within_10pct": 0.6602,
+      "share_within_20pct": 0.8538,
+      "baseline_mdape": 0.2079,
+      "baseline_mape": 0.2858
+    },
+    "Villa": {
+      "n_test": 577,
+      "n_covered": 577,
+      "coverage": 1.0,
+      "mdape": 0.0755,
+      "mape": 0.1205,
+      "within_p25_p75": 0.4818,
+      "within_p10_p90": 0.6898,
+      "median_bias": 0.0122,
+      "share_within_10pct": 0.5858,
+      "share_within_20pct": 0.8215,
+      "baseline_mdape": 0.1948,
+      "baseline_mape": 0.2714
+    }
+  },
+  "by_offplan": {
+    "ready": {
+      "n_test": 2344,
+      "n_covered": 2331,
+      "coverage": 0.9945,
+      "mdape": 0.0972,
+      "mape": 0.1572,
+      "within_p25_p75": 0.4805,
+      "within_p10_p90": 0.7396,
+      "median_bias": 0.0124,
+      "share_within_10pct": 0.5109,
+      "share_within_20pct": 0.7435,
+      "baseline_mdape": 0.2827,
+      "baseline_mape": 0.3688
+    },
+    "off-plan": {
+      "n_test": 6011,
+      "n_covered": 6009,
+      "coverage": 0.9997,
+      "mdape": 0.0511,
+      "mape": 0.0845,
+      "within_p25_p75": 0.4542,
+      "within_p10_p90": 0.7204,
+      "median_bias": 0.0062,
+      "share_within_10pct": 0.7109,
+      "share_within_20pct": 0.8935,
+      "baseline_mdape": 0.1852,
+      "baseline_mape": 0.2522
+    }
+  },
+  "notes": [
+    "Prediction = median AED/sqft of the finest comparable cell built from sales registered before the test window.",
+    "Baseline = one citywide median AED/sqft per off-plan/ready group from the same training window.",
+    "Bands are the p25 to p75 and p10 to p90 of the comparable cell; a well-calibrated band holds about 50% and 80% of actual prices.",
+    "Outlier flags come from the full data set, so the test set excludes extreme registrations."
+  ]
+}

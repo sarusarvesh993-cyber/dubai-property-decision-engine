@@ -1,50 +1,55 @@
 {
-  "generated_at_utc": "2026-09-28T19:10:30+00:00",
+  "generated_at_utc": "2026-09-28T19:24:02+00:00",
   "checks": [
     {
       "check": "Transactions loaded",
       "status": "PASS",
-      "detail": "163,262 rows, 2026-01-01 -> 2026-09-28"
+      "detail": "163,262 rows, 2026-01-01 to 2026-09-28"
     },
     {
       "check": "Rent contracts loaded",
       "status": "PASS",
-      "detail": "607,326 rows, 2026-01-01 -> 2026-09-27"
+      "detail": "607,326 rows, 2026-01-01 to 2026-09-27"
     },
     {
-      "check": "Transactions freshness \u2264 3 days",
+      "check": "Transactions fresh within 3 days",
       "status": "PASS",
       "detail": "latest registration 0 day(s) old"
     },
     {
-      "check": "Rents freshness \u2264 3 days",
+      "check": "Rents fresh within 3 days",
       "status": "PASS",
       "detail": "latest registration 0 day(s) old"
     },
     {
-      "check": "Transaction duplicates < 0.5%",
-      "status": "WARN",
-      "detail": "1.15% duplicate rows on id+price+size+procedure"
+      "check": "Transaction duplicates < 0.5% (outside multi-unit deals)",
+      "status": "PASS",
+      "detail": "0.00% duplicate rows on id+price+size+procedure among single-unit transactions"
     },
     {
-      "check": "Sale price completeness \u2265 99%",
+      "check": "No land plots in the pricing universe",
+      "status": "PASS",
+      "detail": "0.00% of eligible sales are land plots"
+    },
+    {
+      "check": "Sale price completeness >= 99%",
       "status": "PASS",
       "detail": "0.00% sales without price"
     },
     {
-      "check": "Sale size completeness \u2265 95%",
+      "check": "Sale size completeness >= 95%",
       "status": "PASS",
       "detail": "0.00% sales without size"
     },
     {
-      "check": "Benchmark-eligible share of sales 60\u2013100%",
+      "check": "Benchmark-eligible share of sales 60-100%",
       "status": "PASS",
-      "detail": "96.8% of sales eligible after bulk/plausibility/outlier filters"
+      "detail": "89.4% of sales eligible after bulk/plausibility/outlier filters"
     },
     {
       "check": "Sales outlier rate < 5%",
       "status": "PASS",
-      "detail": "2.52% flagged by robust z-score"
+      "detail": "2.37% flagged by robust z-score"
     },
     {
       "check": "Rents ROOMS null (known gateway gap; size bands used instead)",
@@ -57,17 +62,17 @@
       "detail": "5.7% of contracts cover >1 property"
     },
     {
-      "check": "Benchmark-eligible share of residential rents \u2265 60%",
+      "check": "Benchmark-eligible share of residential rents >= 60%",
       "status": "PASS",
       "detail": "88.5% eligible"
     },
     {
-      "check": "Sales in communities with rent coverage \u2265 70% (after crosswalk)",
+      "check": "Sales in communities with rent coverage >= 70% (after crosswalk)",
       "status": "PASS",
       "detail": "73.9% of sales can be matched to Ejari benchmarks"
     },
     {
-      "check": "Weekly volume within 50\u2013200% of median (last full week)",
+      "check": "Weekly volume within 50-200% of median (last full week)",
       "status": "PASS",
       "detail": "last full week 2,321 vs median 3,000"
     }
@@ -117,5 +122,5 @@
       }
     }
   },
-  "warnings": 1
+  "warnings": 0
 }

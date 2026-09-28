@@ -1,23 +1,24 @@
 # Data quality report
 
-_Generated 2026-09-28T19:10:30+00:00 — regenerated on every pipeline run._
+_Generated 2026-09-28T19:24:02+00:00. Regenerated on every pipeline run._
 
 | Check | Status | Detail |
 |---|---|---|
-| Transactions loaded | ✅ PASS | 163,262 rows, 2026-01-01 -> 2026-09-28 |
-| Rent contracts loaded | ✅ PASS | 607,326 rows, 2026-01-01 -> 2026-09-27 |
-| Transactions freshness ≤ 3 days | ✅ PASS | latest registration 0 day(s) old |
-| Rents freshness ≤ 3 days | ✅ PASS | latest registration 0 day(s) old |
-| Transaction duplicates < 0.5% | ⚠️ WARN | 1.15% duplicate rows on id+price+size+procedure |
-| Sale price completeness ≥ 99% | ✅ PASS | 0.00% sales without price |
-| Sale size completeness ≥ 95% | ✅ PASS | 0.00% sales without size |
-| Benchmark-eligible share of sales 60–100% | ✅ PASS | 96.8% of sales eligible after bulk/plausibility/outlier filters |
-| Sales outlier rate < 5% | ✅ PASS | 2.52% flagged by robust z-score |
-| Rents ROOMS null (known gateway gap; size bands used instead) | ✅ PASS | 96% null |
-| Bulk leases share < 15% | ✅ PASS | 5.7% of contracts cover >1 property |
-| Benchmark-eligible share of residential rents ≥ 60% | ✅ PASS | 88.5% eligible |
-| Sales in communities with rent coverage ≥ 70% (after crosswalk) | ✅ PASS | 73.9% of sales can be matched to Ejari benchmarks |
-| Weekly volume within 50–200% of median (last full week) | ✅ PASS | last full week 2,321 vs median 3,000 |
+| Transactions loaded | PASS | 163,262 rows, 2026-01-01 to 2026-09-28 |
+| Rent contracts loaded | PASS | 607,326 rows, 2026-01-01 to 2026-09-27 |
+| Transactions fresh within 3 days | PASS | latest registration 0 day(s) old |
+| Rents fresh within 3 days | PASS | latest registration 0 day(s) old |
+| Transaction duplicates < 0.5% (outside multi-unit deals) | PASS | 0.00% duplicate rows on id+price+size+procedure among single-unit transactions |
+| No land plots in the pricing universe | PASS | 0.00% of eligible sales are land plots |
+| Sale price completeness >= 99% | PASS | 0.00% sales without price |
+| Sale size completeness >= 95% | PASS | 0.00% sales without size |
+| Benchmark-eligible share of sales 60-100% | PASS | 89.4% of sales eligible after bulk/plausibility/outlier filters |
+| Sales outlier rate < 5% | PASS | 2.37% flagged by robust z-score |
+| Rents ROOMS null (known gateway gap; size bands used instead) | PASS | 96% null |
+| Bulk leases share < 15% | PASS | 5.7% of contracts cover >1 property |
+| Benchmark-eligible share of residential rents >= 60% | PASS | 88.5% eligible |
+| Sales in communities with rent coverage >= 70% (after crosswalk) | PASS | 73.9% of sales can be matched to Ejari benchmarks |
+| Weekly volume within 50-200% of median (last full week) | PASS | last full week 2,321 vs median 3,000 |
 
 ## Profile
 
