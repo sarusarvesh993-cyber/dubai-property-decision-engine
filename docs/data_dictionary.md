@@ -22,7 +22,9 @@
 | price_per_sqm, price_per_sqft | float | derived |
 | parking, parcel_id, nearest_metro, nearest_mall, nearest_landmark | string | as registered |
 | is_bulk | int | shares transaction number with other rows |
-| is_plausible | int | passes price/size plausibility bounds (sales only) |
+| is_land | int | property type is Land (plots); excluded from the pricing universe |
+| is_res_unit | int | Flat or Villa that is a Unit or Building; the universe for residential medians, yields and anomalies |
+| is_plausible | int | passes price/size plausibility bounds (built-property sales only) |
 | is_outlier | int | robust z-score flag within community x sub-type x status |
 | benchmark_eligible | int | plausible, not an outlier and not bulk |
 | _pulled_at | timestamp | extraction time (UTC) |

@@ -92,13 +92,17 @@ def clean_transactions() -> pd.DataFrame:
     df["week"] = df["date"].dt.to_period("W-SUN").dt.start_time.dt.strftime("%Y-%m-%d")
     # Bulk deals: several rows under one transaction number (multi-unit / lease-to-own).
     df["is_bulk"] = df.groupby("transaction_id")["transaction_id"].transform("size").gt(1).astype(int)
-    # Plausibility for the pricing universe (sales with sensible price and size). Outliers are flagged in finalise().
-    plaus = (df["is_sale"] == 1) & df["price_aed"].between(50_000, 500_000_000) & df["size_sqm"].between(15, 20_000)
+    # Residential units: flats and villas that are units or buildings. Land plots share the "Residential" usage label
+    # but their AED/sqft is not comparable with built units, so they are kept out of every residential benchmark.
+    df["is_land"] = _flag(df["prop_type"].astype("string").str.strip().str.lower() == "land")
+    df["is_res_unit"] = _flag((df["is_land"] == 0) & df["sub_type"].astype("string").str.strip().isin(["Flat", "Villa"]))
+    # Plausibility for the pricing universe (built-property sales with sensible price and size). Outliers are flagged in finalise().
+    plaus = (df["is_sale"] == 1) & (df["is_land"] == 0) & df["price_aed"].between(50_000, 500_000_000) & df["size_sqm"].between(15, 20_000)
     df["is_plausible"] = _flag(plaus)
     cols = ["transaction_id", "date", "month", "week", "group", "procedure", "usage", "area", "project", "master_project",
             "prop_type", "sub_type", "rooms", "size_band", "is_offplan", "is_freehold", "is_sale", "is_mortgage",
             "price_aed", "size_sqm", "size_sqft", "price_per_sqm", "price_per_sqft", "parking", "parcel_id",
-            "nearest_metro", "nearest_mall", "nearest_landmark", "is_bulk", "is_plausible", "_pulled_at"]
+            "nearest_metro", "nearest_mall", "nearest_landmark", "is_bulk", "is_land", "is_res_unit", "is_plausible", "_pulled_at"]
     return df[cols].sort_values("date").reset_index(drop=True)
 
 

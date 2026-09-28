@@ -14,7 +14,7 @@ Plus a question box that answers in plain language.
 
 How it is built
 Python + DuckDB pipeline on GitHub Actions, static Next.js site on Vercel, all free tiers. Every number traces to one SQL model.
-13 data-quality checks and a fair-price back-test run on every refresh, and the error is published on the site.
+14 data-quality checks and a fair-price back-test run on every refresh, and the error is published on the site.
 The AI part is deliberately boring: retrieval first, a rules-based answer, then a free-tier model rewrites the prose. A guard
 rejects any reply that introduces a number not in the facts, and a router adapts when free models come and go.
 

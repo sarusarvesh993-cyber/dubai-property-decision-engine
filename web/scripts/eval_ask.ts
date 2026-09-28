@@ -22,6 +22,7 @@ type Expect = {
   facts?: Array<"fair_price" | "rent_check">;
   answer?: string[];
   answer_any?: string[];
+  answer_not?: string[];
 };
 type Case = { q: string; expect: Expect };
 
@@ -45,6 +46,7 @@ function check(c: Case): { ok: boolean; problems: string[]; answer: string } {
   }
   for (const s of e.answer ?? []) if (!answer.includes(s)) problems.push(`answer lacks "${s}"`);
   if (e.answer_any && !e.answer_any.some((s) => answer.includes(s))) problems.push(`answer lacks any of ${JSON.stringify(e.answer_any)}`);
+  for (const s of e.answer_not ?? []) if (answer.includes(s)) problems.push(`answer must not contain "${s}"`);
   if (/[\u2014\u2013\u2192\u2190\u2265\u2264\u2026\u00b7\u00f7]/.test(answer)) problems.push("answer contains a banned typographic character");
   return { ok: problems.length === 0, problems, answer };
 }

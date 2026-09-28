@@ -4,7 +4,7 @@ Question answered: "If the engine had been used on the sales that registered in 
 using only the data available before them, how far off would its estimate have been?"
 
 Method
-  * Test set: benchmark-eligible residential sales registered in the most recent TEST window
+  * Test set: benchmark-eligible residential-unit sales (flats and villas) registered in the most recent TEST window
     (28 days when at least 120 days of history exist, otherwise 7 days).
   * Training set: eligible sales registered before the test window, in the same trailing window the
     site uses for price bands (BENCHMARK_MONTHS_SALES), with the same minimum cell size (MIN_CELL_N).
@@ -40,7 +40,7 @@ train AS (
   WHERE t.benchmark_eligible = 1 AND t.date <= p.cutoff AND t.date > p.cutoff - INTERVAL ({months} * 30) DAY),
 test AS (
   SELECT t.* FROM tx t, params p
-  WHERE t.benchmark_eligible = 1 AND t.usage = 'Residential' AND t.date > p.cutoff),
+  WHERE t.benchmark_eligible = 1 AND t.is_res_unit = 1 AND t.date > p.cutoff),
 b0 AS (SELECT area, project, sub_type, rooms, is_offplan, COUNT(*) AS n, MEDIAN(price_per_sqft) AS med,
               QUANTILE_CONT(price_per_sqft, 0.10) AS p10, QUANTILE_CONT(price_per_sqft, 0.25) AS p25,
               QUANTILE_CONT(price_per_sqft, 0.75) AS p75, QUANTILE_CONT(price_per_sqft, 0.90) AS p90
@@ -57,7 +57,7 @@ b3 AS (SELECT area, is_offplan, COUNT(*) AS n, MEDIAN(price_per_sqft) AS med,
               QUANTILE_CONT(price_per_sqft, 0.10) AS p10, QUANTILE_CONT(price_per_sqft, 0.25) AS p25,
               QUANTILE_CONT(price_per_sqft, 0.75) AS p75, QUANTILE_CONT(price_per_sqft, 0.90) AS p90
        FROM train GROUP BY 1,2 HAVING COUNT(*) >= {min_n}),
-city AS (SELECT is_offplan, MEDIAN(price_per_sqft) AS med FROM train WHERE usage = 'Residential' GROUP BY 1)
+city AS (SELECT is_offplan, MEDIAN(price_per_sqft) AS med FROM train WHERE is_res_unit = 1 GROUP BY 1)
 SELECT t.transaction_id, t.date, t.area, t.project, t.sub_type, t.rooms, t.is_offplan, t.price_per_sqft AS actual,
        CASE WHEN b0.med IS NOT NULL THEN 'L0 project'
             WHEN b1.med IS NOT NULL THEN 'L1 area x type x bedrooms'

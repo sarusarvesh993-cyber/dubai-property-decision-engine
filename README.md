@@ -22,7 +22,7 @@ The project is written as a data analyst would ship it in a company: a tested Py
 3. `pipeline/crosswalk.py` reconciles community names between the two feeds. Sales use popular names ("Jumeirah Village Circle"), Ejari uses district names ("Al Barsha South Fourth"). The mapping is derived from projects that appear in both feeds, on top of a verified seed list, and is published for audit. This raised the share of sales with a rent benchmark from 43% to 76%.
 4. `pipeline/sql/marts.sql` (DuckDB) builds the analytical tables: weekly series, community summary, price bands, rent benchmarks, anomalies, top projects.
 5. `pipeline/backtest.py` re-prices the last four weeks of registered sales using only earlier data and publishes coverage, median error, band calibration and a naive-baseline comparison (`backtest.json`).
-6. `pipeline/quality.py` runs 13 checks (freshness, duplicates, completeness, eligibility rates, outlier rate, coverage, volume sanity) and writes `docs/data_quality.md`.
+6. `pipeline/quality.py` runs 14 checks (freshness, duplicates outside multi-unit deals, completeness, eligibility rates, outlier rate, no land plots in the pricing universe, coverage, volume sanity) and writes `docs/data_quality.md`.
 7. `pipeline/market_note.py` writes the weekly note. A router (`pipeline/llm_router.py`) discovers which free-tier models are currently available (Groq, Gemini, Cerebras, OpenRouter), tries them in order and falls back to a rules-based writer, so the product works with or without API keys.
 8. `pipeline/export_web.py` writes compact JSON files to `web/public/data/`. The Next.js site is static and the calculators run in the browser on those files. The same files double as an open JSON API (for example `/data/price_bands.json`).
 9. `web/app/api/ask/route.ts` is the only server function. It powers the "Ask the data" box: `web/lib/ask.ts` parses the question (community aliases such as JVC, JLT or Downtown are understood), retrieves the relevant cells from the published JSON, and writes a rules-based answer; `web/lib/llm.ts` is a TypeScript port of the same free-model router and, when a key is configured, rewrites that answer in better prose without adding numbers. Every response carries the facts it was built from, so a reader can check it.
@@ -53,7 +53,7 @@ python pipeline/run.py --mode smoke   # last 14 days, about 5 minutes
 cd web && npm install && npm run dev  # http://localhost:3000
 ```
 
-Quality gates that run in CI on every push: `pytest -q tests` (pipeline rules and the back-test on synthetic data), `npm run eval:ask` (24-question evaluation set for the Ask box, 80% pass rate required, currently 100%), `npm run typecheck` and `npm run build`. The daily refresh additionally runs the 13 data-quality checks and the fair-price back-test on the real data.
+Quality gates that run in CI on every push: `pytest -q tests` (pipeline rules and the back-test on synthetic data), `npm run eval:ask` (27-question evaluation set for the Ask box, 80% pass rate required, currently 100%), `npm run typecheck` and `npm run build`. The daily refresh additionally runs the 14 data-quality checks and the fair-price back-test on the real data.
 
 Pipeline modes: `smoke` (last 14 days), `daily` (re-pull the last 10 days), `backfill` (everything since 2026-01-01, roughly two hours), `rebuild` (no download, recompute from the stored partitions).
 
@@ -67,7 +67,7 @@ Optional environment variables for the market note and the Ask box: `GROQ_API_KE
 
 ## Method and caveats
 
-Full details are in `docs/methodology.md` and `docs/data_dictionary.md`. The main caveats: the data is registered transactions, not listings; off-plan sales include pre-registrations at launch prices; the public Ejari feed has no bedroom counts, so rent benchmarks use size bands; medians depend on the mix of what sold, so always read them together with the sample size shown. The analytics are indicative and are not a valuation or legal advice. For rent increases the official RERA calculator is the binding reference.
+Full details are in `docs/methodology.md` and `docs/data_dictionary.md`. The main caveats: the data is registered transactions, not listings; residential medians cover flats and villas only (land plots share the "Residential" label in the feed but are excluded from every price benchmark); off-plan sales include pre-registrations at launch prices; the public Ejari feed has no bedroom counts, so rent benchmarks use size bands; medians depend on the mix of what sold, so always read them together with the sample size shown. The analytics are indicative and are not a valuation or legal advice. For rent increases the official RERA calculator is the binding reference.
 
 ## Data notes worth knowing
 

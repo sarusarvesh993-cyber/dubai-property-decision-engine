@@ -201,8 +201,18 @@ function pick<T extends object>(o: T, keys: Array<keyof T>): Partial<T> {
   return out;
 }
 
+const SUGGEST_STOPWORDS = new Set([
+  "which", "what", "where", "when", "does", "down", "town", "city", "area", "areas", "community", "communities", "market", "price", "prices",
+  "rent", "rents", "rental", "flat", "flats", "apartment", "apartments", "villa", "villas", "office", "studio", "bedroom", "bedrooms", "sqft",
+  "heating", "cooling", "best", "worst", "cheapest", "most", "expensive", "yield", "yields", "about", "with", "from", "this", "that", "week",
+  "month", "year", "dubai", "first", "second", "third", "fourth", "fifth", "north", "south", "east", "west", "phase", "park", "gardens",
+  "residence", "hills", "lake", "lakes", "tower", "towers", "village", "island", "islands", "beach", "creek", "harbour", "bay", "marina",
+  "good", "fair", "landlord", "tenant", "increase", "compare", "versus", "sale", "sales", "sold", "buy", "buying", "ready", "plan", "trend", "trends",
+]);
+
 function suggestions(question: string): string[] {
-  const tokens = question.toLowerCase().split(/[^a-z0-9]+/).filter((t) => t.length >= 4);
+  const tokens = question.toLowerCase().split(/[^a-z0-9]+/).filter((t) => t.length >= 4 && !SUGGEST_STOPWORDS.has(t));
+  if (tokens.length === 0) return [];
   const scored = DATASET.areas.areas.map((a) => {
     const name = a.area.toLowerCase();
     const s = tokens.reduce((acc, t) => acc + (name.includes(t) ? 1 : 0), 0);
@@ -247,16 +257,20 @@ export function retrieve(p: Parsed): Facts {
   };
   const wantMarket = p.intents.some((i) => ["overview", "rank", "trend", "yield", "anomaly"].includes(i)) || p.areas.length === 0;
   if (wantMarket) {
-    const withChange = rows.filter((a) => a.ppsqft_change_12w !== null && a.n_bench_12w >= s.params.min_cell_n);
-    const yieldRows = rows.filter((a) => a.gross_yield_est !== null && (a.n_rent_bench_12w ?? 0) >= 30);
+    // Rankings use stricter sample sizes than the community table: 12-week medians move with the mix of what sold,
+    // so a community needs 30+ eligible sales in both windows to be ranked, and a yield needs 30+ sales and 30+ rent
+    // contracts and must fall in a plausible 2% to 12% range (outside that it is almost always a mix effect).
+    const RANK_MIN = 30;
+    const withChange = rows.filter((a) => a.ppsqft_change_12w !== null && a.n_bench_12w >= RANK_MIN && (a.n_bench_prev_12w ?? 0) >= RANK_MIN);
+    const yieldRows = rows.filter((a) => a.gross_yield_est !== null && (a.n_rent_bench_12w ?? 0) >= RANK_MIN && a.n_bench_12w >= RANK_MIN && (a.gross_yield_est as number) >= 0.02 && (a.gross_yield_est as number) <= 0.12);
     facts.market = {
       last_4_full_weeks: s.kpi_last4w,
       previous_4_weeks: s.kpi_prev4w,
       rents_last_4_weeks: s.rent_kpi_last4w,
       busiest_communities_12w: [...rows].sort((a, b) => b.sales_12w - a.sales_12w).slice(0, 8).map((a) => pick(a, ["area", "sales_12w", "median_ppsqft_12w", "offplan_share_12w"])),
-      heating_12w: [...withChange].sort((a, b) => (b.ppsqft_change_12w ?? 0) - (a.ppsqft_change_12w ?? 0)).slice(0, 6).map((a) => pick(a, ["area", "ppsqft_change_12w", "median_ppsqft_12w", "n_bench_12w"])),
-      cooling_12w: [...withChange].sort((a, b) => (a.ppsqft_change_12w ?? 0) - (b.ppsqft_change_12w ?? 0)).slice(0, 6).map((a) => pick(a, ["area", "ppsqft_change_12w", "median_ppsqft_12w", "n_bench_12w"])),
-      highest_gross_yield_estimates: [...yieldRows].sort((a, b) => (b.gross_yield_est ?? 0) - (a.gross_yield_est ?? 0)).slice(0, 6).map((a) => pick(a, ["area", "gross_yield_est", "median_rent_12w", "median_ppsqft_12w", "n_rent_bench_12w"])),
+      heating_12w: [...withChange].sort((a, b) => (b.ppsqft_change_12w ?? 0) - (a.ppsqft_change_12w ?? 0)).slice(0, 6).map((a) => pick(a, ["area", "ppsqft_change_12w", "median_ppsqft_12w", "n_bench_12w", "offplan_share_12w"])),
+      cooling_12w: [...withChange].sort((a, b) => (a.ppsqft_change_12w ?? 0) - (b.ppsqft_change_12w ?? 0)).slice(0, 6).map((a) => pick(a, ["area", "ppsqft_change_12w", "median_ppsqft_12w", "n_bench_12w", "offplan_share_12w"])),
+      highest_gross_yield_estimates: [...yieldRows].sort((a, b) => (b.gross_yield_est ?? 0) - (a.gross_yield_est ?? 0)).slice(0, 6).map((a) => pick(a, ["area", "gross_yield_est", "median_rent_12w", "median_ppsqft_12w", "n_rent_bench_12w", "n_bench_12w"])),
       cheapest_by_median_ppsqft: rows.filter((a) => a.n_bench_12w >= 30).sort((a, b) => (a.median_ppsqft_12w ?? 0) - (b.median_ppsqft_12w ?? 0)).slice(0, 6).map((a) => pick(a, ["area", "median_ppsqft_12w", "median_price_12w", "n_bench_12w"])),
       most_expensive_by_median_ppsqft: rows.filter((a) => a.n_bench_12w >= 30).sort((a, b) => (b.median_ppsqft_12w ?? 0) - (a.median_ppsqft_12w ?? 0)).slice(0, 6).map((a) => pick(a, ["area", "median_ppsqft_12w", "median_price_12w", "n_bench_12w"])),
     };
@@ -318,7 +332,8 @@ export function retrieve(p: Parsed): Facts {
     facts.areas.push(af);
   }
   if (p.areas.length === 0 && !p.intents.includes("overview")) {
-    const sug = suggestions(p.question);
+    const marketWide = p.intents.some((i) => ["rank", "trend", "yield", "overview", "anomaly"].includes(i));
+    const sug = marketWide ? [] : suggestions(p.question);
     if (sug.length) facts.suggestions = sug;
   }
   // keep unused helpers referenced for tree-shaking clarity
@@ -423,12 +438,18 @@ export function composeAnswer(p: Parsed, f: Facts): string {
       else out.push(list("Busiest communities by registered sales in the last 12 weeks", m.busiest_communities_12w, (r) => `${r.area} ${int(r.sales_12w as number)} sales at a median ${int(r.median_ppsqft_12w as number)}/sqft`));
     }
     if (p.intents.includes("trend") && p.areas.length === 0) {
-      const h = list("Heating (12-week change in median AED/sqft)", m.heating_12w, (r) => `${r.area} ${pct(r.ppsqft_change_12w as number, 1, true)}`);
-      const c = list("Cooling", m.cooling_12w, (r) => `${r.area} ${pct(r.ppsqft_change_12w as number, 1, true)}`);
-      out.push(h && c ? h + " " + c : "Heating and cooling signals need 24 weeks of history; they appear automatically once the backfill has loaded.");
+      const fmtRow = (r: Record<string, unknown>) => `${r.area} ${pct(r.ppsqft_change_12w as number, 1, true)} (${int(r.n_bench_12w as number)} sales, off-plan ${pct(r.offplan_share_12w as number, 0)})`;
+      const h = list("Heating, 12-week change in median AED/sqft versus the previous 12 weeks, communities with 30+ eligible sales in both windows", m.heating_12w, fmtRow);
+      const c = list("Cooling", m.cooling_12w, fmtRow);
+      const coolingFirst = /\b(cooling|falling|slowing|softening|dropping|down)\b/.test(p.question.toLowerCase()) && !/\b(heating|rising|hot|hottest|growing)\b/.test(p.question.toLowerCase());
+      if (h && c) {
+        out.push((coolingFirst ? c + " " + h : h + " " + c) + " A 12-week median moves with the mix of what sold, so read each change together with its off-plan share; the Communities page lists every community with its sample size.");
+      } else {
+        out.push("Heating and cooling signals need 24 weeks of history; they appear automatically once the backfill has loaded.");
+      }
     }
     if (p.intents.includes("yield") && p.areas.length === 0) {
-      out.push(list("Highest gross-yield estimates (communities with 30+ rent contracts)", m.highest_gross_yield_estimates, (r) => `${r.area} ${pct(r.gross_yield_est as number)} (median rent ${aed(r.median_rent_12w as number)})`));
+      out.push(list("Highest gross-yield estimates (communities with 30+ eligible sales and 30+ rent contracts in the last 12 weeks; median rent per sqft divided by median price per sqft, not net of service charges or vacancy)", m.highest_gross_yield_estimates, (r) => `${r.area} ${pct(r.gross_yield_est as number)} (median rent ${aed(r.median_rent_12w as number)}, ${int(r.median_ppsqft_12w as number)} AED/sqft)`));
     }
   }
   if (f.anomalies) {

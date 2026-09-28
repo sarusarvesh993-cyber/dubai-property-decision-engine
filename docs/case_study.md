@@ -49,7 +49,7 @@ then 5%, 10%, 15% and 20% for gaps of 11 to 20%, 21 to 30%, 31 to 40% and over 4
 **Market pulse and anomalies.** Weekly series, 12-week momentum with minimum sample sizes, gross-yield estimates where both price
 and rent benchmarks exist in the same window, and a list of registered sales more than 35% away from their comparable median.
 
-**Quality gates.** Thirteen data-quality checks run on every refresh (freshness, duplicates, completeness, eligibility rates,
+**Quality gates.** Fourteen data-quality checks run on every refresh (freshness, duplicates, completeness, eligibility rates,
 outlier rate, coverage, volume sanity) and are published as a report. Twenty unit tests cover the deterministic parts.
 
 **Back-test.** Every refresh re-prices the most recent four weeks of registered residential sales using only earlier data, with the
@@ -61,7 +61,7 @@ published p25 to p75 and p10 to p90 bands, and the same errors for a naive cityw
 ranks them, cools down rate-limited models and blacklists retired ones, and falls back to a rules-based writer. The model never
 computes anything: the Ask box parses the question, retrieves the relevant benchmark cells, writes a deterministic answer, and only
 then lets a model rewrite the prose. A number guard rejects any reply that contains a figure not present in the facts. The facts are
-shown under every answer. A 24-question evaluation set runs in CI without any model call.
+shown under every answer. A 27-question evaluation set runs in CI without any model call.
 
 **Delivery.** Static Next.js site on Vercel, rebuilt automatically on every data commit; the only server function is the question
 endpoint. The JSON artefacts double as an open API (for example `/data/price_bands.json`). Nothing in the stack costs money.
@@ -78,8 +78,8 @@ figures and the back-test table on the methodology page.
 * Worked example: a 750 sqft one-bedroom in Business Bay asked at AED 1.5m is 2,000 AED/sqft, percentile 76 of 41 comparable
   registered sales (median 1,640), fair range for the size AED 951,750 to 1,461,000. A 900 sqft Dubai Marina flat rented at AED
   90,000 sits within 10% of the AED 85,000 median (75 contracts), so no increase is permitted at renewal.
-* Copilot evaluation: 24 of 24 questions parsed and answered correctly (threshold 80%).
-* Operations: daily refresh at 06:00 Gulf time, 13 of 13 quality checks passing, site redeploys without manual steps.
+* Copilot evaluation: 27 of 27 questions parsed and answered correctly (threshold 80%).
+* Operations: daily refresh at 06:00 Gulf time, 14 of 14 quality checks passing, site redeploys without manual steps.
 
 ## 5. What was hard, and what I would tell a stakeholder
 
@@ -87,6 +87,10 @@ figures and the back-test table on the methodology page.
   about repricing. The site always shows sample sizes and separates off-plan from ready; a reader should still ask "what sold".
 * Registered prices lag agreements by weeks, and pre-registrations of off-plan units reflect developer price lists.
 * The rental feed's missing bedrooms mean a two-bedroom and a large one-bedroom of the same size share a benchmark.
+* Land plots carry the "Residential" usage label. With the full history loaded they produced gross yields of 20% in two
+  communities, because apartment rents were being divided by plot prices. The fix was a residential-unit flag (flats and
+  villas that are units or buildings) used by every residential median, yield and anomaly, plus a quality check that fails
+  if a land plot ever enters the pricing universe again.
 * Free-tier language models change monthly. Designing the router to discover and rank models at run time, with a rules
   fallback and a number guard, removed that dependency from the product's reliability.
 

@@ -8,7 +8,7 @@ Two-minute version, then the questions that usually follow. Keep the numbers cur
 is this asking price fair, can my landlord raise my rent and by how much, which communities are heating up or cooling down, and
 which registered sales look mispriced. The pipeline is Python and DuckDB on GitHub Actions, the site is Next.js on Vercel, and
 the whole thing runs on free services. What I am proudest of is the discipline around the numbers: every figure traces to one SQL
-model, thirteen data-quality checks run on every refresh, and the fair-price engine is back-tested out of sample every day, with
+model, fourteen data-quality checks run on every refresh, and the fair-price engine is back-tested out of sample every day, with
 the error published on the site rather than claimed once. There is also a question box that uses a language model, but the model
 is only allowed to rewrite an answer the rules already produced, and a guard rejects any reply that introduces a number that is not
 in the facts."
@@ -35,7 +35,7 @@ had to be built on size bands.
 **Why not just use an LLM to answer questions from the raw data?**
 Because a wrong number in a property decision is expensive and unverifiable. The Ask box does retrieval first: parse the question,
 fetch the exact benchmark cells, write a deterministic answer. The model only rewrites the prose, every number in its reply must
-already exist in the facts (a guard checks), and the facts are shown under the answer. A 24-question evaluation set runs in CI.
+already exist in the facts (a guard checks), and the facts are shown under the answer. A 27-question evaluation set runs in CI.
 
 **Free models change all the time. How does that not break the product?**
 The router discovers the available models at run time from each provider, ranks them, cools down rate-limited ones for five
@@ -48,7 +48,7 @@ developer price lists, and the tool is indicative rather than a valuation. For r
 this prepares the conversation. Then: the marts are parquet and can feed Power BI directly, and the JSON files are an open API.
 
 **How is data quality handled?**
-Thirteen checks on every run: freshness, duplicates, completeness of key fields, eligibility rates, outlier rate, crosswalk coverage,
+Fourteen checks on every run: freshness, duplicates, completeness of key fields, eligibility rates, outlier rate, crosswalk coverage,
 and volume sanity against the recent history. Results are written to a report and the job summary, so a silent break shows up the
 same morning. Unit tests cover the deterministic rules, including the back-test on synthetic data.
 
@@ -61,4 +61,4 @@ a full cycle; per-community pages; a Power BI model for teams that live there.
 * Sales, value and mortgage count for the last four weeks; median residential AED/sqft; off-plan share.
 * Rent contracts in the last four weeks; renewal share; median residential rent.
 * Back-test: coverage, median error overall and at project level, band calibration, baseline error.
-* Crosswalk: 43% to 76% rent-benchmark coverage. Tests: 20 pytest, 24 eval questions, 13 quality checks.
+* Crosswalk: 43% to 76% rent-benchmark coverage. Tests: 20 pytest, 27 eval questions, 14 quality checks.

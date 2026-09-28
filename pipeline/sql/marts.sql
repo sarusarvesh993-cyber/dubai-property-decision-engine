@@ -1,5 +1,6 @@
 -- DuckDB analytical models. Placeholders {CLEAN}, {MIN_N}, {SALES_MONTHS}, {RENT_MONTHS} are filled by build_marts.py.
 -- Grain and filters are explicit in every model so numbers are reproducible and explainable.
+-- "Residential" medians use is_res_unit (flats and villas, no land plots); price bands keep every built sub-type.
 
 CREATE OR REPLACE VIEW tx AS SELECT * FROM read_parquet('{CLEAN}/transactions.parquet');
 CREATE OR REPLACE VIEW rt AS SELECT * FROM read_parquet('{CLEAN}/rents.parquet');
@@ -14,9 +15,9 @@ SELECT week,
        SUM(price_aed) FILTER (WHERE is_sale = 1)                             AS sales_value_aed,
        COUNT(*) FILTER (WHERE is_mortgage = 1)                               AS mortgages,
        AVG(is_offplan) FILTER (WHERE is_sale = 1)                            AS offplan_share,
-       COUNT(*) FILTER (WHERE benchmark_eligible = 1 AND usage = 'Residential') AS n_res_bench,
-       MEDIAN(price_per_sqft) FILTER (WHERE benchmark_eligible = 1 AND usage = 'Residential') AS median_ppsqft_res,
-       MEDIAN(price_aed) FILTER (WHERE benchmark_eligible = 1 AND usage = 'Residential')      AS median_price_res
+       COUNT(*) FILTER (WHERE benchmark_eligible = 1 AND is_res_unit = 1) AS n_res_bench,
+       MEDIAN(price_per_sqft) FILTER (WHERE benchmark_eligible = 1 AND is_res_unit = 1) AS median_ppsqft_res,
+       MEDIAN(price_aed) FILTER (WHERE benchmark_eligible = 1 AND is_res_unit = 1)      AS median_price_res
 FROM tx GROUP BY week ORDER BY week;
 
 CREATE OR REPLACE TABLE mart_weekly_rents AS
@@ -33,10 +34,10 @@ CREATE OR REPLACE TABLE mart_area_month AS
 SELECT area, month, is_offplan,
        COUNT(*) FILTER (WHERE is_sale = 1)                                   AS sales,
        SUM(price_aed) FILTER (WHERE is_sale = 1)                             AS sales_value_aed,
-       COUNT(*) FILTER (WHERE benchmark_eligible = 1 AND usage = 'Residential') AS n_bench,
-       MEDIAN(price_per_sqft) FILTER (WHERE benchmark_eligible = 1 AND usage = 'Residential') AS median_ppsqft,
-       QUANTILE_CONT(price_per_sqft, 0.25) FILTER (WHERE benchmark_eligible = 1 AND usage = 'Residential') AS p25_ppsqft,
-       QUANTILE_CONT(price_per_sqft, 0.75) FILTER (WHERE benchmark_eligible = 1 AND usage = 'Residential') AS p75_ppsqft
+       COUNT(*) FILTER (WHERE benchmark_eligible = 1 AND is_res_unit = 1) AS n_bench,
+       MEDIAN(price_per_sqft) FILTER (WHERE benchmark_eligible = 1 AND is_res_unit = 1) AS median_ppsqft,
+       QUANTILE_CONT(price_per_sqft, 0.25) FILTER (WHERE benchmark_eligible = 1 AND is_res_unit = 1) AS p25_ppsqft,
+       QUANTILE_CONT(price_per_sqft, 0.75) FILTER (WHERE benchmark_eligible = 1 AND is_res_unit = 1) AS p75_ppsqft
 FROM tx GROUP BY area, month, is_offplan;
 
 -- ---------------------------------------------------------------- area summary: last 12 weeks vs previous 12 weeks
@@ -47,15 +48,15 @@ WITH cur AS (
          SUM(price_aed) FILTER (WHERE is_sale = 1) AS value_12w,
          AVG(is_offplan) FILTER (WHERE is_sale = 1) AS offplan_share_12w,
          COUNT(*) FILTER (WHERE is_mortgage = 1) AS mortgages_12w,
-         COUNT(*) FILTER (WHERE benchmark_eligible = 1 AND usage = 'Residential') AS n_bench_12w,
-         MEDIAN(price_per_sqft) FILTER (WHERE benchmark_eligible = 1 AND usage = 'Residential') AS median_ppsqft_12w,
-         MEDIAN(price_aed) FILTER (WHERE benchmark_eligible = 1 AND usage = 'Residential') AS median_price_12w
+         COUNT(*) FILTER (WHERE benchmark_eligible = 1 AND is_res_unit = 1) AS n_bench_12w,
+         MEDIAN(price_per_sqft) FILTER (WHERE benchmark_eligible = 1 AND is_res_unit = 1) AS median_ppsqft_12w,
+         MEDIAN(price_aed) FILTER (WHERE benchmark_eligible = 1 AND is_res_unit = 1) AS median_price_12w
   FROM tx WHERE date > max_tx_date() - INTERVAL 84 DAY GROUP BY area),
 prev AS (
   SELECT area,
          COUNT(*) FILTER (WHERE is_sale = 1) AS sales_prev_12w,
-         COUNT(*) FILTER (WHERE benchmark_eligible = 1 AND usage = 'Residential') AS n_bench_prev_12w,
-         MEDIAN(price_per_sqft) FILTER (WHERE benchmark_eligible = 1 AND usage = 'Residential') AS median_ppsqft_prev_12w
+         COUNT(*) FILTER (WHERE benchmark_eligible = 1 AND is_res_unit = 1) AS n_bench_prev_12w,
+         MEDIAN(price_per_sqft) FILTER (WHERE benchmark_eligible = 1 AND is_res_unit = 1) AS median_ppsqft_prev_12w
   FROM tx WHERE date <= max_tx_date() - INTERVAL 84 DAY AND date > max_tx_date() - INTERVAL 168 DAY GROUP BY area),
 rents AS (
   SELECT area,
@@ -137,7 +138,7 @@ WITH scored AS (
   LEFT JOIN mart_price_bands b1 ON b1.level = 'L1' AND b1.area = t.area AND b1.sub_type = t.sub_type
         AND b1.rooms = t.rooms AND b1.is_offplan = t.is_offplan
   LEFT JOIN mart_price_bands b2 ON b2.level = 'L2' AND b2.area = t.area AND b2.sub_type = t.sub_type AND b2.is_offplan = t.is_offplan
-  WHERE t.benchmark_eligible = 1 AND t.usage = 'Residential' AND t.date > max_tx_date() - INTERVAL 60 DAY)
+  WHERE t.benchmark_eligible = 1 AND t.is_res_unit = 1 AND t.date > max_tx_date() - INTERVAL 60 DAY)
 SELECT *, price_per_sqft / cell_median_ppsqft - 1 AS deviation_pct,
        CASE WHEN price_per_sqft > cell_median_ppsqft THEN 'above' ELSE 'below' END AS direction
 FROM scored

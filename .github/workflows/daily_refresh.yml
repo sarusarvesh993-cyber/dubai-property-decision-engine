@@ -23,7 +23,11 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 330
     steps:
+      # Queued runs must start from the branch head at start time, not from the commit that queued them,
+      # otherwise a run queued behind a long backfill would rebuild from stale partitions and fail to push.
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
 
       - uses: actions/setup-python@v5
         with:
@@ -51,7 +55,11 @@ jobs:
             echo "No data changes."
           else
             git commit -m "data: refresh ${{ github.event.inputs.mode || 'daily' }} $(date -u +'%Y-%m-%d %H:%M UTC')"
-            git pull --rebase --autostash origin ${{ github.ref_name }}
+            if ! git pull --rebase --autostash origin ${{ github.ref_name }}; then
+              git rebase --abort || true
+              echo "::error::Another data commit landed during this run and the rebase conflicted. Nothing was pushed; the next scheduled run refreshes everything from the latest data."
+              exit 1
+            fi
             git push
           fi
 

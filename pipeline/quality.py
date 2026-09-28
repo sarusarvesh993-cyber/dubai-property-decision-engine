@@ -26,8 +26,12 @@ def run() -> dict:
     lag_r = max(0, (pd.Timestamp.utcnow().tz_localize(None) - r["registration_date"].max()).days)
     add("Transactions fresh within 3 days", lag_t <= 3, f"latest registration {lag_t} day(s) old")
     add("Rents fresh within 3 days", lag_r <= 3, f"latest registration {lag_r} day(s) old")
-    dup_t = t.duplicated(subset=["transaction_id", "price_aed", "size_sqm", "procedure"]).mean()
-    add("Transaction duplicates < 0.5%", dup_t < 0.005, f"{dup_t:.2%} duplicate rows on id+price+size+procedure")
+    single = t[t["is_bulk"] == 0]
+    dup_t = single.duplicated(subset=["transaction_id", "price_aed", "size_sqm", "procedure"]).mean() if len(single) else 0.0
+    add("Transaction duplicates < 0.5% (outside multi-unit deals)", dup_t < 0.005,
+        f"{dup_t:.2%} duplicate rows on id+price+size+procedure among single-unit transactions")
+    land = t.loc[(t["is_sale"] == 1) & (t["benchmark_eligible"] == 1), "is_land"].mean() if "is_land" in t.columns else 0.0
+    add("No land plots in the pricing universe", land == 0, f"{land:.2%} of eligible sales are land plots")
     miss_price = t.loc[t["is_sale"] == 1, "price_aed"].isna().mean()
     add("Sale price completeness >= 99%", miss_price < 0.01, f"{miss_price:.2%} sales without price")
     miss_size = t.loc[t["is_sale"] == 1, "size_sqm"].isna().mean()

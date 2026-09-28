@@ -30,13 +30,13 @@ def _synthetic(n_days: int = 200, seed: int = 7) -> pd.DataFrame:
         ppsf = base * float(np.exp(rng.normal(0, 0.05)))
         size = 800.0
         rows.append({"transaction_id": str(i), "date": day, "area": area, "project": project, "sub_type": "Flat", "rooms": rooms,
-                     "is_offplan": 0, "usage": "Residential", "size_sqft": size, "price_aed": ppsf * size, "price_per_sqft": ppsf,
+                     "is_offplan": 0, "usage": "Residential", "is_res_unit": 1, "size_sqft": size, "price_aed": ppsf * size, "price_per_sqft": ppsf,
                      "benchmark_eligible": 1})
     # a community that only appears in the test window: no comparable cell, so coverage < 100%
     last = start + pd.Timedelta(days=n_days - 1)
     for j in range(5):
         rows.append({"transaction_id": f"g{j}", "date": last, "area": "Gamma", "project": None, "sub_type": "Flat", "rooms": "1 B/R",
-                     "is_offplan": 0, "usage": "Residential", "size_sqft": 800.0, "price_aed": 800 * 1200.0, "price_per_sqft": 1200.0,
+                     "is_offplan": 0, "usage": "Residential", "is_res_unit": 1, "size_sqft": 800.0, "price_aed": 800 * 1200.0, "price_per_sqft": 1200.0,
                      "benchmark_eligible": 1})
     return pd.DataFrame(rows)
 
@@ -63,7 +63,7 @@ def test_backtest_short_history_uses_seven_days():
 
 
 def test_backtest_handles_empty_input():
-    empty = pd.DataFrame(columns=["transaction_id", "date", "area", "project", "sub_type", "rooms", "is_offplan", "usage",
+    empty = pd.DataFrame(columns=["transaction_id", "date", "area", "project", "sub_type", "rooms", "is_offplan", "usage", "is_res_unit",
                                   "size_sqft", "price_aed", "price_per_sqft", "benchmark_eligible"])
     empty["date"] = pd.to_datetime(empty["date"])
     assert backtest.compute(empty)["status"] == "no data"

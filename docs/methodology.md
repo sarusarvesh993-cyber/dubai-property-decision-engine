@@ -22,10 +22,11 @@ Gateway facts verified on 2026-09-28: keyless; every declared `P_*` parameter mu
 | Sale flag | procedure is one of Sale, Sell - Pre registration, Delayed Sell, Sale On Payment Plan. Mortgages, grants, development registrations and lease-to-own are **not** sales. |
 | Size | `ACTUAL_AREA` (sqm), fallback `PROCEDURE_AREA`; sqft = sqm x 10.7639. |
 | Rooms | normalised to Studio / 1-4 B/R / 5+ B/R / NA. |
-| Size bands (sqm) | <40, 40-60, 60-85, 85-120, 120-170, 170-250, 250-400, 400+ - used for rents because `ROOMS` is ~96 % null in the Ejari feed. |
-| Plausibility | sales: 50k <= price <= 500m AED and 15 <= sqm <= 20,000; rents: residential, 8k <= annual <= 5m AED, 15 <= sqm <= 5,000, 6-36-month term. |
+| Size bands (sqm) | under 40, 40 to 60, 60 to 85, 85 to 120, 120 to 170, 170 to 250, 250 to 400, 400 and above. Used for rents because `ROOMS` is about 96% null in the Ejari feed. |
+| Residential unit | `is_res_unit`: sub-type Flat or Villa and property type Unit or Building. Land plots carry the "Residential" usage label in the feed but their AED/sqft is not comparable with built units, so `is_land` rows are excluded from the pricing universe and from every residential median, yield and anomaly. |
+| Plausibility | sales: built property (not land), 50k to 500m AED and 15 to 20,000 sqm; rents: residential, 8k to 5m AED a year, 15 to 5,000 sqm, 6 to 36-month term. |
 | Bulk | transactions sharing a transaction number; leases with `TOTAL_PROPERTIES > 1`. |
-| Outliers | modified z-score of log(price or rent per sqm) within community x sub-type (x off-plan for sales); \|z\| > 3.5 flagged. |
+| Outliers | modified z-score of log(price or rent per sqm) within community x sub-type (x off-plan for sales); absolute z above 3.5 flagged. |
 | Benchmark-eligible | plausible, not an outlier and not bulk. |
 
 ## 4. Community name resolution (crosswalk)
@@ -81,7 +82,7 @@ Reading the result: the median error is the typical gap between the engine's est
 The site's question box (`web/app/api/ask/route.ts`) follows the same principle: retrieval first, language model second, and never a number that was not computed by the pipeline.
 
 1. `parseQuestion` (`web/lib/ask.ts`) extracts communities (exact names plus an alias table: JVC, JLT, JVT, Downtown, Marina, JBR, Creek Harbour, Dubai Hills, and the Ejari district names from the crosswalk), property type (flat, villa, office, hotel apartment), bedrooms, size in sqft or sqm, off-plan or ready, and money amounts (a price such as "1.5m" or a rent such as "90,000"). It also assigns intents: price, rent, yield, trend, rank, anomaly, compare, profile or overview.
-2. `retrieve` collects only the cells that matter: the community summary rows, the matching price bands and rent benchmarks, and, when a price or rent and a size were given, the same fair-price or rent-check verdict the calculators produce (`web/lib/engine.ts`). Rankings use the community summary with minimum sample sizes (30 eligible sales or 30 rent contracts). Unknown communities return "did you mean" suggestions.
+2. `retrieve` collects only the cells that matter: the community summary rows, the matching price bands and rent benchmarks, and, when a price or rent and a size were given, the same fair-price or rent-check verdict the calculators produce (`web/lib/engine.ts`). Rankings use the community summary with stricter sample sizes than the community table: heating and cooling lists need 30 or more eligible sales in both 12-week windows, yield lists need 30 or more sales and 30 or more rent contracts and a gross yield between 2% and 12% (outside that range the figure is almost always a mix effect), and price lists need 30 or more sales. Unknown communities return "did you mean" suggestions, except for market-wide questions.
 3. `composeAnswer` writes a deterministic answer from those facts with the sample sizes and fallback level stated.
 4. If a free-tier key is configured, `web/lib/llm.ts` (a TypeScript port of `pipeline/llm_router.py`, with the same discovery, ordering, cool-downs and blacklists) asks the model to rewrite the rules answer in plain prose, under the instruction that every number must already appear in the facts block. If the model is unavailable, or its reply contains a number that is not in the facts, the rules answer is returned. The response states which path produced it, and the facts are shown under the answer.
 
@@ -89,7 +90,7 @@ Questions are not stored. Requests are limited to 30 per 10 minutes per client o
 
 ### 7.2 Copilot evaluation set (`web/eval/ask_eval.json`)
 
-Twenty-four questions with the expected parse (community, type, bedrooms, size, amounts, intent), the expected retrieval (fair-price or rent-check verdict present) and, where the wording does not depend on the data, required phrases in the answer. `npm run eval:ask` runs them in CI without any model call, prints one line per case and fails below an 80% pass rate. The set is meant to grow: every misread question found in the logs or in user feedback becomes a new case.
+Twenty-seven questions with the expected parse (community, type, bedrooms, size, amounts, intent), the expected retrieval (fair-price or rent-check verdict present) and, where the wording does not depend on the data, required phrases in the answer. `npm run eval:ask` runs them in CI without any model call, prints one line per case and fails below an 80% pass rate. The set is meant to grow: every misread question found in the logs or in user feedback becomes a new case.
 
 ## 8. Known limitations
 
