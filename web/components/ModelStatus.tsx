@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 
 type Status = {
   keys_on_server: Record<string, boolean>;
+  misnamed_keys?: Array<{ provider: string; found_name: string; expected_name: string }>;
   any_key: boolean;
   models_seen: Array<{ provider: string; model: string }>;
   live_test: { ok: boolean; label: string | null; ms: number; detail: string; at: string };
@@ -55,6 +56,9 @@ export default function ModelStatus() {
       {st ? (
         <p className="hint mt">
           Keys visible to the site: {keysSet.length ? keysSet.join(", ") : "none"}.{" "}
+          {st.misnamed_keys && st.misnamed_keys.length
+            ? st.misnamed_keys.map((m) => `A variable named ${m.found_name} is being used for ${m.provider}; the expected name is ${m.expected_name}, rename it when convenient.`).join(" ") + " "
+            : ""}
           {st.models_seen.length ? `Models the router sees right now: ${st.models_seen.map((m) => `${m.provider}:${m.model}`).join(", ")}. ` : ""}
           Weekly market note (written by the GitHub Actions pipeline, uses the GitHub secret): {st.market_note_source ?? "not generated"}.{" "}
           {!st.live_test.ok && st.any_key ? st.live_test.detail + " " : ""}

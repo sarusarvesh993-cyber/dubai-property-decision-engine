@@ -72,6 +72,8 @@ Two places tell you, without exposing the key:
 * Open `/ask` on the site. The status box under the question box says one of three things: "rules only" (no key visible to the site), "key set, model off" (a key is set but no model answered the test call: invalid key, free-tier rate limit or timeout) or "model on" with the provider and model that answered. The "Test the model connection now" button repeats the test; results are cached for ten minutes to protect free quotas. The same information is available as JSON at `/api/status`.
 * Open the home page. The chip next to the weekly market note says "written by groq ..." (or another provider) when the GitHub Actions pipeline used a model, and "rules-based (no LLM key configured)" when it did not. That reflects the GitHub repository secret, which is separate from the Vercel environment variable.
 
+The variable names are exact: `GROQ_API_KEY`, `GEMINI_API_KEY`, `CEREBRAS_API_KEY`, `OPENROUTER_API_KEY`. If a variable clearly refers to a provider but carries another name (for example `Groq_API_Key_Dubai`), the site still uses it and the status box says which name it found and which name is expected. A new or renamed variable only takes effect on the next deployment.
+
 Under every answer on `/ask`, the line "Answered by ..." names the writer: `provider:model` when a model wrote the sentences, or `rules (...)` with the reason when the built-in writer did. The numbers are identical in both cases; the model only changes the wording.
 
 ## Method and caveats

@@ -46,9 +46,30 @@ export function scoreModel(provider: string, id: string, ctx = 0): number {
   return s;
 }
 
+// Names that clearly refer to a provider even when the variable was not called GROQ_API_KEY etc.
+const NAME_HINTS: Record<string, RegExp> = {
+  groq: /GROQ/,
+  gemini: /GEMINI|GOOGLE_?(AI|API|GENAI|GENERATIVE)/,
+  cerebras: /CEREBRAS/,
+  openrouter: /OPEN_?ROUTER/,
+};
+
+/** A variable that looks like this provider's key but carries a different name (for example Groq_API_Key_Dubai). */
+export function misnamedKey(provider: string): { name: string; value: string } | null {
+  const expected = PROVIDERS[provider].keyEnv;
+  const re = NAME_HINTS[provider];
+  for (const [name, value] of Object.entries(process.env)) {
+    if (name === expected || !value || value.trim().length < 20) continue;
+    if (re.test(name.toUpperCase().replace(/[^A-Z]/g, "_"))) return { name, value: value.trim() };
+  }
+  return null;
+}
+
 function key(provider: string): string | undefined {
   const v = process.env[PROVIDERS[provider].keyEnv];
-  return v && v.trim() ? v.trim() : undefined;
+  if (v && v.trim()) return v.trim();
+  // Accept a misnamed variable so a small naming slip does not silently disable the model; /api/status reports it.
+  return misnamedKey(provider)?.value;
 }
 
 function headers(provider: string, withAuth = true): Record<string, string> {
@@ -115,6 +136,17 @@ export function anyKeyConfigured(): boolean {
 export function configuredKeys(): Record<string, boolean> {
   const out: Record<string, boolean> = {};
   for (const p of ORDER) out[PROVIDERS[p].keyEnv] = Boolean(key(p));
+  return out;
+}
+
+/** Keys found under a non-standard variable name, so the status page can say what was used and what the expected name is. */
+export function misnamedKeys(): Array<{ provider: string; found_name: string; expected_name: string }> {
+  const out: Array<{ provider: string; found_name: string; expected_name: string }> = [];
+  for (const p of ORDER) {
+    if (process.env[PROVIDERS[p].keyEnv]?.trim()) continue;
+    const m = misnamedKey(p);
+    if (m) out.push({ provider: p, found_name: m.name, expected_name: PROVIDERS[p].keyEnv });
+  }
   return out;
 }
 

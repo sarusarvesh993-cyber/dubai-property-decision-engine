@@ -1,4 +1,4 @@
-import { anyKeyConfigured, candidates, chat, configuredKeys } from "@/lib/llm";
+import { anyKeyConfigured, candidates, chat, configuredKeys, misnamedKeys } from "@/lib/llm";
 import summary from "@/public/data/summary.json";
 import marketNote from "@/public/data/market_note.json";
 
@@ -46,6 +46,7 @@ export async function GET(req: Request) {
     {
       checked_at: new Date().toISOString(),
       keys_on_server: configuredKeys(),
+      misnamed_keys: misnamedKeys(),
       any_key: anyKeyConfigured(),
       models_seen: models,
       live_test: cached,
@@ -53,6 +54,7 @@ export async function GET(req: Request) {
       data_as_of: (summary as { as_of: string }).as_of,
       how_to_read: [
         "keys_on_server lists the environment variable names the site can see; a value of false means the key is not set in Vercel for this deployment.",
+        "misnamed_keys lists variables that look like a provider key but carry another name (for example Groq_API_Key_Dubai); they are used, but the expected name is shown so the setting can be tidied.",
         "live_test.ok true means a model answered a one-word test call; the label is provider:model.",
         "market_note_source is the writer of the weekly note produced by the GitHub Actions pipeline; it reflects the GitHub secret, not the Vercel variable.",
       ],
