@@ -26,6 +26,8 @@ Gateway facts verified on 2026-09-28: keyless; every declared `P_*` parameter mu
 | Residential unit | `is_res_unit`: sub-type Flat or Villa and property type Unit or Building. Land plots carry the "Residential" usage label in the feed but their AED/sqft is not comparable with built units, so `is_land` rows are excluded from the pricing universe and from every residential median, yield and anomaly. |
 | Plausibility | sales: built property (not land), 50k to 500m AED and 15 to 20,000 sqm; rents: residential, 8k to 5m AED a year, 15 to 5,000 sqm, 6 to 36-month term. |
 | Bulk | transactions sharing a transaction number; leases with `TOTAL_PROPERTIES > 1`. |
+| Partial-share transfer | `is_partial`: `PROCEDURE_AREA` below 98% of `ACTUAL_AREA`. The price covers only the share transferred (typically 50%), so AED/sqft on the full unit is understated by the same factor. 1.25% of sales; counted in volumes, excluded from every benchmark. Found because 76 half-share studios registered on one day pulled a community's ready-studio median down to 441 AED/sqft against a true 1,142. |
+| Portfolio block | `is_portfolio`: ten or more ready units in one community registered on the same day at an identical AED/sqft (rounded to the dirham), i.e. a building or portfolio sold as one lot and registered unit by unit. 0.78% of sales; the largest block was 218 flats in Majan on 10 March 2026 at exactly 851 AED/sqft. Counted in volumes, excluded from benchmarks. Off-plan launches also show uniform prices but are genuine sales to many buyers, so the rule applies to ready units only. |
 | Outliers | modified z-score of log(price or rent per sqm) within community x sub-type (x off-plan for sales); absolute z above 3.5 flagged. |
 | Benchmark-eligible | plausible, not an outlier and not bulk. |
 
@@ -59,7 +61,7 @@ Cells with fewer than `MIN_CELL_N = 8` records are never published.
 * **Fair price verdict** by percentile of asking AED/sqft within the chosen cell: below 15 well below, 15 to 35 below, 35 to 65 in line, 65 to 85 above, over 85 well above. Confidence: high (project or bedroom-level cell with at least 20 sales), medium, low (community-level cell or fewer than 12 sales).
 * **Rent increase** (Decree 43/2013): gap = 1 minus current rent divided by market median. 0% if the gap is up to 10%; 5% if 11 to 20%; 10% if 21 to 30%; 15% if 31 to 40%; 20% if over 40%. The official RERA index is authoritative; this tool is for preparation.
 * **Heat signal**: 12-week change in median AED/sqft: cooling below -5%, softening -5% to -1.5%, stable within 1.5%, warming +1.5% to +5%, heating above +5% (needs at least 8 eligible sales in both windows).
-* **Gross yield estimate** = median rent per sqft divided by median price per sqft in the same community and window (not net of service charges or vacancy).
+* **Gross yield estimate** is computed like for like: the community's dominant sale type (flats or villas) and Ejari contracts of the same type, median rent per sqft divided by median price per sqft over the same 12 weeks (not net of service charges or vacancy). `areas.json` carries `yield_sub_type`, `n_yield_sales` and `n_yield_rents` so a reader can see what the estimate rests on. Mixing types produced yields no investor would recognise (villa rents over flat prices, or the reverse). Rankings need 30 sales and 30 rent contracts of that type and a result between 2% and 12%.
 
 ### 6.1 Back-test of the fair-price engine (`pipeline/backtest.py`)
 

@@ -1,4 +1,5 @@
 import AskBox from "@/components/AskBox";
+import ModelStatus from "@/components/ModelStatus";
 import { getSummary } from "@/lib/data";
 import { fmtDate } from "@/lib/format";
 
@@ -18,6 +19,7 @@ export default function AskPage() {
         </div>
       </div>
       <AskBox mode="full" />
+      <ModelStatus />
       <p className="callout mt">
         How it works: the question is parsed for community, property type, bedrooms, size and amounts; the matching benchmark cells are retrieved; a
         rules-based answer is written from them and, when a free-tier model key is configured, the model rewrites it in better prose without adding numbers.

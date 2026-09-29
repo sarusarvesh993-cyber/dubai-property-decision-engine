@@ -2,7 +2,10 @@ name: Daily data refresh
 
 on:
   schedule:
-    - cron: "0 2 * * *"        # 02:00 UTC = 06:00 Gulf Standard Time, every day
+    # GitHub delays or skips schedules that fire exactly on the hour (the busiest minute), so run at an
+    # off-peak minute and keep a second attempt later in the morning; daily mode is idempotent.
+    - cron: "23 2 * * *"       # 02:23 UTC = 06:23 Gulf Standard Time
+    - cron: "23 5 * * *"       # 05:23 UTC = 09:23 Gulf Standard Time (catch-up if the first was delayed)
   workflow_dispatch:
     inputs:
       mode:

@@ -26,6 +26,10 @@ SQFT_PER_SQM = 10.7639
 BENCHMARK_MONTHS_SALES = 6           # window for price bands
 BENCHMARK_MONTHS_RENTS = 12          # window for rent benchmarks
 MIN_CELL_N = 8                       # minimum contracts/sales before publishing a benchmark cell
+RANK_MIN_N = 30                      # minimum sales (and rent contracts) before a community enters a ranking (heating, cooling, yields)
+YIELD_BOUNDS = (0.02, 0.12)          # gross-yield estimates outside this band are treated as mix artefacts and not ranked
+PARTIAL_SHARE_MAX_RATIO = 0.98       # procedure area below this share of the unit area = partial-share transfer
+PORTFOLIO_MIN_UNITS = 10             # ready units in one community, same day, identical AED/sqft = portfolio block
 
 # Every gateway command needs its FULL parameter list, even when values are empty.
 COMMAND_PARAMS = {

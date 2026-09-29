@@ -42,7 +42,7 @@ export type Summary = {
   } | null;
   weekly_sales: WeeklySales[];
   weekly_rents: WeeklyRents[];
-  params: { min_cell_n: number; sales_months: number; rent_months: number };
+  params: { min_cell_n: number; sales_months: number; rent_months: number; rank_min_n?: number; yield_bounds?: [number, number] };
 };
 
 export type AreaRow = {
@@ -64,6 +64,11 @@ export type AreaRow = {
   median_rent_12w: number | null;
   median_rent_psqft_12w: number | null;
   gross_yield_est: number | null;
+  yield_sub_type?: string | null;
+  n_yield_sales?: number | null;
+  n_yield_rents?: number | null;
+  median_ppsqft_yield?: number | null;
+  median_rent_psqft_yield?: number | null;
   signal: string;
 };
 

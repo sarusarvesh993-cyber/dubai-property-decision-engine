@@ -29,7 +29,7 @@ published bands, split by matching level and by off-plan or ready, next to a nai
 **What was the hardest data problem?**
 Community names. Sales use popular names, Ejari uses district names, and nothing in the feeds joins them. I derived a crosswalk
 from projects that appear in both feeds, on top of a verified seed list, published it for audit, and raised the share of sales with
-a rent benchmark from 43% to 76%. Second hardest: the rental feed has no bedroom count for 96% of contracts, so rent benchmarks
+a rent benchmark from 43% to 74%. Second hardest: the rental feed has no bedroom count for 96% of contracts, so rent benchmarks
 had to be built on size bands.
 
 **Why not just use an LLM to answer questions from the raw data?**
@@ -61,4 +61,19 @@ a full cycle; per-community pages; a Power BI model for teams that live there.
 * Sales, value and mortgage count for the last four weeks; median residential AED/sqft; off-plan share.
 * Rent contracts in the last four weeks; renewal share; median residential rent.
 * Back-test: coverage, median error overall and at project level, band calibration, baseline error.
-* Crosswalk: 43% to 76% rent-benchmark coverage. Tests: 20 pytest, 27 eval questions, 14 quality checks.
+* Crosswalk: 43% to 74% rent-benchmark coverage. Tests: 21 pytest, 29 eval questions, 17 quality checks. Back-test on the full history: median error 6.2% against 20.5% for a citywide median, 99.8% coverage, 8,350 sales.
+
+## Question: what did the full history reveal that the first two weeks did not?
+
+Three things, each now a rule with a test. First, land plots share the "Residential" usage label, so plot prices were sitting in
+apartment yields (20% gross yields in two communities). Second, partial-share transfers: the procedure area is a fraction of the
+unit and the price covers that fraction, which halves the apparent AED/sqft; 76 of them on one day made honest studio sales in
+International City look 195% overpriced on the anomaly monitor. Third, portfolio blocks: a whole building sold in one lot and
+registered unit by unit at a single AED/sqft (218 flats in Majan at exactly 851). The general lesson I would give a stakeholder is
+that a registration is not a market sale until you have checked what was transferred, to whom, and alongside what else.
+
+## Question: how do you keep the copilot honest?
+
+The model never sees raw data and never computes. The question is parsed, the benchmark cells are retrieved, a rules answer is
+written, and the model may only rewrite it. A guard compares every number in the reply with the facts and discards the reply if
+any number is new. The status box on the Ask page shows which model answered, and the same 29 questions run in CI without a model.

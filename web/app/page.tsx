@@ -21,7 +21,8 @@ export default function Home() {
   const k = s.kpi_last4w;
   const p = s.kpi_prev4w;
   const r = s.rent_kpi_last4w;
-  const withChange = areas.filter((a) => a.ppsqft_change_12w !== null && a.n_bench_12w >= s.params.min_cell_n);
+  const rankMin = s.params.rank_min_n ?? 30;
+  const withChange = areas.filter((a) => a.ppsqft_change_12w !== null && a.n_bench_12w >= rankMin && (a.n_bench_prev_12w ?? 0) >= rankMin);
   const heating = [...withChange].sort((a, b) => (b.ppsqft_change_12w ?? 0) - (a.ppsqft_change_12w ?? 0)).slice(0, 6);
   const cooling = [...withChange].sort((a, b) => (a.ppsqft_change_12w ?? 0) - (b.ppsqft_change_12w ?? 0)).slice(0, 6);
   const busiest = [...areas].sort((a, b) => b.sales_12w - a.sales_12w).slice(0, 8);
@@ -32,11 +33,11 @@ export default function Home() {
         <div>
           <h1>Dubai residential market pulse</h1>
           <p className="sub">
-            Registered DLD transactions to <strong>{fmtDate(s.as_of)}</strong> | Ejari contracts to {fmtDate(s.rent_as_of)} | history from{" "}
-            {fmtDate(s.coverage_from)} | refreshed daily 06:00 GST
+            Registered DLD transactions to <strong>{fmtDate(s.as_of)}</strong>, Ejari contracts to {fmtDate(s.rent_as_of)}, history from{" "}
+            {fmtDate(s.coverage_from)}, refreshed every morning (06:23 GST)
           </p>
         </div>
-        <span className="chip info">{fmtInt(s.rows.transactions)} transactions | {fmtInt(s.rows.rents)} rent contracts loaded</span>
+        <span className="chip info">{fmtInt(s.rows.transactions)} transactions, {fmtInt(s.rows.rents)} rent contracts loaded</span>
       </div>
 
       <section className="card hero mb">
@@ -93,7 +94,7 @@ export default function Home() {
 
       <section className="grid three mb">
         <div className="card">
-          <h3>Heating communities <span className="chip good">12-week median AED/sqft up</span></h3>
+          <h3>Heating communities <span className="chip good">12-week median AED/sqft up, {rankMin}+ eligible sales in both windows</span></h3>
           <ul className="list">
             {heating.length === 0 && <li className="small">Needs at least 24 weeks of history; this fills in automatically after the backfill.</li>}
             {heating.map((a) => (
@@ -105,7 +106,7 @@ export default function Home() {
           </ul>
         </div>
         <div className="card">
-          <h3>Cooling communities <span className="chip bad">12-week median AED/sqft down</span></h3>
+          <h3>Cooling communities <span className="chip bad">12-week median AED/sqft down, {rankMin}+ eligible sales in both windows</span></h3>
           <ul className="list">
             {cooling.length === 0 && <li className="small">Needs at least 24 weeks of history; this fills in automatically after the backfill.</li>}
             {cooling.map((a) => (

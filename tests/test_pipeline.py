@@ -97,3 +97,32 @@ def test_crosswalk_never_remaps_canonical_names():
     t = pd.DataFrame({"is_sale": 1, "project": ["P1", "P2", "P3"] * 20, "area": ["Business Bay"] * 60})
     r = pd.DataFrame({"project": ["P1", "P2", "P3"] * 5, "area": ["Business Bay"] * 15})
     assert crosswalk.derive(t, r).empty
+
+
+def test_partial_share_and_portfolio_flags(monkeypatch):
+    """Partial-share transfers and same-day portfolio blocks are flagged and kept out of benchmarks."""
+    import pandas as pd
+    import clean
+
+    base = {"TRANSACTION_NUMBER": None, "INSTANCE_DATE": "2026-05-20T10:00:00", "GROUP_EN": "Sales", "PROCEDURE_EN": "Sale",
+            "USAGE_EN": "Residential", "AREA_EN": "Majan", "PROJECT_EN": None, "MASTER_PROJECT_EN": None, "PROP_TYPE_EN": "Unit",
+            "PROP_SB_TYPE_EN": "Flat", "ROOMS_EN": "Studio", "IS_OFFPLAN_EN": "Ready", "IS_FREE_HOLD_EN": "Free Hold",
+            "TRANS_VALUE": 400000.0, "ACTUAL_AREA": 40.0, "PROCEDURE_AREA": 40.0, "PARCEL_ID": None, "PARKING": None,
+            "NEAREST_METRO_EN": None, "NEAREST_MALL_EN": None, "NEAREST_LANDMARK_EN": None, "_pulled_at": "2026-05-21"}
+    rows = []
+    for i in range(12):                      # a 12-unit block at an identical AED/sqft on one day
+        rows.append({**base, "TRANSACTION_NUMBER": f"B-{i}"})
+    rows.append({**base, "TRANSACTION_NUMBER": "H-1", "TRANS_VALUE": 200000.0, "PROCEDURE_AREA": 20.0})   # a 50% share
+    for i in range(5):                       # ordinary sales at varied prices
+        rows.append({**base, "TRANSACTION_NUMBER": f"S-{i}", "TRANS_VALUE": 410000.0 + 7000 * i, "INSTANCE_DATE": f"2026-05-2{i + 1}T09:00:00"})
+    df = pd.DataFrame(rows)
+    monkeypatch.setattr(clean, "_load", lambda kind: df)
+    out = clean.clean_transactions()
+    assert out["is_portfolio"].sum() == 12
+    assert out["is_partial"].sum() == 1
+    assert out.loc[out["transaction_id"] == "H-1", "is_partial"].item() == 1
+    assert out.loc[out["transaction_id"].str.startswith("S-"), ["is_partial", "is_portfolio"]].sum().sum() == 0
+    flagged = clean._flag_outliers(out.copy(), "price_per_sqm", ["area", "sub_type", "is_offplan"])
+    assert flagged.loc[flagged["is_portfolio"] == 1, "benchmark_eligible"].sum() == 0
+    assert flagged.loc[flagged["is_partial"] == 1, "benchmark_eligible"].sum() == 0
+    assert flagged.loc[flagged["transaction_id"].str.startswith("S-"), "benchmark_eligible"].sum() == 5

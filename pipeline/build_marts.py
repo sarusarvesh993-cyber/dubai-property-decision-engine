@@ -7,7 +7,7 @@ from datetime import datetime, timezone
 
 import duckdb
 
-from config import BENCHMARK_MONTHS_RENTS, BENCHMARK_MONTHS_SALES, CLEAN, MARTS, MIN_CELL_N, SQL_DIR
+from config import BENCHMARK_MONTHS_RENTS, BENCHMARK_MONTHS_SALES, CLEAN, MARTS, MIN_CELL_N, SQL_DIR, RANK_MIN_N, YIELD_BOUNDS
 
 log = logging.getLogger("marts")
 MART_TABLES = ["mart_weekly_sales", "mart_weekly_rents", "mart_area_month", "mart_area_summary", "mart_price_bands",
@@ -34,7 +34,8 @@ def run() -> dict:
         "tx_rows": con.execute("SELECT COUNT(*) FROM tx").fetchone()[0],
         "rt_rows": con.execute("SELECT COUNT(*) FROM rt").fetchone()[0],
         "mart_rows": counts,
-        "params": {"min_cell_n": MIN_CELL_N, "sales_months": BENCHMARK_MONTHS_SALES, "rent_months": BENCHMARK_MONTHS_RENTS},
+        "params": {"min_cell_n": MIN_CELL_N, "sales_months": BENCHMARK_MONTHS_SALES, "rent_months": BENCHMARK_MONTHS_RENTS,
+                   "rank_min_n": RANK_MIN_N, "yield_bounds": list(YIELD_BOUNDS)},
     }
     (MARTS / "_meta.json").write_text(json.dumps(meta, indent=2, default=str), encoding="utf-8")
     con.close()

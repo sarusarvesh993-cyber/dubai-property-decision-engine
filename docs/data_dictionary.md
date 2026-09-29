@@ -22,6 +22,8 @@
 | price_per_sqm, price_per_sqft | float | derived |
 | parking, parcel_id, nearest_metro, nearest_mall, nearest_landmark | string | as registered |
 | is_bulk | int | shares transaction number with other rows |
+| is_partial | int | procedure area below 98% of the unit area: only a share of the unit changed hands; excluded from benchmarks |
+| is_portfolio | int | one of 10+ ready units in the same community registered the same day at an identical AED/sqft; excluded from benchmarks |
 | is_land | int | property type is Land (plots); excluded from the pricing universe |
 | is_res_unit | int | Flat or Villa that is a Unit or Building; the universe for residential medians, yields and anomalies |
 | is_plausible | int | passes price/size plausibility bounds (built-property sales only) |
@@ -52,7 +54,7 @@
 | File | Content |
 |---|---|
 | summary.json | as-of dates, row counts, 4-week KPIs and prior period, weekly series |
-| areas.json | community summary rows (+ signal) and community x month trend rows |
+| areas.json | community summary rows (+ signal) and community x month trend rows. Yield fields: `gross_yield_est`, `yield_sub_type` (Flat or Villa, the community's dominant sale type), `n_yield_sales`, `n_yield_rents`, `median_ppsqft_yield`, `median_rent_psqft_yield` |
 | price_bands.json | fair-price benchmark cells (levels L0-L3) |
 | rent_benchmarks.json | rent benchmark cells (levels R1-R3) |
 | anomalies.json | top 100 flagged sales |

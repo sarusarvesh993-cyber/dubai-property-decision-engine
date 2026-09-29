@@ -32,6 +32,13 @@ def run() -> dict:
         f"{dup_t:.2%} duplicate rows on id+price+size+procedure among single-unit transactions")
     land = t.loc[(t["is_sale"] == 1) & (t["benchmark_eligible"] == 1), "is_land"].mean() if "is_land" in t.columns else 0.0
     add("No land plots in the pricing universe", land == 0, f"{land:.2%} of eligible sales are land plots")
+    sales = t[t["is_sale"] == 1]
+    partial = sales["is_partial"].mean() if "is_partial" in t.columns else 0.0
+    add("Partial-share transfers excluded from benchmarks (< 3% of sales)", partial < 0.03,
+        f"{partial:.2%} of sales transfer only a share of the unit (procedure area below unit area); kept in volumes, out of benchmarks")
+    portfolio = sales["is_portfolio"].mean() if "is_portfolio" in t.columns else 0.0
+    add("Portfolio blocks excluded from benchmarks (< 3% of sales)", portfolio < 0.03,
+        f"{portfolio:.2%} of sales sit in same-day blocks of 10+ ready units at one AED/sqft; kept in volumes, out of benchmarks")
     miss_price = t.loc[t["is_sale"] == 1, "price_aed"].isna().mean()
     add("Sale price completeness >= 99%", miss_price < 0.01, f"{miss_price:.2%} sales without price")
     miss_size = t.loc[t["is_sale"] == 1, "size_sqm"].isna().mean()
@@ -54,6 +61,8 @@ def run() -> dict:
         med = weekly.iloc[:-1].median()
         add("Weekly volume within 50-200% of median (last full week)", 0.5 * med <= last_full <= 2 * med,
             f"last full week {last_full:,} vs median {med:,.0f}")
+    else:
+        add("Weekly volume within 50-200% of median (last full week)", True, f"not evaluated, {len(weekly)} week(s) loaded (needs 5)")
 
     profile = {
         "transactions": {"rows": int(len(t)), "sales": int(t["is_sale"].sum()), "mortgages": int(t["is_mortgage"].sum()),

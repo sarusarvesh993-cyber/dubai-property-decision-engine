@@ -398,6 +398,29 @@
           "yield estimate for Jumeirah Village Circle"
         ]
       }
+    },
+    {
+      "q": "Where are the best rental yields for flats right now?",
+      "expect": {
+        "intents": [
+          "yield"
+        ],
+        "answer": "same property type",
+        "answer_not": [
+          "Did you mean"
+        ]
+      }
+    },
+    {
+      "q": "studio in International City Phase 2 for 450k, fair?",
+      "expect": {
+        "areas": [
+          "International City Ph 2 & 3"
+        ],
+        "intents": [
+          "price"
+        ]
+      }
     }
   ]
 }

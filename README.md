@@ -19,15 +19,15 @@ The project is written as a data analyst would ship it in a company: a tested Py
 
 1. `pipeline/extract.py` pulls transactions and rent contracts from the DLD gateway in weekly windows and stores them as monthly parquet partitions (`data/raw/`). Re-pulls are merged with full-record de-duplication because identifiers in the public feed are anonymised.
 2. `pipeline/clean.py` standardises types and units, normalises bedrooms, builds size bands, flags bulk deals, implausible records and statistical outliers, and marks which rows may be used for benchmarks.
-3. `pipeline/crosswalk.py` reconciles community names between the two feeds. Sales use popular names ("Jumeirah Village Circle"), Ejari uses district names ("Al Barsha South Fourth"). The mapping is derived from projects that appear in both feeds, on top of a verified seed list, and is published for audit. This raised the share of sales with a rent benchmark from 43% to 76%.
+3. `pipeline/crosswalk.py` reconciles community names between the two feeds. Sales use popular names ("Jumeirah Village Circle"), Ejari uses district names ("Al Barsha South Fourth"). The mapping is derived from projects that appear in both feeds, on top of a verified seed list, and is published for audit. This raised the share of sales with a rent benchmark from 43% to 74%.
 4. `pipeline/sql/marts.sql` (DuckDB) builds the analytical tables: weekly series, community summary, price bands, rent benchmarks, anomalies, top projects.
 5. `pipeline/backtest.py` re-prices the last four weeks of registered sales using only earlier data and publishes coverage, median error, band calibration and a naive-baseline comparison (`backtest.json`).
-6. `pipeline/quality.py` runs 14 checks (freshness, duplicates outside multi-unit deals, completeness, eligibility rates, outlier rate, no land plots in the pricing universe, coverage, volume sanity) and writes `docs/data_quality.md`.
+6. `pipeline/quality.py` runs 17 checks (freshness, duplicates outside multi-unit deals, completeness, eligibility rates, outlier rate, no land plots in the pricing universe, partial-share transfers and portfolio blocks kept out of benchmarks, coverage, volume sanity) and writes `docs/data_quality.md`.
 7. `pipeline/market_note.py` writes the weekly note. A router (`pipeline/llm_router.py`) discovers which free-tier models are currently available (Groq, Gemini, Cerebras, OpenRouter), tries them in order and falls back to a rules-based writer, so the product works with or without API keys.
 8. `pipeline/export_web.py` writes compact JSON files to `web/public/data/`. The Next.js site is static and the calculators run in the browser on those files. The same files double as an open JSON API (for example `/data/price_bands.json`).
 9. `web/app/api/ask/route.ts` is the only server function. It powers the "Ask the data" box: `web/lib/ask.ts` parses the question (community aliases such as JVC, JLT or Downtown are understood), retrieves the relevant cells from the published JSON, and writes a rules-based answer; `web/lib/llm.ts` is a TypeScript port of the same free-model router and, when a key is configured, rewrites that answer in better prose without adding numbers. Every response carries the facts it was built from, so a reader can check it.
 
-GitHub Actions runs the pipeline daily at 06:00 Gulf time and commits the refreshed data; Vercel redeploys the site on every commit.
+GitHub Actions runs the pipeline every morning (06:23 Gulf time, with a catch-up attempt at 09:23 because GitHub can delay scheduled runs) and commits the refreshed data; Vercel redeploys the site on every commit.
 
 ## Repository layout
 
@@ -53,7 +53,7 @@ python pipeline/run.py --mode smoke   # last 14 days, about 5 minutes
 cd web && npm install && npm run dev  # http://localhost:3000
 ```
 
-Quality gates that run in CI on every push: `pytest -q tests` (pipeline rules and the back-test on synthetic data), `npm run eval:ask` (27-question evaluation set for the Ask box, 80% pass rate required, currently 100%), `npm run typecheck` and `npm run build`. The daily refresh additionally runs the 14 data-quality checks and the fair-price back-test on the real data.
+Quality gates that run in CI on every push: `pytest -q tests` (pipeline rules and the back-test on synthetic data), `npm run eval:ask` (29-question evaluation set for the Ask box, 80% pass rate required, currently 100%), `npm run typecheck` and `npm run build`. The daily refresh additionally runs the 14 data-quality checks and the fair-price back-test on the real data.
 
 Pipeline modes: `smoke` (last 14 days), `daily` (re-pull the last 10 days), `backfill` (everything since 2026-01-01, roughly two hours), `rebuild` (no download, recompute from the stored partitions).
 
@@ -64,6 +64,15 @@ Optional environment variables for the market note and the Ask box: `GROQ_API_KE
 1. Push the repository to GitHub. The "Daily data refresh" workflow runs on schedule; run it once manually with `mode = backfill` to load history.
 2. Import the repository in Vercel with Root Directory set to `web` and Framework Preset set to Next.js.
 3. Optionally add `GROQ_API_KEY` (or any of the other free-tier keys) in two places: as a GitHub repository secret, so the weekly note is written by a model, and as a Vercel environment variable (Project, Settings, Environment Variables, then redeploy), so the Ask box answers are written by a model. Without keys both fall back to the rules-based writer.
+
+## Is the model key working?
+
+Two places tell you, without exposing the key:
+
+* Open `/ask` on the site. The status box under the question box says one of three things: "rules only" (no key visible to the site), "key set, model off" (a key is set but no model answered the test call: invalid key, free-tier rate limit or timeout) or "model on" with the provider and model that answered. The "Test the model connection now" button repeats the test; results are cached for ten minutes to protect free quotas. The same information is available as JSON at `/api/status`.
+* Open the home page. The chip next to the weekly market note says "written by groq ..." (or another provider) when the GitHub Actions pipeline used a model, and "rules-based (no LLM key configured)" when it did not. That reflects the GitHub repository secret, which is separate from the Vercel environment variable.
+
+Under every answer on `/ask`, the line "Answered by ..." names the writer: `provider:model` when a model wrote the sentences, or `rules (...)` with the reason when the built-in writer did. The numbers are identical in both cases; the model only changes the wording.
 
 ## Method and caveats
 

@@ -100,7 +100,8 @@ def run() -> dict:
         "as_of": meta["tx_last_date"],
         "areas": _records(areas_out, {"value_12w": 0, "offplan_share_12w": 3, "median_ppsqft_12w": 0, "median_price_12w": 0,
                                       "median_ppsqft_prev_12w": 0, "ppsqft_change_12w": 4, "renewal_share_12w": 3,
-                                      "median_rent_12w": 0, "median_rent_psqft_12w": 1, "gross_yield_est": 4}),
+                                      "median_rent_12w": 0, "median_rent_psqft_12w": 1, "gross_yield_est": 4,
+                                      "median_ppsqft_yield": 0, "median_rent_psqft_yield": 1}),
         "area_month": _records(area_month[area_month["n_bench"] >= meta["params"]["min_cell_n"]],
                                {"median_ppsqft": 0, "p25_ppsqft": 0, "p75_ppsqft": 0, "sales_value_aed": 0}),
     })

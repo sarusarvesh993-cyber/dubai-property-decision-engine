@@ -65,16 +65,35 @@ rents AS (
          COUNT(*) FILTER (WHERE benchmark_eligible = 1) AS n_rent_bench_12w,
          MEDIAN(annual_rent_aed) FILTER (WHERE benchmark_eligible = 1) AS median_rent_12w,
          MEDIAN(rent_per_sqft) FILTER (WHERE benchmark_eligible = 1) AS median_rent_psqft_12w
-  FROM rt WHERE registration_date > max_rt_date() - INTERVAL 84 DAY GROUP BY area)
+  FROM rt WHERE registration_date > max_rt_date() - INTERVAL 84 DAY GROUP BY area),
+-- Gross yield is computed like for like: the community's dominant sale type (flats or villas) against rents of the same type.
+-- Mixing villa rents with flat prices (or the reverse) produced yields that no investor would recognise.
+sale_type AS (
+  SELECT area, sub_type, COUNT(*) AS n_yield_sales, MEDIAN(price_per_sqft) AS median_ppsqft_yield
+  FROM tx WHERE date > max_tx_date() - INTERVAL 84 DAY AND benchmark_eligible = 1 AND is_res_unit = 1
+  GROUP BY area, sub_type),
+rent_type AS (
+  SELECT area,
+         CASE WHEN trim(sub_type) IN ('Flat', 'Studio') THEN 'Flat'
+              WHEN trim(sub_type) IN ('Villa', 'Complex Villas') THEN 'Villa' END AS sub_type,
+         COUNT(*) AS n_yield_rents, MEDIAN(rent_per_sqft) AS median_rent_psqft_yield
+  FROM rt WHERE registration_date > max_rt_date() - INTERVAL 84 DAY AND benchmark_eligible = 1
+  GROUP BY 1, 2 HAVING sub_type IS NOT NULL),
+yield_pick AS (
+  SELECT s.area, s.sub_type AS yield_sub_type, s.n_yield_sales, r.n_yield_rents, s.median_ppsqft_yield, r.median_rent_psqft_yield,
+         ROW_NUMBER() OVER (PARTITION BY s.area ORDER BY s.n_yield_sales DESC, s.sub_type) AS rk
+  FROM sale_type s JOIN rent_type r USING (area, sub_type))
 SELECT c.area, c.sales_12w, c.value_12w, c.offplan_share_12w, c.mortgages_12w, c.n_bench_12w,
        c.median_ppsqft_12w, c.median_price_12w,
        p.sales_prev_12w, p.n_bench_prev_12w, p.median_ppsqft_prev_12w,
        CASE WHEN c.n_bench_12w >= {MIN_N} AND p.n_bench_prev_12w >= {MIN_N}
             THEN c.median_ppsqft_12w / p.median_ppsqft_prev_12w - 1 END AS ppsqft_change_12w,
        r.rent_contracts_12w, r.renewal_share_12w, r.n_rent_bench_12w, r.median_rent_12w, r.median_rent_psqft_12w,
-       CASE WHEN c.n_bench_12w >= {MIN_N} AND r.n_rent_bench_12w >= {MIN_N}
-            THEN r.median_rent_psqft_12w / c.median_ppsqft_12w END AS gross_yield_est
+       y.yield_sub_type, y.n_yield_sales, y.n_yield_rents, y.median_ppsqft_yield, y.median_rent_psqft_yield,
+       CASE WHEN y.n_yield_sales >= {MIN_N} AND y.n_yield_rents >= {MIN_N}
+            THEN y.median_rent_psqft_yield / y.median_ppsqft_yield END AS gross_yield_est
 FROM cur c LEFT JOIN prev p USING (area) LEFT JOIN rents r USING (area)
+LEFT JOIN yield_pick y ON y.area = c.area AND y.rk = 1
 ORDER BY c.sales_12w DESC;
 
 -- ---------------------------------------------------------------- price bands (fair-price engine), last {SALES_MONTHS} months

@@ -7,6 +7,7 @@ Outputs
 Rules (documented in docs/methodology.md)
   * sizes in sqm from ACTUAL_AREA (fallback PROCEDURE_AREA); price_per_sqft derived
   * sale flag: procedures Sale / Sell - Pre registration / Delayed Sell (excludes mortgages, grants, lease-to-own)
+  * partial-share transfers (procedure area below the unit area) and same-day portfolio blocks are flagged and kept out of benchmarks
   * bulk flags: transactions sharing a TRANSACTION_NUMBER; leases with TOTAL_PROPERTIES > 1
   * robust outlier flag per cell (area x sub-type x off-plan): |modified z| of log(price/sqm) > 3.5
   * rooms normalised to Studio / 1 B/R / 2 B/R / 3 B/R / 4 B/R / 5+ B/R / NA
@@ -21,7 +22,7 @@ import numpy as np
 import pandas as pd
 
 import crosswalk
-from config import CLEAN, MARTS, RAW, SQFT_PER_SQM
+from config import CLEAN, MARTS, RAW, SQFT_PER_SQM, PARTIAL_SHARE_MAX_RATIO, PORTFOLIO_MIN_UNITS
 
 log = logging.getLogger("clean")
 
@@ -92,6 +93,17 @@ def clean_transactions() -> pd.DataFrame:
     df["week"] = df["date"].dt.to_period("W-SUN").dt.start_time.dt.strftime("%Y-%m-%d")
     # Bulk deals: several rows under one transaction number (multi-unit / lease-to-own).
     df["is_bulk"] = df.groupby("transaction_id")["transaction_id"].transform("size").gt(1).astype(int)
+    # Partial-share transfers: the procedure area is a fraction of the unit (a 50% share, say), so the registered price covers
+    # only that fraction and AED/sqft on the full unit is understated. Counted in volumes, excluded from every benchmark.
+    proc_area = pd.to_numeric(df["PROCEDURE_AREA"], errors="coerce")
+    share = (proc_area / size).where((size > 0) & (proc_area > 0))
+    df["is_partial"] = _flag(share.notna() & (share < PARTIAL_SHARE_MAX_RATIO))
+    # Portfolio blocks: ten or more ready units in one community registered on the same day at an identical AED/sqft, i.e. a
+    # building or portfolio changing hands in one lot and registered unit by unit. Not individual market sales.
+    block_key = (df["area"].astype("string") + "|" + df["date"].dt.strftime("%Y-%m-%d") + "|" + df["price_per_sqft"].round(0).astype("string"))
+    block_key = block_key.where((df["is_sale"] == 1) & (df["is_offplan"] == 0) & df["price_per_sqft"].notna())
+    block_size = block_key.map(block_key.value_counts()).fillna(0)
+    df["is_portfolio"] = _flag(block_size >= PORTFOLIO_MIN_UNITS)
     # Residential units: flats and villas that are units or buildings. Land plots share the "Residential" usage label
     # but their AED/sqft is not comparable with built units, so they are kept out of every residential benchmark.
     df["is_land"] = _flag(df["prop_type"].astype("string").str.strip().str.lower() == "land")
@@ -102,7 +114,8 @@ def clean_transactions() -> pd.DataFrame:
     cols = ["transaction_id", "date", "month", "week", "group", "procedure", "usage", "area", "project", "master_project",
             "prop_type", "sub_type", "rooms", "size_band", "is_offplan", "is_freehold", "is_sale", "is_mortgage",
             "price_aed", "size_sqm", "size_sqft", "price_per_sqm", "price_per_sqft", "parking", "parcel_id",
-            "nearest_metro", "nearest_mall", "nearest_landmark", "is_bulk", "is_land", "is_res_unit", "is_plausible", "_pulled_at"]
+            "nearest_metro", "nearest_mall", "nearest_landmark", "is_bulk", "is_partial", "is_portfolio", "is_land", "is_res_unit",
+            "is_plausible", "_pulled_at"]
     return df[cols].sort_values("date").reset_index(drop=True)
 
 
@@ -144,12 +157,17 @@ def clean_rents() -> pd.DataFrame:
 
 
 def _flag_outliers(df: pd.DataFrame, value_col: str, group_cols: list[str]) -> pd.DataFrame:
+    """Robust outlier flag within comparable cells, then the single benchmark_eligible flag every mart filters on."""
+    excluded = df["is_bulk"] == 1
+    for col in ("is_partial", "is_portfolio"):          # transactions only
+        if col in df.columns:
+            excluded |= df[col] == 1
     df["is_outlier"] = 0
-    sub = df[df["is_plausible"] == 1]
+    sub = df[(df["is_plausible"] == 1) & ~excluded]
     if len(sub):
         flag = robust_outlier_flag(sub, value_col, group_cols)
         df.loc[sub.index, "is_outlier"] = flag.astype(int).values
-    df["benchmark_eligible"] = _flag((df["is_plausible"] == 1) & (df["is_outlier"] == 0) & (df["is_bulk"] == 0))
+    df["benchmark_eligible"] = _flag((df["is_plausible"] == 1) & (df["is_outlier"] == 0) & ~excluded)
     return df
 
 

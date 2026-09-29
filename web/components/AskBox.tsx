@@ -14,6 +14,21 @@ const EXAMPLES = [
 
 type AskResponse = { question: string; answer: string; source: string; facts: unknown; error?: string };
 
+/** Plain-words meaning of the source label returned by /api/ask. */
+function explainSource(source: string): string {
+  if (source.startsWith("rules (no model key")) {
+    return "This means the built-in rules writer wrote the sentences because no model key is set on the server (Vercel environment variable). The numbers are the same either way; a model only improves the wording. The status box below shows what the server can see.";
+  }
+  if (source.startsWith("rules (model unavailable")) {
+    return "A model key is set, but no model answered in time (invalid key, free-tier rate limit or timeout), so the rules writer answered. Use the status box below to test the connection.";
+  }
+  if (source.startsWith("rules (model reply failed")) {
+    return "A model answered but introduced a number that is not in the facts, so its reply was discarded and the rules answer shown instead.";
+  }
+  if (source === "error") return "";
+  return "A language model wrote the sentences from the facts below; every number in its reply was checked against those facts before it was shown.";
+}
+
 export default function AskBox({ mode = "full" }: { mode?: "full" | "compact" }) {
   const router = useRouter();
   const [q, setQ] = useState("");
@@ -91,7 +106,7 @@ export default function AskBox({ mode = "full" }: { mode?: "full" | "compact" })
           </div>
           <div className="note">{res.answer}</div>
           <p className="hint mt">
-            Answered by <strong>{res.source}</strong>. Every number comes from the published benchmarks; the model (when configured) only writes the sentences.
+            Answered by <strong>{res.source}</strong>. {explainSource(res.source)}
           </p>
           {res.facts ? (
             <details className="mt">

@@ -69,6 +69,16 @@ const ALIASES: Record<string, string> = {
   "sobha hartland": "Sobha Heartland",
   "arabian ranches": "Arabian Ranches I",
   "international city": "International City Ph 1",
+  "international city phase 1": "International City Ph 1",
+  "international city 1": "International City Ph 1",
+  "international city phase 2": "International City Ph 2 & 3",
+  "international city phase 3": "International City Ph 2 & 3",
+  "international city 2": "International City Ph 2 & 3",
+  "international city 3": "International City Ph 2 & 3",
+  "international city ph 2": "International City Ph 2 & 3",
+  "international city ph 3": "International City Ph 2 & 3",
+  "warsan 4": "International City Ph 2 & 3",
+  "warsan fourth": "International City Ph 2 & 3",
   dip: "Dubai Investment Park First",
   "investment park": "Dubai Investment Park First",
   tecom: "Barsha Heights",
@@ -260,9 +270,8 @@ export function retrieve(p: Parsed): Facts {
     // Rankings use stricter sample sizes than the community table: 12-week medians move with the mix of what sold,
     // so a community needs 30+ eligible sales in both windows to be ranked, and a yield needs 30+ sales and 30+ rent
     // contracts and must fall in a plausible 2% to 12% range (outside that it is almost always a mix effect).
-    const RANK_MIN = 30;
     const withChange = rows.filter((a) => a.ppsqft_change_12w !== null && a.n_bench_12w >= RANK_MIN && (a.n_bench_prev_12w ?? 0) >= RANK_MIN);
-    const yieldRows = rows.filter((a) => a.gross_yield_est !== null && (a.n_rent_bench_12w ?? 0) >= RANK_MIN && a.n_bench_12w >= RANK_MIN && (a.gross_yield_est as number) >= 0.02 && (a.gross_yield_est as number) <= 0.12);
+    const yieldRows = rows.filter((a) => a.gross_yield_est !== null && (a.n_yield_rents ?? a.n_rent_bench_12w ?? 0) >= RANK_MIN && (a.n_yield_sales ?? a.n_bench_12w) >= RANK_MIN && (a.gross_yield_est as number) >= 0.02 && (a.gross_yield_est as number) <= 0.12);
     facts.market = {
       last_4_full_weeks: s.kpi_last4w,
       previous_4_weeks: s.kpi_prev4w,
@@ -270,7 +279,7 @@ export function retrieve(p: Parsed): Facts {
       busiest_communities_12w: [...rows].sort((a, b) => b.sales_12w - a.sales_12w).slice(0, 8).map((a) => pick(a, ["area", "sales_12w", "median_ppsqft_12w", "offplan_share_12w"])),
       heating_12w: [...withChange].sort((a, b) => (b.ppsqft_change_12w ?? 0) - (a.ppsqft_change_12w ?? 0)).slice(0, 6).map((a) => pick(a, ["area", "ppsqft_change_12w", "median_ppsqft_12w", "n_bench_12w", "offplan_share_12w"])),
       cooling_12w: [...withChange].sort((a, b) => (a.ppsqft_change_12w ?? 0) - (b.ppsqft_change_12w ?? 0)).slice(0, 6).map((a) => pick(a, ["area", "ppsqft_change_12w", "median_ppsqft_12w", "n_bench_12w", "offplan_share_12w"])),
-      highest_gross_yield_estimates: [...yieldRows].sort((a, b) => (b.gross_yield_est ?? 0) - (a.gross_yield_est ?? 0)).slice(0, 6).map((a) => pick(a, ["area", "gross_yield_est", "median_rent_12w", "median_ppsqft_12w", "n_rent_bench_12w", "n_bench_12w"])),
+      highest_gross_yield_estimates: [...yieldRows].sort((a, b) => (b.gross_yield_est ?? 0) - (a.gross_yield_est ?? 0)).slice(0, 6).map((a) => pick(a, ["area", "gross_yield_est", "yield_sub_type", "median_rent_12w", "median_ppsqft_yield", "median_rent_psqft_yield", "n_yield_rents", "n_yield_sales"])),
       cheapest_by_median_ppsqft: rows.filter((a) => a.n_bench_12w >= 30).sort((a, b) => (a.median_ppsqft_12w ?? 0) - (b.median_ppsqft_12w ?? 0)).slice(0, 6).map((a) => pick(a, ["area", "median_ppsqft_12w", "median_price_12w", "n_bench_12w"])),
       most_expensive_by_median_ppsqft: rows.filter((a) => a.n_bench_12w >= 30).sort((a, b) => (b.median_ppsqft_12w ?? 0) - (a.median_ppsqft_12w ?? 0)).slice(0, 6).map((a) => pick(a, ["area", "median_ppsqft_12w", "median_price_12w", "n_bench_12w"])),
     };
@@ -286,7 +295,7 @@ export function retrieve(p: Parsed): Facts {
   }
   for (const area of p.areas) {
     const row = rows.find((a) => a.area === area);
-    const af: AreaFacts = { area, summary: row ? pick(row, ["sales_12w", "value_12w", "offplan_share_12w", "mortgages_12w", "n_bench_12w", "median_ppsqft_12w", "median_price_12w", "median_ppsqft_prev_12w", "ppsqft_change_12w", "signal", "rent_contracts_12w", "renewal_share_12w", "n_rent_bench_12w", "median_rent_12w", "median_rent_psqft_12w", "gross_yield_est"]) : {}, price_cells: [], rent_cells: [] };
+    const af: AreaFacts = { area, summary: row ? pick(row, ["sales_12w", "value_12w", "offplan_share_12w", "mortgages_12w", "n_bench_12w", "median_ppsqft_12w", "median_price_12w", "median_ppsqft_prev_12w", "ppsqft_change_12w", "signal", "rent_contracts_12w", "renewal_share_12w", "n_rent_bench_12w", "median_rent_12w", "median_rent_psqft_12w", "gross_yield_est", "yield_sub_type", "n_yield_sales", "n_yield_rents"]) : {}, price_cells: [], rent_cells: [] };
     const subType = p.subType ?? "Flat";
     const bands = DATASET.priceBands.bands.filter((b) => b.area === area);
     const wantedLevels = p.rooms ? ["L1", "L2", "L3"] : ["L2", "L1", "L3"];
@@ -344,8 +353,13 @@ export function retrieve(p: Parsed): Facts {
 
 // ------------------------------------------------------------------ rules-based answer
 
+/** Minimum eligible sales (and rent contracts of the same type) before a community enters a market-wide ranking. */
+const RANK_MIN = 30;
+
 const aed = (v: number | null | undefined, d = 0) => (v === null || v === undefined || Number.isNaN(v) ? "n/a" : "AED " + v.toLocaleString("en-AE", { maximumFractionDigits: d }));
 const int = (v: number | null | undefined) => (v === null || v === undefined || Number.isNaN(v) ? "n/a" : Math.round(v).toLocaleString("en-AE"));
+const num = (v: number | null | undefined, d = 1) => (v === null || v === undefined || Number.isNaN(v) ? "n/a" : v.toLocaleString("en-AE", { maximumFractionDigits: d, minimumFractionDigits: d }));
+const typeLabel = (t: unknown) => (t === "Villa" ? "villas" : t === "Flat" ? "flats" : "residential units");
 const pct = (v: number | null | undefined, d = 1, signed = false) => {
   if (v === null || v === undefined || Number.isNaN(v)) return "n/a";
   const t = (v * 100).toFixed(d) + "%";
@@ -407,7 +421,7 @@ export function composeAnswer(p: Parsed, f: Facts): string {
       }
     }
     if (p.intents.includes("yield") || p.intents.includes("profile") || p.intents.includes("compare")) {
-      parts.push(s.gross_yield_est ? `Gross yield estimate for ${a.area}: ${pct(s.gross_yield_est)} (median rent per sqft divided by median price per sqft, not net of service charges or vacancy).` : `No gross-yield estimate for ${a.area} yet (needs both price and rent benchmarks in the same window).`);
+      parts.push(s.gross_yield_est ? `Gross yield estimate for ${a.area}: ${pct(s.gross_yield_est)} (${typeLabel(s.yield_sub_type)}, median rent per sqft divided by median price per sqft of the same type, not net of service charges or vacancy${(s.n_yield_sales ?? 30) < RANK_MIN || (s.n_yield_rents ?? 30) < RANK_MIN ? "; small sample, read with care" : ""}).` : `No gross-yield estimate for ${a.area} yet (needs both price and rent benchmarks for the same property type in the same window).`);
     }
     if (p.intents.includes("trend") || p.intents.includes("profile") || p.intents.includes("compare")) {
       parts.push(s.ppsqft_change_12w !== undefined && s.ppsqft_change_12w !== null
@@ -449,7 +463,7 @@ export function composeAnswer(p: Parsed, f: Facts): string {
       }
     }
     if (p.intents.includes("yield") && p.areas.length === 0) {
-      out.push(list("Highest gross-yield estimates (communities with 30+ eligible sales and 30+ rent contracts in the last 12 weeks; median rent per sqft divided by median price per sqft, not net of service charges or vacancy)", m.highest_gross_yield_estimates, (r) => `${r.area} ${pct(r.gross_yield_est as number)} (median rent ${aed(r.median_rent_12w as number)}, ${int(r.median_ppsqft_12w as number)} AED/sqft)`));
+      out.push(list("Highest gross-yield estimates (communities with 30+ eligible sales and 30+ rent contracts of the same property type in the last 12 weeks; median rent per sqft divided by median price per sqft for that type, not net of service charges or vacancy)", m.highest_gross_yield_estimates, (r) => `${r.area} ${pct(r.gross_yield_est as number)} (${typeLabel(r.yield_sub_type)}: rent ${num(r.median_rent_psqft_yield as number, 1)} AED/sqft a year against ${int(r.median_ppsqft_yield as number)} AED/sqft)`));
     }
   }
   if (f.anomalies) {

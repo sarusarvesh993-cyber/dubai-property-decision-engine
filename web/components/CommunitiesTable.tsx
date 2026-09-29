@@ -71,7 +71,7 @@ export default function CommunitiesTable({ areas, areaMonth, minN }: { areas: Ar
                 {header("Signal", "signal")}
                 {header("Off-plan", "offplan_share_12w")}
                 {header("Median rent", "median_rent_12w", "Residential Ejari contracts, last 12 weeks")}
-                {header("Yield est.", "gross_yield_est", "Median rent per sqft divided by median price per sqft")}
+                {header("Yield est.", "gross_yield_est", "Median rent per sqft divided by median price per sqft, same property type (flats or villas)")}
               </tr>
             </thead>
             <tbody>

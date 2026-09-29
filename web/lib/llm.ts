@@ -111,6 +111,13 @@ export function anyKeyConfigured(): boolean {
   return ORDER.some((p) => key(p));
 }
 
+/** Which provider keys are present on the server, by environment variable name (values are never exposed). */
+export function configuredKeys(): Record<string, boolean> {
+  const out: Record<string, boolean> = {};
+  for (const p of ORDER) out[PROVIDERS[p].keyEnv] = Boolean(key(p));
+  return out;
+}
+
 export async function chat(messages: Array<{ role: string; content: string }>, opts: { maxTokens?: number; temperature?: number; attempts?: number } = {}): Promise<LLMResult | null> {
   const list = await candidates();
   const dead = new Set<string>();

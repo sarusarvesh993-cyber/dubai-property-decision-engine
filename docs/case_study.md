@@ -29,7 +29,7 @@ A question box ("Ask the data") answers all of the above in plain language, and 
 * Three data facts shaped the design:
   1. Identifiers in the public feeds are anonymised, so rows are de-duplicated on the full record rather than on an ID.
   2. The rental feed has no bedroom count for about 96% of contracts, so rent benchmarks use size bands instead of bedrooms.
-  3. The two feeds name communities differently: sales use popular names ("Jumeirah Village Circle"), Ejari uses district names ("Al Barsha South Fourth"). Without reconciliation only 43% of sales had a rent benchmark; a crosswalk derived from projects that appear in both feeds, on top of a verified seed list, lifted that to 76%.
+  3. The two feeds name communities differently: sales use popular names ("Jumeirah Village Circle"), Ejari uses district names ("Al Barsha South Fourth"). Without reconciliation only 43% of sales had a rent benchmark; a crosswalk derived from projects that appear in both feeds, on top of a verified seed list, lifted that to 74% on the full history.
 
 ## 3. The method
 
@@ -68,18 +68,19 @@ endpoint. The JSON artefacts double as an open API (for example `/data/price_ban
 
 ## 4. Results
 
-Numbers below are from the first published run (14 days of data to 28 September 2026); the live site always shows the current
-figures and the back-test table on the methodology page.
+Numbers below are from the full 2026 history (registered transactions 1 January to 28 September 2026, 163,262 transactions and
+607,326 Ejari contracts); the live site always shows the current figures and the back-test table on the methodology page.
 
-* Coverage: 184 communities with at least one benchmark; 76% of sales matched to a rent benchmark after the crosswalk (43% before).
-* Fair-price back-test: 81% of test sales matched to a comparable cell; median absolute error 10.6% overall against 19.8% for a
-  single citywide median; 3.2% where a project-level cell existed. About 41% of actual prices fell inside the p25 to p75 band and
-  69% inside p10 to p90 on this short window, which is the calibration the longer history is expected to tighten.
-* Worked example: a 750 sqft one-bedroom in Business Bay asked at AED 1.5m is 2,000 AED/sqft, percentile 76 of 41 comparable
-  registered sales (median 1,640), fair range for the size AED 951,750 to 1,461,000. A 900 sqft Dubai Marina flat rented at AED
-  90,000 sits within 10% of the AED 85,000 median (75 contracts), so no increase is permitted at renewal.
-* Copilot evaluation: 27 of 27 questions parsed and answered correctly (threshold 80%).
-* Operations: daily refresh at 06:00 Gulf time, 14 of 14 quality checks passing, site redeploys without manual steps.
+* Coverage: 184 communities with at least one benchmark; 74% of sales matched to a rent benchmark after the crosswalk (43% before).
+* Fair-price back-test (28-day window, 8,350 registered residential sales priced only with earlier data): 99.8% matched to a
+  comparable cell; median absolute error 6.2% overall against 20.5% for a single citywide median, 4.5% where a project-level cell
+  existed; 66% of sales within 10% of the prediction. About 46% of actual prices fell inside the p25 to p75 band and 73% inside
+  p10 to p90, close to the 50% and 80% a calibrated band should hold.
+* Worked example: a 750 sqft one-bedroom in Business Bay asked at AED 1.5m is 2,000 AED/sqft, percentile 61 of 376 comparable
+  registered sales (median 1,816), p25 to p75 for the size AED 1,083,000 to 1,689,000. A 900 sqft Dubai Marina one-bedroom rented
+  at AED 90,000 sits within 10% of the AED 86,608 median (1,278 contracts), so no increase is permitted at renewal.
+* Copilot evaluation: 29 of 29 questions parsed and answered correctly (threshold 80%), on smoke data and on the live data.
+* Operations: daily refresh every morning (06:23 Gulf time), 17 of 17 quality checks passing, site redeploys without manual steps.
 
 ## 5. What was hard, and what I would tell a stakeholder
 
@@ -91,6 +92,14 @@ figures and the back-test table on the methodology page.
   communities, because apartment rents were being divided by plot prices. The fix was a residential-unit flag (flats and
   villas that are units or buildings) used by every residential median, yield and anomaly, plus a quality check that fails
   if a land plot ever enters the pricing universe again.
+* Registered rows are not all market sales. Two patterns only showed up with the full history: partial-share transfers, where
+  the procedure area is a fraction of the unit and the price covers that fraction (76 half-share studios registered on one day
+  pulled a community's ready-studio median to 441 AED/sqft against a true 1,142, and the anomaly monitor then flagged the honest
+  sales as 195% overpriced); and portfolio blocks, where a whole building changes hands and is registered unit by unit at one
+  AED/sqft (218 flats in Majan on a single day at exactly 851). Both are now flagged, counted in volumes and kept out of every
+  benchmark, and two quality checks report their share on each refresh (1.25% and 0.78% of sales).
+* Yields must be like for like. A community-level rent-per-sqft over price-per-sqft mixed villa rents with flat prices in some
+  communities; the estimate now uses the community's dominant sale type and rents of the same type, and shows the type.
 * Free-tier language models change monthly. Designing the router to discover and rank models at run time, with a rules
   fallback and a number guard, removed that dependency from the product's reliability.
 
