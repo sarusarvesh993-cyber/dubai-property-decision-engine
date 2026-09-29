@@ -126,3 +126,24 @@ def test_partial_share_and_portfolio_flags(monkeypatch):
     assert flagged.loc[flagged["is_portfolio"] == 1, "benchmark_eligible"].sum() == 0
     assert flagged.loc[flagged["is_partial"] == 1, "benchmark_eligible"].sum() == 0
     assert flagged.loc[flagged["transaction_id"].str.startswith("S-"), "benchmark_eligible"].sum() == 5
+
+
+def test_plain_prose_strips_markdown_and_dashes():
+    from market_note import plain_prose
+
+    raw = "**Activity**\n\n- Sales rose \u2014 strongly \u2014 in the 85\u2013120 sqm band.\n### Rentals\nMedian rent AED 71,400\u2011 a year."
+    out = plain_prose(raw)
+    assert "**" not in out and "#" not in out and "\u2014" not in out and "\u2013" not in out and "\u2011" not in out
+    assert out.startswith("Activity")
+    assert "85 to 120 sqm" in out
+    assert "Sales rose, strongly, in" in out
+
+
+def test_note_number_guard_accepts_traceable_numbers_and_rejects_invented_ones():
+    from market_note import unsupported_numbers
+
+    facts = '{"last4w": {"sales": 10195, "value_aed": 26811468058, "offplan_share": 0.652, "median_ppsqft_res": 1676}, "delta": {"sales": -0.064}, "rent": {"median_rent_res": 71400}}'
+    ok = "10,195 sales worth AED 26.81 billion (26.8bn), off-plan 65.2% or about 65%, down 6.4%, median AED 1,676 per sqft, rent AED 71,400 or 71k, over 4 weeks in 12 communities."
+    assert unsupported_numbers(ok, [facts]) == []
+    bad = "Prices rose 14.9% to AED 1,999 per sqft and 25% of deals were cash."
+    assert unsupported_numbers(bad, [facts]) == ["14.9", "1,999", "25"]

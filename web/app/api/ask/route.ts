@@ -1,5 +1,5 @@
 import { composeAnswer, parseQuestion, retrieve } from "@/lib/ask";
-import { unsupportedNumbers } from "@/lib/guard";
+import { plainProse, unsupportedNumbers } from "@/lib/guard";
 import { anyKeyConfigured, chat } from "@/lib/llm";
 
 export const runtime = "nodejs";
@@ -43,11 +43,12 @@ async function answer(q: string, ip: string) {
         ],
         { maxTokens: 500, temperature: 0.2 },
       );
-      if (r && r.text.trim().length > 40) {
+      const cleaned = r ? plainProse(r.text) : "";
+      if (r && cleaned.length > 40) {
         // Every number in the model's reply must already exist in the facts, the rules answer or the question.
-        const bad = unsupportedNumbers(r.text, [JSON.stringify(facts), rules, question]);
+        const bad = unsupportedNumbers(cleaned, [JSON.stringify(facts), rules, question]);
         if (bad.length === 0) {
-          text = r.text.trim();
+          text = cleaned;
           source = r.label;
         } else {
           source = `rules (model reply failed the number check: ${bad.slice(0, 3).join(", ")})`;

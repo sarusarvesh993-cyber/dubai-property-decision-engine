@@ -324,7 +324,7 @@ export function retrieve(p: Parsed): Facts {
       const r = fairPrice(DATASET.priceBands.bands, { area, subType, rooms: p.rooms ?? "NA", isOffplan: p.offplan ?? false, sizeSqft: p.sizeSqft, askingPrice: p.price });
       if (r) {
         const { band: b, ...rest } = r;
-        af.fair_price = { ...rest, cell_n: b.n, cell_median_ppsqft: b.median };
+        af.fair_price = { ...rest, percentile: Math.round(rest.percentile), cell_n: b.n, cell_median_ppsqft: b.median };
       }
     } else if (p.price && !p.sizeSqft) {
       facts.notes.push("A fair-price verdict needs the unit size in sqft as well as the asking price.");
@@ -474,6 +474,14 @@ export function composeAnswer(p: Parsed, f: Facts): string {
     out.push(`I could not match a community in your question. Did you mean: ${f.suggestions.join(", ")}?`);
   }
   if (out.length === 0) out.push("I could not find data for that question. Try asking about a community (for example JVC, Business Bay, Dubai Marina), a price for a given size, or a rent.");
+  // Questions that need one more detail (a verdict without the unit size, a trend before there is history) say so
+  // in the rules answer too, not only in the facts the model sees.
+  const missing = f.notes.filter((n) => n.includes("needs the unit size") || n.includes("not available yet"));
+  if (missing.length) {
+    const where = f.areas[0]?.area ?? "Business Bay";
+    const example = missing.some((n) => n.includes("renewal-increase")) ? `current rent 80,000 for a 900 sqft flat in ${where}, renewal` : `1 bed 750 sqft in ${where} asking 1.5m`;
+    out.push(missing.join(" ") + (missing.some((n) => n.includes("needs the unit size")) ? ` Example: "${example}".` : ""));
+  }
   out.push(`Data to ${f.as_of}, registered DLD records only. Indicative, not a valuation.`);
   return out.filter(Boolean).join("\n\n");
 }

@@ -2,6 +2,7 @@ import Link from "next/link";
 import AskBox from "@/components/AskBox";
 import { WeeklyRentsChart, WeeklySalesChart } from "@/components/Charts";
 import { getAreas, getMarketNote, getSummary } from "@/lib/data";
+import { plainProse } from "@/lib/guard";
 import { delta, fmtAed, fmtBn, fmtDate, fmtInt, fmtPct } from "@/lib/format";
 
 function Delta({ v, invert = false }: { v: number | null; invert?: boolean }) {
@@ -138,14 +139,20 @@ export default function Home() {
       <section className="card">
         <h2>
           Weekly market note{" "}
-          <span className={`chip ${note?.source === "rules" ? "muted" : "info"}`}>
-            {note ? (note.source === "rules" ? "rules-based (no LLM key configured)" : `written by ${note.source}`) : "not generated"}
+          <span className={`chip ${note?.source.startsWith("rules") ? "muted" : "info"}`}>
+            {note
+              ? note.source === "rules"
+                ? "rules-based (no LLM key configured)"
+                : note.source.startsWith("rules")
+                  ? `rules-based (${note.source.replace(/^rules \(/, "").replace(/\)$/, "")})`
+                  : `written by ${note.source}`
+              : "not generated"}
           </span>
         </h2>
-        {note ? <div className="note">{note.text}</div> : <p className="small">Run the pipeline to generate the note.</p>}
+        {note ? <div className="note">{plainProse(note.text)}</div> : <p className="small">Run the pipeline to generate the note.</p>}
         <p className="hint">
-          All figures in the note are computed by the pipeline; the language model (when configured) only turns them into prose and is
-          never allowed to introduce numbers of its own.
+          All figures in the note are computed by the pipeline; the language model (when configured) only turns them into prose. Its text
+          passes the same number check as the Ask box: if it contains a figure that is not in the facts, the rules-based note is published instead.
         </p>
       </section>
     </>

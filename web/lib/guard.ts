@@ -64,3 +64,23 @@ export function unsupportedNumbers(candidate: string, sources: string[]): string
   }
   return bad;
 }
+
+/**
+ * Strips markdown decoration and typographic dashes a model may add (bold, headings, bullets, em and en dashes,
+ * non-breaking hyphens) so model-written prose reads as plain text. Same rules as pipeline/market_note.py.
+ */
+export function plainProse(text: string): string {
+  return text
+    .replace(/\*\*(.+?)\*\*/g, "$1")
+    .replace(/__(.+?)__/g, "$1")
+    .replace(/^\s{0,3}#{1,6}\s*/gm, "")
+    .replace(/^\s*[-*\u2022]\s+/gm, "")
+    .replace(/[\u2011\u2010]/g, "-")
+    .replace(/(\d)\s?[\u2013\u2014]\s?(\d)/g, "$1 to $2")
+    .replace(/\s*[\u2013\u2014]\s*/g, ", ")
+    .replace(/\u2026/g, "...")
+    .replace(/\u00b7/g, ",")
+    .replace(/[ \t]+\n/g, "\n")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+}
