@@ -73,12 +73,13 @@ sale_type AS (
   FROM tx WHERE date > max_tx_date() - INTERVAL 84 DAY AND benchmark_eligible = 1 AND is_res_unit = 1
   GROUP BY area, sub_type),
 rent_type AS (
-  SELECT area,
-         CASE WHEN trim(sub_type) IN ('Flat', 'Studio') THEN 'Flat'
-              WHEN trim(sub_type) IN ('Villa', 'Complex Villas') THEN 'Villa' END AS sub_type,
-         COUNT(*) AS n_yield_rents, MEDIAN(rent_per_sqft) AS median_rent_psqft_yield
-  FROM rt WHERE registration_date > max_rt_date() - INTERVAL 84 DAY AND benchmark_eligible = 1
-  GROUP BY 1, 2 HAVING sub_type IS NOT NULL),
+  SELECT area, rent_kind AS sub_type, COUNT(*) AS n_yield_rents, MEDIAN(rent_per_sqft) AS median_rent_psqft_yield
+  FROM (SELECT area, rent_per_sqft,
+               CASE WHEN trim(sub_type) IN ('Flat', 'Studio') THEN 'Flat'
+                    WHEN trim(sub_type) IN ('Villa', 'Complex Villas') THEN 'Villa' END AS rent_kind
+        FROM rt WHERE registration_date > max_rt_date() - INTERVAL 84 DAY AND benchmark_eligible = 1)
+  WHERE rent_kind IS NOT NULL
+  GROUP BY area, rent_kind),
 yield_pick AS (
   SELECT s.area, s.sub_type AS yield_sub_type, s.n_yield_sales, r.n_yield_rents, s.median_ppsqft_yield, r.median_rent_psqft_yield,
          ROW_NUMBER() OVER (PARTITION BY s.area ORDER BY s.n_yield_sales DESC, s.sub_type) AS rk
