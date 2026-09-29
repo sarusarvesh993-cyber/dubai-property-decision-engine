@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-09-28T19:24:02+00:00",
+  "generated_at_utc": "2026-09-29T06:13:35+00:00",
   "checks": [
     {
       "check": "Transactions loaded",
@@ -19,7 +19,7 @@
     {
       "check": "Rents fresh within 3 days",
       "status": "PASS",
-      "detail": "latest registration 0 day(s) old"
+      "detail": "latest registration 1 day(s) old"
     },
     {
       "check": "Transaction duplicates < 0.5% (outside multi-unit deals)",
@@ -30,6 +30,16 @@
       "check": "No land plots in the pricing universe",
       "status": "PASS",
       "detail": "0.00% of eligible sales are land plots"
+    },
+    {
+      "check": "Partial-share transfers excluded from benchmarks (< 3% of sales)",
+      "status": "PASS",
+      "detail": "1.25% of sales transfer only a share of the unit (procedure area below unit area); kept in volumes, out of benchmarks"
+    },
+    {
+      "check": "Portfolio blocks excluded from benchmarks (< 3% of sales)",
+      "status": "PASS",
+      "detail": "0.78% of sales sit in same-day blocks of 10+ ready units at one AED/sqft; kept in volumes, out of benchmarks"
     },
     {
       "check": "Sale price completeness >= 99%",
@@ -44,12 +54,12 @@
     {
       "check": "Benchmark-eligible share of sales 60-100%",
       "status": "PASS",
-      "detail": "89.4% of sales eligible after bulk/plausibility/outlier filters"
+      "detail": "88.8% of sales eligible after bulk/plausibility/outlier filters"
     },
     {
       "check": "Sales outlier rate < 5%",
       "status": "PASS",
-      "detail": "2.37% flagged by robust z-score"
+      "detail": "1.87% flagged by robust z-score"
     },
     {
       "check": "Rents ROOMS null (known gateway gap; size bands used instead)",
@@ -64,7 +74,7 @@
     {
       "check": "Benchmark-eligible share of residential rents >= 60%",
       "status": "PASS",
-      "detail": "88.5% eligible"
+      "detail": "88.4% eligible"
     },
     {
       "check": "Sales in communities with rent coverage >= 70% (after crosswalk)",
