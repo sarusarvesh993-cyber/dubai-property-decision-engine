@@ -1,11 +1,11 @@
 {
-  "built_at_utc": "2026-09-30T08:50:26+00:00",
+  "built_at_utc": "2026-09-30T11:18:41+00:00",
   "tx_first_date": "2026-01-01",
   "tx_last_date": "2026-09-30",
   "rt_first_date": "2026-01-01",
   "rt_last_date": "2026-09-29",
-  "tx_rows": 164958,
-  "rt_rows": 616985,
+  "tx_rows": 165139,
+  "rt_rows": 616987,
   "mart_rows": {
     "mart_weekly_sales": 40,
     "mart_weekly_rents": 40,
@@ -13,8 +13,8 @@
     "mart_area_summary": 227,
     "mart_price_bands": 2417,
     "mart_rent_benchmarks": 3234,
-    "mart_anomalies": 1000,
-    "mart_top_projects": 1189,
+    "mart_anomalies": 1004,
+    "mart_top_projects": 1187,
     "dim_area": 277
   },
   "params": {
