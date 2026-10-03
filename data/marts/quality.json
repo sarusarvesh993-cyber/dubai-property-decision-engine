@@ -1,10 +1,10 @@
 {
-  "generated_at_utc": "2026-10-03T08:24:50+00:00",
+  "generated_at_utc": "2026-10-03T10:32:38+00:00",
   "checks": [
     {
       "check": "Transactions loaded",
       "status": "PASS",
-      "detail": "167,340 rows, 2026-01-01 to 2026-10-03"
+      "detail": "167,371 rows, 2026-01-01 to 2026-10-03"
     },
     {
       "check": "Rent contracts loaded",
@@ -34,7 +34,7 @@
     {
       "check": "Partial-share transfers excluded from benchmarks (< 3% of sales)",
       "status": "PASS",
-      "detail": "1.25% of sales transfer only a share of the unit (procedure area below unit area); kept in volumes, out of benchmarks"
+      "detail": "1.24% of sales transfer only a share of the unit (procedure area below unit area); kept in volumes, out of benchmarks"
     },
     {
       "check": "Portfolio blocks excluded from benchmarks (< 3% of sales)",
@@ -89,18 +89,18 @@
   ],
   "profile": {
     "transactions": {
-      "rows": 167340,
-      "sales": 121832,
-      "mortgages": 35189,
+      "rows": 167371,
+      "sales": 121857,
+      "mortgages": 35193,
       "areas": 250,
       "projects": 3184,
-      "offplan_share_of_sales": 0.6823248407643312,
+      "offplan_share_of_sales": 0.6823243638034746,
       "procedures": {
-        "Sell - Pre registration": 83129,
-        "Sale": 29434,
-        "Mortgage Registration": 23799,
-        "Delayed Sell": 8984,
-        "Grant": 5240,
+        "Sell - Pre registration": 83146,
+        "Sale": 29441,
+        "Mortgage Registration": 23802,
+        "Delayed Sell": 8985,
+        "Grant": 5241,
         "Delayed Mortgage": 3374,
         "Portfolio Mortgage Registration": 3133,
         "Development Registration Pre-Registration": 1819,

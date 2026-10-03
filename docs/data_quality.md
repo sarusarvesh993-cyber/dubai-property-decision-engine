@@ -1,16 +1,16 @@
 # Data quality report
 
-_Generated 2026-10-03T08:24:50+00:00. Regenerated on every pipeline run._
+_Generated 2026-10-03T10:32:38+00:00. Regenerated on every pipeline run._
 
 | Check | Status | Detail |
 |---|---|---|
-| Transactions loaded | PASS | 167,340 rows, 2026-01-01 to 2026-10-03 |
+| Transactions loaded | PASS | 167,371 rows, 2026-01-01 to 2026-10-03 |
 | Rent contracts loaded | PASS | 629,888 rows, 2026-01-01 to 2026-10-02 |
 | Transactions fresh within 3 days | PASS | latest registration 0 day(s) old |
 | Rents fresh within 3 days | PASS | latest registration 0 day(s) old |
 | Transaction duplicates < 0.5% (outside multi-unit deals) | PASS | 0.00% duplicate rows on id+price+size+procedure among single-unit transactions |
 | No land plots in the pricing universe | PASS | 0.00% of eligible sales are land plots |
-| Partial-share transfers excluded from benchmarks (< 3% of sales) | PASS | 1.25% of sales transfer only a share of the unit (procedure area below unit area); kept in volumes, out of benchmarks |
+| Partial-share transfers excluded from benchmarks (< 3% of sales) | PASS | 1.24% of sales transfer only a share of the unit (procedure area below unit area); kept in volumes, out of benchmarks |
 | Portfolio blocks excluded from benchmarks (< 3% of sales) | PASS | 1.19% of sales sit in same-day blocks of 10+ ready units at one AED/sqft; kept in volumes, out of benchmarks |
 | Sale price completeness >= 99% | PASS | 0.00% sales without price |
 | Sale size completeness >= 95% | PASS | 0.00% sales without size |
@@ -27,18 +27,18 @@ _Generated 2026-10-03T08:24:50+00:00. Regenerated on every pipeline run._
 ```json
 {
   "transactions": {
-    "rows": 167340,
-    "sales": 121832,
-    "mortgages": 35189,
+    "rows": 167371,
+    "sales": 121857,
+    "mortgages": 35193,
     "areas": 250,
     "projects": 3184,
-    "offplan_share_of_sales": 0.6823248407643312,
+    "offplan_share_of_sales": 0.6823243638034746,
     "procedures": {
-      "Sell - Pre registration": 83129,
-      "Sale": 29434,
-      "Mortgage Registration": 23799,
-      "Delayed Sell": 8984,
-      "Grant": 5240,
+      "Sell - Pre registration": 83146,
+      "Sale": 29441,
+      "Mortgage Registration": 23802,
+      "Delayed Sell": 8985,
+      "Grant": 5241,
       "Delayed Mortgage": 3374,
       "Portfolio Mortgage Registration": 3133,
       "Development Registration Pre-Registration": 1819,
