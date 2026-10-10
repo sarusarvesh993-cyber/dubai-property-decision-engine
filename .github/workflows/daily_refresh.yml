@@ -1,0 +1,72 @@
+name: Daily data refresh
+
+on:
+  schedule:
+    # GitHub delays or skips schedules that fire exactly on the hour (the busiest minute), so run at an
+    # off-peak minute and keep a second attempt later in the morning; daily mode is idempotent.
+    - cron: "23 2 * * *"       # 02:23 UTC = 06:23 Gulf Standard Time
+    - cron: "23 5 * * *"       # 05:23 UTC = 09:23 Gulf Standard Time (catch-up if the first was delayed)
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "Pipeline mode"
+        type: choice
+        default: daily
+        options: [daily, backfill, smoke, rebuild]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: data-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+    steps:
+      # Queued runs must start from the branch head at start time, not from the commit that queued them,
+      # otherwise a run queued behind a long backfill would rebuild from stale partitions and fail to push.
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: pipeline/requirements.txt
+
+      - name: Install pipeline dependencies
+        run: pip install -r pipeline/requirements.txt
+
+      - name: Run pipeline
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          CEREBRAS_API_KEY: ${{ secrets.CEREBRAS_API_KEY }}
+        run: python pipeline/run.py --mode "${{ github.event.inputs.mode || 'daily' }}"
+
+      - name: Commit refreshed data
+        run: |
+          git config user.name "data-refresh-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/raw data/clean data/marts web/public/data docs/data_quality.md
+          if git diff --cached --quiet; then
+            echo "No data changes."
+          else
+            git commit -m "data: refresh ${{ github.event.inputs.mode || 'daily' }} $(date -u +'%Y-%m-%d %H:%M UTC')"
+            if ! git pull --rebase --autostash origin ${{ github.ref_name }}; then
+              git rebase --abort || true
+              echo "::error::Another data commit landed during this run and the rebase conflicted. Nothing was pushed; the next scheduled run refreshes everything from the latest data."
+              exit 1
+            fi
+            git push
+          fi
+
+      - name: Publish quality report to job summary
+        if: always()
+        run: |
+          if [ -f docs/data_quality.md ]; then cat docs/data_quality.md >> "$GITHUB_STEP_SUMMARY"; fi

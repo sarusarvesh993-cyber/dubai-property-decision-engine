@@ -1,0 +1,127 @@
+import BacktestTable from "@/components/BacktestTable";
+import { getBacktest, getCrosswalk, getQuality, getSummary } from "@/lib/data";
+import { fmtDate } from "@/lib/format";
+
+export const metadata = { title: "Methodology | Dubai Property Decision Engine" };
+
+export default function MethodologyPage() {
+  const q = getQuality();
+  const s = getSummary();
+  const xw = getCrosswalk();
+  const bt = getBacktest();
+  return (
+    <>
+      <div className="page-head">
+        <div>
+          <h1>Methodology &amp; data quality</h1>
+          <p className="sub">How every number on this site is produced, and the checks that run on each refresh.</p>
+        </div>
+      </div>
+
+      <div className="grid two">
+        <div className="card prose">
+          <h2>Sources</h2>
+          <ul>
+            <li><strong>Transactions</strong>: Dubai Land Department open-data gateway: registered sales, mortgages and gifts (procedure, community, project, type, bedrooms, size, value).</li>
+            <li><strong>Rent contracts</strong>: Ejari registrations (community, project, type, size, annual rent, new/renewed, term).</li>
+            <li>Coverage: {fmtDate(s.coverage_from)} to {fmtDate(s.as_of)}. The public gateway publishes data from January 2026 onward.</li>
+          </ul>
+          <h2>Pipeline</h2>
+          <ol>
+            <li><strong>Extract</strong>: weekly windows, 5,000-row pages, monthly parquet partitions; daily job re-pulls the last 10 days to capture late registrations.</li>
+            <li><strong>Clean</strong>: full-record de-duplication (identifiers are anonymised), sizes converted from sqm to sqft, AED/sqft, room normalisation, size bands.</li>
+            <li><strong>Resolve</strong>: the two feeds name communities differently (sales say "Jumeirah Village Circle", Ejari says "Al Barsha South Fourth"). A crosswalk is derived from projects that appear in both feeds (dominant pairing with at least 3 shared projects and at least 70% of contracts) on top of a verified seed list, and applied to both feeds before any benchmark is computed. Every mapping is published below.</li>
+            <li><strong>Filter</strong>: benchmarks use <em>sales</em> only (Sale, Sell-Pre-registration, Delayed Sell, Payment-plan sale); mortgages, gifts, lease-to-own and bulk deals are excluded, and so are land plots, partial-share transfers (the registered procedure area is only a fraction of the unit, so the price covers a fraction too) and portfolio blocks (ten or more ready units in one community registered on the same day at an identical AED/sqft, a building changing hands in one lot); plausibility bounds; robust outlier flag (modified z-score on log AED/sqft above 3.5 within community, type and status). Excluded rows still count in sales volumes.</li>
+            <li><strong>Model</strong>: DuckDB SQL marts: weekly series, community summary (12 weeks vs previous 12), price bands at four levels of specificity, rent benchmarks at three levels, anomalies, top projects.</li>
+            <li><strong>Publish</strong>: compact JSON to <code>/data/*.json</code> (also usable as an open API), static Next.js site rebuilt on every data commit.</li>
+          </ol>
+          <h2>Decision rules</h2>
+          <ul>
+            <li><strong>Fair price</strong>: the asking AED/sqft is placed within the p10-p90 distribution of the most specific cell with at least {s.params.min_cell_n} sales in the last {s.params.sales_months} months. Percentile below 15 is "well below", 15 to 35 "below", 35 to 65 "in line", 65 to 85 "above", over 85 "well above".</li>
+            <li><strong>Rent check</strong>: current rent vs median of comparable Ejari contracts (last {s.params.rent_months} months). Permitted increase per Decree 43/2013 slabs: 0% when the rent is up to 10% below market, 5% (11 to 20% below), 10% (21 to 30%), 15% (31 to 40%), 20% (over 40%).</li>
+            <li><strong>Heat signal</strong>: change in median AED/sqft, last 12 weeks vs previous 12. Cooling below -5%, softening -5% to -1.5%, stable within 1.5%, warming +1.5% to +5%, heating above +5% (needs at least {s.params.min_cell_n} sales in both windows). Rankings on the home page and in Ask the data are stricter: a community needs at least {s.params.rank_min_n ?? 30} eligible sales in both windows, and each row shows its sample size and off-plan share because a 12-week median moves with the mix of what sold.</li>
+            <li><strong>Gross yield estimate</strong>: like for like. The community's dominant sale type (flats or villas) is taken and its median rent per sqft (Ejari contracts of the same type) is divided by its median price per sqft, both over the last 12 weeks. Rankings need at least {s.params.rank_min_n ?? 30} sales and {s.params.rank_min_n ?? 30} rent contracts of that type and a result between 2% and 12%. Not net of service charges or vacancy.</li>
+            <li><strong>Anomalies</strong>: eligible residential sales deviating more than 35% from the median of the finest available comparable cell.</li>
+          </ul>
+          <h2>How accurate is the fair-price estimate?</h2>
+          {bt ? (
+            <BacktestTable b={bt} />
+          ) : (
+            <p className="small">The back-test report appears after the next data refresh.</p>
+          )}
+          <h2>AI layer</h2>
+          <p>
+            The weekly market note is generated by a free-tier language model chosen at run time by a self-adapting router (it discovers which free models are
+            currently available, ranks them, and falls back to the next one or to a rules-based writer on failure). The model receives only pre-computed facts and is
+            instructed not to introduce numbers of its own.
+          </p>
+          <p>
+            The Ask the data box works the same way in three steps. First the question is parsed for community (aliases such as JVC or Downtown are understood),
+            property type, bedrooms, size and amounts. Then the matching benchmark cells are retrieved from the published files, including the same fair-price
+            and rent-check verdicts the calculators produce. Finally a rules-based answer is written from those facts and, when a free-tier key is configured,
+            a model rewrites it in plainer prose; any reply that introduces a number not present in the facts is discarded in favour of the rules answer. The
+            facts used are shown under every answer, and questions are not stored.
+          </p>
+          <h2>Limitations</h2>
+          <ul>
+            <li>Rentals feed has no bedrooms and no unit identifiers; benchmarks use size bands.</li>
+            <li>Off-plan "sales" include pre-registrations at launch prices; medians for launch-heavy communities reflect developer pricing.</li>
+            <li>Medians are mix-dependent; always read them with the sample size shown.</li>
+            <li>Indicative analytics only, not a valuation, legal or investment advice.</li>
+          </ul>
+        </div>
+
+        <div className="card">
+          <h2>Data-quality checks {q ? <span className={`chip ${q.warnings ? "warn" : "good"}`}>{q.warnings ? `${q.warnings} warning(s)` : "all passing"}</span> : null}</h2>
+          {q ? (
+            <>
+              <p className="small">Generated {q.generated_at_utc.replace("T", " ").slice(0, 16)} UTC</p>
+              <table className="data">
+                <thead>
+                  <tr><th>Check</th><th>Status</th><th style={{ textAlign: "left" }}>Detail</th></tr>
+                </thead>
+                <tbody>
+                  {q.checks.map((c) => (
+                    <tr key={c.check}>
+                      <td style={{ whiteSpace: "normal" }}>{c.check}</td>
+                      <td><span className={`chip ${c.status === "PASS" ? "good" : "warn"}`}>{c.status}</span></td>
+                      <td style={{ textAlign: "left", whiteSpace: "normal" }} className="small">{c.detail}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </>
+          ) : (
+            <p className="small">No quality report found.</p>
+          )}
+          <h3 className="mt">Community name resolution {xw ? <span className="chip">{xw.mappings.length} mappings</span> : null}</h3>
+          {xw ? (
+            <div className="table-wrap" style={{ maxHeight: 360 }}>
+              <table className="data">
+                <thead>
+                  <tr><th>Ejari / district name</th><th style={{ textAlign: "left" }}>Community used here</th><th>Method</th><th>Shared projects</th></tr>
+                </thead>
+                <tbody>
+                  {xw.mappings.map((m) => (
+                    <tr key={m.district}>
+                      <td>{m.district}</td>
+                      <td style={{ textAlign: "left" }}>{m.community}</td>
+                      <td className="small">{m.method}</td>
+                      <td className="small">{m.projects ?? "n/a"}{m.share ? `, ${(m.share * 100).toFixed(0)}%` : ""}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : null}
+          <h3 className="mt">Open data endpoints</h3>
+          <ul className="list">
+            {["summary.json", "areas.json", "price_bands.json", "rent_benchmarks.json", "anomalies.json", "projects.json", "crosswalk.json", "market_note.json", "quality.json", "meta.json"].map((f) => (
+              <li key={f}><a href={`/data/${f}`}>/data/{f}</a></li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </>
+  );
+}

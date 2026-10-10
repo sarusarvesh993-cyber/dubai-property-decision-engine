@@ -1,0 +1,23 @@
+# python
+__pycache__/
+*.pyc
+.venv/
+.env
+.pytest_cache/
+data/llm_cache/
+
+# node / next
+web/node_modules/
+web/.next/
+web/out/
+web/next-env.d.ts
+web/.vercel/
+web/.env*.local
+web/tsconfig.tsbuildinfo
+
+# os / editors
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.log

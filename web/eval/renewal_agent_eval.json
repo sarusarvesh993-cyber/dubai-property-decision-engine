@@ -1,0 +1,176 @@
+{
+  "name": "Dubai Renter Renewal Agent Evaluation Suite",
+  "version": "1.0.0",
+  "as_of": "2026-10-10",
+  "pass_threshold": 1.0,
+  "cases": [
+    {
+      "id": "TC-01-NORMAL-ZERO-INCREASE",
+      "category": "normal",
+      "description": "Notice served 120 days out, rent within 10% of median -> 0% increase permitted under Decree 43/2013",
+      "input": {
+        "area": "Dubai Marina",
+        "subType": "Flat",
+        "sizeSqft": 850,
+        "currentRent": 88000,
+        "proposedRent": 105000,
+        "contractExpiry": "2027-02-01",
+        "noticeDate": "2026-10-01",
+        "noticeMethod": "email",
+        "landlordReason": "market",
+        "threatenedEviction": false
+      },
+      "expect": {
+        "noticeCompliant": true,
+        "noticeBarred": false,
+        "effectiveSlabPct": 0,
+        "effectiveMaxNewRent": 88000,
+        "isDemandUnlawful": true,
+        "excessDemandAed": 17000,
+        "requiredLegalCitations": ["Law No. 33 of 2008", "Decree No. 43 of 2013"]
+      }
+    },
+    {
+      "id": "TC-02-PROCEDURAL-UNTIMELY-NOTICE",
+      "category": "ambiguous_or_invalid_notice",
+      "description": "Notice served 58 days prior to expiry -> Barred under Law 33/2008 Art 14; 0% increase allowed",
+      "input": {
+        "area": "Dubai Marina",
+        "subType": "Flat",
+        "sizeSqft": 850,
+        "currentRent": 85000,
+        "proposedRent": 98000,
+        "contractExpiry": "2026-12-15",
+        "noticeDate": "2026-10-18",
+        "noticeMethod": "email",
+        "landlordReason": "market",
+        "threatenedEviction": false
+      },
+      "expect": {
+        "noticeCompliant": false,
+        "noticeBarred": true,
+        "effectiveSlabPct": 0,
+        "effectiveMaxNewRent": 85000,
+        "isDemandUnlawful": true,
+        "excessDemandAed": 13000,
+        "requiredLegalCitations": ["Article 14", "90 days"]
+      }
+    },
+    {
+      "id": "TC-03-EVICTION-THREAT-UNLAWFUL",
+      "category": "eviction_threat",
+      "description": "Landlord demands +20% and threatens eviction for sale without 12-month notary notice -> flagged under Law 33/2008 Art 25",
+      "input": {
+        "area": "Business Bay",
+        "subType": "Flat",
+        "sizeSqft": 750,
+        "currentRent": 72000,
+        "proposedRent": 86400,
+        "contractExpiry": "2027-02-15",
+        "noticeDate": "2026-10-05",
+        "noticeMethod": "whatsapp",
+        "landlordReason": "sale",
+        "threatenedEviction": true
+      },
+      "expect": {
+        "noticeCompliant": true,
+        "noticeBarred": false,
+        "evictionThreatFlagged": true,
+        "notaryRequired": true,
+        "requiredLegalCitations": ["Article 25", "12 months", "Notary Public"]
+      }
+    },
+    {
+      "id": "TC-04-PARTIAL-INCREASE-ALLOWED",
+      "category": "normal_partial",
+      "description": "Rent is 26% below market median -> Decree 43/2013 permits 10% maximum increase; landlord demands 20%+",
+      "input": {
+        "area": "Jumeirah Village Circle",
+        "subType": "Flat",
+        "sizeSqft": 800,
+        "currentRent": 48000,
+        "proposedRent": 65000,
+        "contractExpiry": "2027-03-01",
+        "noticeDate": "2026-10-10",
+        "noticeMethod": "email",
+        "landlordReason": "market",
+        "threatenedEviction": false
+      },
+      "expect": {
+        "noticeCompliant": true,
+        "noticeBarred": false,
+        "effectiveSlabPct": 0.10,
+        "effectiveMaxNewRent": 52800,
+        "isDemandUnlawful": true,
+        "excessDemandAed": 12200,
+        "requiredLegalCitations": ["Decree No. 43 of 2013"]
+      }
+    },
+    {
+      "id": "TC-05-MISSING-DATA-CLARIFICATION",
+      "category": "missing_data",
+      "description": "Missing contract expiry or notice date -> Triggers clarification state, prevents silent assumptions",
+      "input": {
+        "area": "Dubai Marina",
+        "subType": "Flat",
+        "sizeSqft": 850,
+        "currentRent": 88000,
+        "proposedRent": 100000,
+        "contractExpiry": "",
+        "noticeDate": "",
+        "noticeMethod": "none",
+        "landlordReason": "market",
+        "threatenedEviction": false
+      },
+      "expect": {
+        "isMissingNoticeData": true,
+        "blocksProceduralConclusion": true
+      }
+    },
+    {
+      "id": "TC-06-UNSUPPORTED-AREA-FALLBACK",
+      "category": "unsupported_data",
+      "description": "Area with low/insufficient Ejari cell data -> Falls back safely with low-sample caveat and Smart Rental Index link",
+      "input": {
+        "area": "Al Athbah",
+        "subType": "Flat",
+        "sizeSqft": 800,
+        "currentRent": 40000,
+        "proposedRent": 50000,
+        "contractExpiry": "2027-04-01",
+        "noticeDate": "2026-10-01",
+        "noticeMethod": "email",
+        "landlordReason": "market",
+        "threatenedEviction": false
+      },
+      "expect": {
+        "handlesGracefully": true,
+        "showsOfficialSmartIndexGuidance": true
+      }
+    },
+    {
+      "id": "TC-07-ABOVE-MARKET-REDUCTION",
+      "category": "above_market",
+      "description": "Tenant rent is already above market median -> Slabs allow 0% increase and arms tenant for downward negotiation",
+      "input": {
+        "area": "Burj Khalifa",
+        "subType": "Flat",
+        "sizeSqft": 1100,
+        "currentRent": 215000,
+        "proposedRent": 230000,
+        "contractExpiry": "2027-02-28",
+        "noticeDate": "2026-10-01",
+        "noticeMethod": "email",
+        "landlordReason": "market",
+        "threatenedEviction": false
+      },
+      "expect": {
+        "noticeCompliant": true,
+        "effectiveSlabPct": 0,
+        "belowMarketPctNegative": true,
+        "effectiveMaxNewRent": 215000,
+        "isDemandUnlawful": true
+      }
+    }
+  ]
+}
