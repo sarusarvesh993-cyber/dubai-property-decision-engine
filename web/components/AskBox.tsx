@@ -40,13 +40,13 @@ export default function AskBox({ mode = "full" }: { mode?: "full" | "compact" })
     const text = question.trim();
     if (!text) return;
     if (mode === "compact") {
-      router.push(`/ask?q=${encodeURIComponent(text)}`);
+      router.push(`/renewal-agent?q=${encodeURIComponent(text)}`);
       return;
     }
     setLoading(true);
     setRes(null);
     if (typeof window !== "undefined") {
-      window.history.replaceState(null, "", `/ask?q=${encodeURIComponent(text)}`);
+      window.history.replaceState(null, "", `/renewal-agent?q=${encodeURIComponent(text)}`);
     }
     try {
       const r = await fetch("/api/ask", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ q: text }) });
@@ -59,7 +59,7 @@ export default function AskBox({ mode = "full" }: { mode?: "full" | "compact" })
     }
   }
 
-  // On /ask?q=... (for example after using the box on the home page) ask the question straight away.
+  // On /renewal-agent?q=... (for example after using the box on the home page) ask the question straight away.
   // The query string is read in the browser so the form itself is part of the static HTML.
   useEffect(() => {
     if (mode !== "full" || typeof window === "undefined") return;

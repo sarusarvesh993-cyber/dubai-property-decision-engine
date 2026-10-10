@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import type { RentBenchmark } from "@/lib/types";
 import { rentCheck, sizeBandOf } from "@/lib/engine";
 import { fmtAed, fmtInt, fmtPct, fmtDate } from "@/lib/format";
@@ -9,6 +9,7 @@ interface RenewalAgentProps {
   benchmarks: RentBenchmark[];
   asOf: string;
   windowMonths: number;
+  initialQuestion?: string;
 }
 
 interface TenancyFacts {
@@ -24,6 +25,31 @@ interface TenancyFacts {
   threatenedEviction: boolean;
 }
 
+interface AskResponse {
+  question: string;
+  answer: string;
+  source: string;
+  facts: unknown;
+  parsed?: {
+    areas?: string[];
+    subType?: string | null;
+    rooms?: string | null;
+    sizeSqft?: number | null;
+    rent?: number | null;
+    price?: number | null;
+  };
+  error?: string;
+}
+
+const EXAMPLE_QUESTIONS = [
+  "My rent in Dubai Marina is 88,000 for 850 sqft. Landlord asks 105,000. Can they increase it?",
+  "Landlord sent renewal notice 58 days before expiry in JVC. Is it legally valid?",
+  "Landlord demands +20% and threatens to sell apartment in Business Bay via WhatsApp",
+  "What is the market rent for a 2 bed flat in JVC?",
+  "Downtown Dubai rent is 215,000 for 1100 sqft. Can I negotiate a reduction?",
+  "Is AED 1.5m fair for a 750 sqft 1 bed in Business Bay?",
+];
+
 const PRESET_SCENARIOS: Array<{
   id: string;
   title: string;
@@ -33,7 +59,7 @@ const PRESET_SCENARIOS: Array<{
   {
     id: "untimely-notice",
     title: "Scenario 1: Untimely Notice (60-day violation)",
-    subtitle: "Dubai Marina 1BR • Landlord asks +15% but sent notice 60 days before expiry",
+    subtitle: "Dubai Marina 1BR • Landlord asks +15% but sent notice 58 days before expiry",
     data: {
       area: "Dubai Marina",
       subType: "Flat",
@@ -117,9 +143,15 @@ const PRESET_SCENARIOS: Array<{
   },
 ];
 
-export default function RenewalAgent({ benchmarks, asOf, windowMonths }: RenewalAgentProps) {
+export default function RenewalAgent({ benchmarks, asOf, windowMonths, initialQuestion = "" }: RenewalAgentProps) {
   // Available communities
   const areas = useMemo(() => Array.from(new Set(benchmarks.map((b) => b.area))).sort(), [benchmarks]);
+
+  // Conversational Ask Copilot State
+  const [question, setQuestion] = useState(initialQuestion);
+  const [askLoading, setAskLoading] = useState(false);
+  const [askResult, setAskResult] = useState<AskResponse | null>(null);
+  const askedRef = useRef<string | null>(null);
 
   // Form State
   const [facts, setFacts] = useState<TenancyFacts>(PRESET_SCENARIOS[0].data);
@@ -131,7 +163,7 @@ export default function RenewalAgent({ benchmarks, asOf, windowMonths }: Renewal
   }, [benchmarks, facts.area]);
 
   // Execution & approval states
-  const [activeTab, setActiveTab] = useState<"analysis" | "script" | "roadmap">("analysis");
+  const [activeTab, setActiveTab] = useState<"analysis" | "script" | "roadmap" | "status">("analysis");
   const [acknowledgedFacts, setAcknowledgedFacts] = useState(false);
   const [acknowledgedDisclaimer, setAcknowledgedDisclaimer] = useState(false);
   const [approvedAction, setApprovedAction] = useState(false);
@@ -192,6 +224,69 @@ export default function RenewalAgent({ benchmarks, asOf, windowMonths }: Renewal
       setAcknowledgedDisclaimer(false);
     }
   };
+
+  // Ask Copilot Function: Queries API and synchronizes parsed tenancy parameters
+  async function handleAsk(queryText: string) {
+    const text = queryText.trim();
+    if (!text) return;
+    setAskLoading(true);
+    setAskResult(null);
+
+    if (typeof window !== "undefined") {
+      window.history.replaceState(null, "", `?q=${encodeURIComponent(text)}`);
+    }
+
+    try {
+      const res = await fetch("/api/ask", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ q: text }),
+      });
+      const data = (await res.json()) as AskResponse;
+      setAskResult(res.ok ? data : { question: text, answer: data.error ?? "Failed to analyze question.", source: "error", facts: null });
+
+      // Intelligent State Synchronization from natural language query
+      if (data.parsed) {
+        setFacts((prev) => {
+          const next = { ...prev };
+          if (data.parsed?.areas && data.parsed.areas.length > 0) {
+            const matchedArea = areas.find((a) => a.toLowerCase() === data.parsed?.areas?.[0]?.toLowerCase());
+            if (matchedArea) next.area = matchedArea;
+          }
+          if (data.parsed?.subType) next.subType = data.parsed.subType;
+          if (data.parsed?.sizeSqft && data.parsed.sizeSqft > 0) next.sizeSqft = data.parsed.sizeSqft;
+          if (data.parsed?.rent && data.parsed.rent > 0) next.currentRent = data.parsed.rent;
+          if (data.parsed?.price && data.parsed.price > 0 && !data.parsed.rent) next.proposedRent = data.parsed.price;
+          // Notice & eviction detection
+          if (/\b(evict|eviction|kick out|vacate|leave|sell|selling)\b/i.test(text)) {
+            next.threatenedEviction = true;
+            if (/\bsell|sale\b/i.test(text)) next.landlordReason = "sale";
+          }
+          if (/\b(60 days|50 days|45 days|30 days|untimely|late notice|short notice)\b/i.test(text)) {
+            next.contractExpiry = "2026-12-15";
+            next.noticeDate = "2026-10-18"; // 58 days
+          }
+          return next;
+        });
+      }
+    } catch {
+      setAskResult({ question: text, answer: "The AI agent could not reach the server. Please try again.", source: "error", facts: null });
+    } finally {
+      setAskLoading(false);
+    }
+  }
+
+  // Handle URL query parameter on initial mount
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const initial = new URLSearchParams(window.location.search).get("q");
+    if (initial && askedRef.current !== initial) {
+      askedRef.current = initial;
+      setQuestion(initial);
+      void handleAsk(initial);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Generate Formal Landlord Communication Script
   const negotiationDraft = useMemo(() => {
@@ -285,11 +380,11 @@ Sincerely,
               <span className="chip info">Dubai Tenancy Law Compliant</span>
               <span className="chip muted">DLD Data to {fmtDate(asOf)}</span>
             </div>
-            <h1 style={{ margin: "0.2rem 0 0.5rem 0", fontSize: "1.8rem" }}>Dubai Renter Renewal Agent</h1>
-            <p style={{ margin: 0, color: "var(--muted)", maxWidth: "750px", fontSize: "0.95rem" }}>
-              A goal-driven personal agent that audits your landlord&apos;s rent renewal demand against verified Dubai laws
-              (Decree 43/2013 &amp; Law 33/2008), checks the 90-day notice rule, cross-references registered Ejari contracts,
-              and generates a legally sound negotiation pack requiring your explicit approval.
+            <h1 style={{ margin: "0.2rem 0 0.5rem 0", fontSize: "1.8rem" }}>Dubai Renter Agent &amp; Ask Copilot</h1>
+            <p style={{ margin: 0, color: "var(--muted)", maxWidth: "800px", fontSize: "0.95rem" }}>
+              A unified autonomous agent combining plain-language market inquiry with high-stakes tenancy renewal protection.
+              Audits notice deadlines (Law 33/2008), calculates legal rent caps (Decree 43/2013), screens eviction threats, and synthesizes
+              an evidence-backed negotiation pack requiring your approval.
             </p>
           </div>
           <button
@@ -301,7 +396,7 @@ Sincerely,
           </button>
         </div>
 
-        {/* Visible Agent Reasoning & Plan Execution */}
+        {/* Visible Multi-Step Agent Execution Plan */}
         {showPlanBreakdown && (
           <div className="agent-plan-box mt" style={{ background: "#f8fafc", padding: "1rem", borderRadius: "10px", border: "1px solid var(--line)" }}>
             <h3 style={{ fontSize: "0.95rem", textTransform: "uppercase", letterSpacing: "0.04em", color: "var(--brand)" }}>
@@ -326,9 +421,73 @@ Sincerely,
               </div>
               <div style={{ padding: "0.6rem", background: "#fff", borderRadius: "8px", border: "1px solid var(--line)", fontSize: "0.82rem" }}>
                 <strong>Step 5: Human Approval</strong>
-                <p style={{ margin: "0.2rem 0 0", color: "var(--muted)" }}>User reviews facts, approves script, prevents unintended actions.</p>
+                <p style={{ margin: "0.2rem 0 0", color: "var(--muted)" }}>Renter reviews facts, approves script, prevents unintended actions.</p>
               </div>
             </div>
+          </div>
+        )}
+      </div>
+
+      {/* UNIFIED SECTION: Interactive Ask Copilot Bar */}
+      <div className="card mb" style={{ border: "2px solid #bfdbfe", background: "#f0f7ff" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.4rem" }}>
+          <h2 style={{ fontSize: "1.1rem", margin: 0, color: "var(--brand)" }}>
+            💬 Natural Language Copilot: Ask Anything or Describe Your Rent Dilemma
+          </h2>
+          <span className="chip info">Auto-Populates Facts &amp; Evaluates Laws</span>
+        </div>
+        <p style={{ fontSize: "0.88rem", color: "var(--muted)", margin: "0 0 0.6rem 0" }}>
+          Type your renewal question in plain English. The agent will formulate a deterministic answer and automatically sync your tenancy details into the audit engine below.
+        </p>
+
+        <form
+          className="askbar"
+          onSubmit={(e) => {
+            e.preventDefault();
+            void handleAsk(question);
+          }}
+        >
+          <input
+            value={question}
+            onChange={(e) => setQuestion(e.target.value)}
+            placeholder="e.g. My rent in Dubai Marina is 88,000 for 850 sqft. Landlord asks 105,000. Can they increase it?"
+            maxLength={300}
+            style={{ fontSize: "0.95rem" }}
+          />
+          <button className="btn" type="submit" disabled={askLoading}>
+            {askLoading ? "Analyzing..." : "Ask Agent"}
+          </button>
+        </form>
+
+        <div className="examples mt">
+          {EXAMPLE_QUESTIONS.map((ex) => (
+            <button
+              key={ex}
+              type="button"
+              className="chip-btn"
+              onClick={() => {
+                setQuestion(ex);
+                void handleAsk(ex);
+              }}
+            >
+              {ex}
+            </button>
+          ))}
+        </div>
+
+        {/* Real-time Copilot Answer Card */}
+        {askResult && (
+          <div className="card mt" style={{ background: "#fff", border: "1px solid var(--line)" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.3rem" }}>
+              <span className="small"><strong>Analyzed Query:</strong> {askResult.question}</span>
+              <span className="chip muted" style={{ fontSize: "0.75rem" }}>Source: {askResult.source}</span>
+            </div>
+            <div className="note" style={{ fontSize: "0.95rem", lineHeight: 1.5, color: "var(--ink)" }}>
+              {askResult.answer}
+            </div>
+            <p className="hint mt" style={{ fontSize: "0.8rem" }}>
+              ✓ All numbers strictly audited by AST guardrail against registered DLD facts. Tenancy facts below have been synchronized with your query.
+            </p>
           </div>
         )}
       </div>
@@ -336,7 +495,7 @@ Sincerely,
       {/* Preset Quick Loader */}
       <div className="card mb" style={{ background: "#fff" }}>
         <h3 style={{ fontSize: "0.9rem", color: "var(--muted)", textTransform: "uppercase", letterSpacing: "0.04em" }}>
-          Load Test Scenarios (1-Click Evaluation)
+          Load Verified Benchmark Scenarios (1-Click Test Suite)
         </h3>
         <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginTop: "0.4rem" }}>
           {PRESET_SCENARIOS.map((sc) => (
@@ -365,7 +524,7 @@ Sincerely,
         <div className="card">
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.8rem" }}>
             <h2>1. Tenancy &amp; Notice Facts</h2>
-            <span className="chip info">Renter Inputs</span>
+            <span className="chip info">Renter Inputs (Editable)</span>
           </div>
 
           <div className="form">

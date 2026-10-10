@@ -5,10 +5,9 @@ import { usePathname } from "next/navigation";
 
 const LINKS = [
   { href: "/", label: "Market pulse" },
-  { href: "/renewal-agent", label: "✨ Renter Agent (New)" },
+  { href: "/renewal-agent", label: "✨ AI Agent & Copilot" },
   { href: "/rent-check", label: "Rent check" },
   { href: "/fair-price", label: "Fair price" },
-  { href: "/ask", label: "Ask" },
   { href: "/communities", label: "Communities" },
   { href: "/anomalies", label: "Anomalies" },
   { href: "/methodology", label: "Methodology" },
@@ -16,6 +15,8 @@ const LINKS = [
 
 export default function Nav() {
   const path = usePathname();
+  const isAgentActive = path === "/renewal-agent" || path === "/ask";
+
   return (
     <header className="nav">
       <div className="nav-inner">
@@ -28,8 +29,8 @@ export default function Nav() {
             <Link
               key={l.href}
               href={l.href}
-              className={path === l.href ? "active" : undefined}
-              style={l.href === "/renewal-agent" ? { fontWeight: 700, color: "#fff", background: "rgba(200, 162, 74, 0.3)" } : undefined}
+              className={l.href === "/renewal-agent" ? (isAgentActive ? "active" : undefined) : (path === l.href ? "active" : undefined)}
+              style={l.href === "/renewal-agent" ? { fontWeight: 700, color: "#fff", background: "rgba(200, 162, 74, 0.35)", border: "1px solid rgba(255, 255, 255, 0.3)" } : undefined}
             >
               {l.label}
             </Link>
