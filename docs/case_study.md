@@ -16,6 +16,7 @@ The project turns the official Dubai Land Department (DLD) feeds into four every
 |---|---|---|
 | Is this asking price fair? | buyers, brokers, valuers | percentile of the asking AED/sqft inside the comparable registered sales, a p25 to p75 fair range for the unit's size, evidence count and confidence, a negotiation brief |
 | Can my landlord raise the rent, and by how much? | tenants, landlords, property managers | market median from Ejari contracts of the same community, type and size band, the permitted increase under Decree 43/2013 slabs, and the resulting ceiling |
+| How do I prepare my renewal defense? | tenants, personal agents | interactive Renewal Agent (`/renewal-agent`) auditing notice timing (90-day statutory default or custom agreed terms), delivery channel checks, Decree 43 indicative brackets, eviction defense screening (Law 33/2008 Art. 25), and reactive counter-letter generation with human approval |
 | Which communities are heating up or cooling down? | investors, developers, lenders | 12-week versus previous 12-week change in median AED/sqft with sample sizes, off-plan share, rent medians and gross-yield estimates |
 | What looks mispriced? | analysts, compliance, valuers | registered sales more than 35% away from their comparable cell median |
 

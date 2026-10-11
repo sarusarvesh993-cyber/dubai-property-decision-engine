@@ -142,10 +142,10 @@ export default function Home() {
           <span className={`chip ${note?.source.startsWith("rules") ? "muted" : "info"}`}>
             {note
               ? note.source === "rules"
-                ? "rules-based (no LLM key configured)"
+                ? "rules-based (deterministic)"
                 : note.source.startsWith("rules")
-                  ? `rules-based (${note.source.replace(/^rules \(/, "").replace(/\)$/, "")})`
-                  : `written by ${note.source}`
+                  ? "rules-based (verified data)"
+                  : `AI-assisted (${note.source})`
               : "not generated"}
           </span>
         </h2>

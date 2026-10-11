@@ -34,4 +34,5 @@ jobs:
       - run: npm ci
       - run: npm run typecheck
       - run: npm run eval:ask
+      - run: npm run eval:renewal
       - run: npm run build

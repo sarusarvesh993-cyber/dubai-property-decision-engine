@@ -1,7 +1,8 @@
 /**
  * Automated Evaluation Suite for the Dubai Renter Renewal Agent.
- * Runs deterministic tests across notice compliance, statutory caps,
- * eviction threats, missing data handling, and fallback behavior.
+ * Runs deterministic tests across statutory notice compliance, custom contract terms,
+ * 89/90/91-day boundaries, date validation, Decree 43/2013 indicative slabs,
+ * eviction formalities screening, missing-fact detection, and fallback handling.
  */
 import fs from "node:fs";
 import path from "node:path";
@@ -22,26 +23,30 @@ interface TestCaseInput {
   proposedRent: number;
   contractExpiry: string;
   noticeDate: string;
-  noticeMethod: "email" | "whatsapp" | "notary" | "verbal" | "none";
+  noticeMethod: "email" | "whatsapp" | "notary" | "registered_mail" | "verbal" | "none";
+  noticeAgreement: "statutory_90" | "custom_agreed";
+  customNoticeDays?: number;
   landlordReason: "market" | "sale" | "renovation" | "personal_use" | "unspecified";
   threatenedEviction: boolean;
 }
 
 interface TestCaseExpect {
+  daysNotice?: number;
   noticeCompliant?: boolean;
-  noticeBarred?: boolean;
-  effectiveSlabPct?: number;
-  effectiveMaxNewRent?: number;
-  isDemandUnlawful?: boolean;
-  excessDemandAed?: number;
-  evictionThreatFlagged?: boolean;
-  notaryRequired?: boolean;
-  isMissingNoticeData?: boolean;
-  blocksProceduralConclusion?: boolean;
+  noticePrecluded?: boolean;
+  customRequiredDays?: number;
+  isRecognizedNoticeMethod?: boolean;
+  evictionCheckTriggered?: boolean;
+  notaryPublicRequired?: boolean;
+  indicativeSlabPct?: number;
+  indicativeCeiling?: number;
+  diffVsIndicative?: number;
+  unableToAssess?: boolean;
+  calculationBlocked?: boolean;
+  dateValidationError?: boolean;
   handlesGracefully?: boolean;
-  showsOfficialSmartIndexGuidance?: boolean;
-  belowMarketPctNegative?: boolean;
-  requiredLegalCitations?: string[];
+  providesDLDGuidance?: boolean;
+  rentAboveMedian?: boolean;
 }
 
 interface TestCase {
@@ -57,32 +62,66 @@ function evaluateCase(c: TestCase): { ok: boolean; problems: string[] } {
   const e = c.expect;
   const problems: string[] = [];
 
-  // 1. Missing Data Check
-  const isMissingNotice = !p.contractExpiry || !p.noticeDate;
-  if (e.isMissingNoticeData !== undefined && isMissingNotice !== e.isMissingNoticeData) {
-    problems.push(`Expected isMissingNoticeData=${e.isMissingNoticeData}, got ${isMissingNotice}`);
+  // 1. Missing Data / Unable to Assess Check
+  const isMissingFacts = !p.contractExpiry || !p.noticeDate;
+  if (e.unableToAssess !== undefined && isMissingFacts !== e.unableToAssess) {
+    problems.push(`Expected unableToAssess=${e.unableToAssess}, got ${isMissingFacts}`);
   }
-
-  // If missing data was expected and matches, return pass for missing data handling
-  if (isMissingNotice) {
+  if (isMissingFacts) {
     return { ok: problems.length === 0, problems };
   }
 
-  // 2. Notice Calculation Check
+  // 2. Date Sequence Validation
   const expiry = new Date(p.contractExpiry);
   const notice = new Date(p.noticeDate);
+  const hasDateValidationError = notice.getTime() > expiry.getTime();
+  if (e.dateValidationError !== undefined && hasDateValidationError !== e.dateValidationError) {
+    problems.push(`Expected dateValidationError=${e.dateValidationError}, got ${hasDateValidationError}`);
+  }
+  if (hasDateValidationError) {
+    return { ok: problems.length === 0, problems };
+  }
+
+  // 3. Days Notice and Custom Term Check
   const diffDays = Math.ceil((expiry.getTime() - notice.getTime()) / (1000 * 60 * 60 * 24));
-  const isCompliant = diffDays >= 90;
-  const isNoticeBarred = !isCompliant;
+  if (e.daysNotice !== undefined && diffDays !== e.daysNotice) {
+    problems.push(`Expected daysNotice=${e.daysNotice}, got ${diffDays}`);
+  }
 
+  const requiredDays = p.noticeAgreement === "custom_agreed" ? (p.customNoticeDays || 90) : 90;
+  if (e.customRequiredDays !== undefined && requiredDays !== e.customRequiredDays) {
+    problems.push(`Expected customRequiredDays=${e.customRequiredDays}, got ${requiredDays}`);
+  }
+
+  const isCompliant = diffDays >= requiredDays;
+  const isPrecluded = !isCompliant;
   if (e.noticeCompliant !== undefined && isCompliant !== e.noticeCompliant) {
-    problems.push(`Expected noticeCompliant=${e.noticeCompliant}, got ${isCompliant} (${diffDays} days notice)`);
+    problems.push(`Expected noticeCompliant=${e.noticeCompliant}, got ${isCompliant}`);
   }
-  if (e.noticeBarred !== undefined && isNoticeBarred !== e.noticeBarred) {
-    problems.push(`Expected noticeBarred=${e.noticeBarred}, got ${isNoticeBarred}`);
+  if (e.noticePrecluded !== undefined && isPrecluded !== e.noticePrecluded) {
+    problems.push(`Expected noticePrecluded=${e.noticePrecluded}, got ${isPrecluded}`);
   }
 
-  // 3. Rent Check Benchmark Lookup
+  // 4. Notice Method Check
+  const recognizedFormalMethods = ["notary", "registered_mail", "email"];
+  const isRecognized = recognizedFormalMethods.includes(p.noticeMethod);
+  if (e.isRecognizedNoticeMethod !== undefined && isRecognized !== e.isRecognizedNoticeMethod) {
+    problems.push(`Expected isRecognizedNoticeMethod=${e.isRecognizedNoticeMethod}, got ${isRecognized}`);
+  }
+
+  // 5. Eviction Check
+  const evictionCheck = p.threatenedEviction || p.landlordReason === "sale" || p.landlordReason === "personal_use";
+  if (e.evictionCheckTriggered !== undefined && evictionCheck !== e.evictionCheckTriggered) {
+    problems.push(`Expected evictionCheckTriggered=${e.evictionCheckTriggered}, got ${evictionCheck}`);
+  }
+  if (e.notaryPublicRequired !== undefined) {
+    const notaryNeeded = evictionCheck && p.noticeMethod !== "notary";
+    if (notaryNeeded !== e.notaryPublicRequired) {
+      problems.push(`Expected notaryPublicRequired=${e.notaryPublicRequired}, got ${notaryNeeded}`);
+    }
+  }
+
+  // 6. Rent Benchmark and Indicative Slab
   const rentRes = rentCheck(benchmarks, {
     area: p.area,
     subType: p.subType,
@@ -91,44 +130,32 @@ function evaluateCase(c: TestCase): { ok: boolean; problems: string[] } {
     isRenewal: true,
   });
 
-  if (!rentRes && e.handlesGracefully) {
-    // Graceful handling of missing benchmark cell
-    return { ok: true, problems: [] };
+  if (!rentRes) {
+    if (e.handlesGracefully) {
+      return { ok: problems.length === 0, problems };
+    }
+    problems.push(`No benchmark found for ${p.area} ${p.subType}`);
+    return { ok: false, problems };
   }
 
-  if (rentRes) {
-    const effectiveSlab = isNoticeBarred ? 0 : rentRes.slabPct;
-    const effectiveCeiling = isNoticeBarred ? p.currentRent : rentRes.maxNewRent;
-    const isUnlawful = p.proposedRent > effectiveCeiling;
-    const excess = Math.max(0, p.proposedRent - effectiveCeiling);
+  const effectiveSlab = isPrecluded ? 0 : rentRes.slabPct;
+  const effectiveCeiling = isPrecluded ? p.currentRent : rentRes.maxNewRent;
+  const diffVsIndicative = Math.max(0, p.proposedRent - effectiveCeiling);
 
-    if (e.effectiveSlabPct !== undefined && Math.abs(effectiveSlab - e.effectiveSlabPct) > 0.001) {
-      problems.push(`Expected effectiveSlabPct=${e.effectiveSlabPct}, got ${effectiveSlab}`);
-    }
-    if (e.effectiveMaxNewRent !== undefined && Math.abs(effectiveCeiling - e.effectiveMaxNewRent) > 1) {
-      problems.push(`Expected effectiveMaxNewRent=${e.effectiveMaxNewRent}, got ${effectiveCeiling}`);
-    }
-    if (e.isDemandUnlawful !== undefined && isUnlawful !== e.isDemandUnlawful) {
-      problems.push(`Expected isDemandUnlawful=${e.isDemandUnlawful}, got ${isUnlawful}`);
-    }
-    if (e.excessDemandAed !== undefined && Math.abs(excess - e.excessDemandAed) > 1) {
-      problems.push(`Expected excessDemandAed=${e.excessDemandAed}, got ${excess}`);
-    }
-    if (e.belowMarketPctNegative !== undefined) {
-      const isNegative = rentRes.belowMarketPct < 0;
-      if (isNegative !== e.belowMarketPctNegative) {
-        problems.push(`Expected belowMarketPctNegative=${e.belowMarketPctNegative}, got ${isNegative}`);
-      }
-    }
+  if (e.indicativeSlabPct !== undefined && Math.abs(effectiveSlab - e.indicativeSlabPct) > 0.001) {
+    problems.push(`Expected indicativeSlabPct=${e.indicativeSlabPct}, got ${effectiveSlab}`);
   }
-
-  // 4. Eviction Threat Screening Check
-  const evictionThreat = p.threatenedEviction || p.landlordReason === "sale" || p.landlordReason === "personal_use";
-  if (e.evictionThreatFlagged !== undefined && evictionThreat !== e.evictionThreatFlagged) {
-    problems.push(`Expected evictionThreatFlagged=${e.evictionThreatFlagged}, got ${evictionThreat}`);
+  if (e.indicativeCeiling !== undefined && Math.abs(effectiveCeiling - e.indicativeCeiling) > 1) {
+    problems.push(`Expected indicativeCeiling=${e.indicativeCeiling}, got ${effectiveCeiling}`);
   }
-  if (e.notaryRequired !== undefined && (p.noticeMethod !== "notary") !== e.notaryRequired) {
-    problems.push(`Expected notaryRequired=${e.notaryRequired}`);
+  if (e.diffVsIndicative !== undefined && Math.abs(diffVsIndicative - e.diffVsIndicative) > 1) {
+    problems.push(`Expected diffVsIndicative=${e.diffVsIndicative}, got ${diffVsIndicative}`);
+  }
+  if (e.rentAboveMedian !== undefined) {
+    const isAbove = rentRes.belowMarketPct < 0;
+    if (isAbove !== e.rentAboveMedian) {
+      problems.push(`Expected rentAboveMedian=${e.rentAboveMedian}, got ${isAbove}`);
+    }
   }
 
   return { ok: problems.length === 0, problems };

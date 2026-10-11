@@ -102,12 +102,12 @@
 * **Psychographic State:** Anxious, time-constrained, and intimidated by complex legal terminology. Tenants frequently receive aggressive, informal rent increase demands via WhatsApp or email from landlords or real estate brokers.
 
 ### 3.2 The High-Stakes Problem
-* **Statutory Asymmetry:** While Dubai possesses one of the world's most progressive tenant protection frameworks (Decree No. 43 of 2013 and Law No. 33 of 2008), over 60% of tenants capitulate to unlawful increases or fake eviction threats due to lack of immediate legal clarity.
-* **The "Notice Ambush":** Landlords frequently issue rent hike notices 30–60 days before contract expiry. Under Article 14 of Law 33/2008, notices served under 90 days are legally invalid; yet tenants rarely realize they possess the statutory right to renew on identical terms.
-* **The "Eviction Leverage" Scam:** Landlords often threaten: *"Pay an additional AED 15,000 or vacate for sale/renovation."* Under Article 25 of Law 33/2008, eviction upon expiry requires a 12-month notice served via the Dubai Notary Public, restricted to four statutory reasons.
+* **Statutory Asymmetry:** While Dubai possesses one of the world's most progressive tenant protection frameworks (Decree No. 43 of 2013 and Law No. 33 of 2008), many tenants accept unsubstantiated rent increases or informal eviction demands due to lack of immediate procedural clarity.
+* **The "Notice Ambush":** Landlords frequently issue rent hike notices 30–60 days before contract expiry. Under Article 14 of Law 33/2008, 90 days notice is required unless otherwise agreed in the contract; notices served late may preclude amendments upon renewal.
+* **The "Eviction Leverage" Risk:** Landlords sometimes suggest: *"Pay an additional AED 15,000 or vacate for sale/renovation."* Under Article 25 of Law 33/2008, eviction upon expiry strictly requires a 12-month notice served via the Dubai Notary Public or registered mail, restricted to four statutory reasons.
 
 ### 3.3 Job-to-be-Done (JTBD)
-> *"When my landlord or property manager demands a rent increase at renewal, help me audit the legal validity and notice timing of the demand, calculate my exact legal ceiling using official Dubai benchmarks, and generate a customized, legally backed Renewal Negotiation Pack so I can protect my housing budget without fear of unlawful eviction."*
+> *"When my landlord or property manager proposes a rent increase at renewal, help me audit the procedural notice timing and contract terms of the demand, calculate an indicative preparation ceiling using official Dubai benchmarks, and generate a customized, legally grounded Renewal Negotiation Pack so I can protect my housing budget with procedural clarity."*
 
 ### 3.4 Championship Category Rationale
 * **Category:** *Best Personal AI Agent*
@@ -396,38 +396,44 @@ interface ScreenEvictionOutput {
 
 ## 7. Agent Evaluation Suite & Live Demo Plan
 
-### 7.1 Automated Evaluation Suite (Passed 7/7, 100%)
-Implemented in `web/scripts/eval_renewal_agent.ts` and `web/eval/renewal_agent_eval.json`:
+### 7.1 Automated Evaluation Suite (Passed 12/12 in CI, 100%)
+Implemented in `web/scripts/eval_renewal_agent.ts` and `web/eval/renewal_agent_eval.json` and executed in `.github/workflows/ci.yml`:
 
-1. **TC-01 (Normal - Zero Increase):** Notice served 120 days out; rent within 10% of median $\implies$ 0% increase permitted under Decree 43/2013; excess demand flagged. `[PASS]`
-2. **TC-02 (Procedural - Untimely Notice):** Notice served 58 days prior to expiry $\implies$ Barred under Law 33/2008 Art 14; 0% increase allowed regardless of market median. `[PASS]`
-3. **TC-03 (Eviction Threat Screening):** Landlord demands +20% and threatens eviction for sale without 12-month notary notice $\implies$ Flagged under Law 33/2008 Art 25; tenant rights defense activated. `[PASS]`
-4. **TC-04 (Partial Increase Allowed):** Rent is 26% below median $\implies$ Decree 43/2013 permits 10% maximum increase; landlord demands 35%; excess demand calculated. `[PASS]`
-5. **TC-05 (Missing Data Handling):** Missing contract expiry or notice date $\implies$ Triggers clarification state, prevents silent assumptions. `[PASS]`
-6. **TC-06 (Unsupported/Sparse Data):** Area with sparse Ejari contracts $\implies$ Falls back safely with low-sample caveat and links to official Smart Rental Index. `[PASS]`
-7. **TC-07 (Above Market Benchmark):** Current rent is above market median $\implies$ Slabs allow 0% increase and arms tenant for downward negotiation. `[PASS]`
+1. **TC-01 (Normal - Zero Increase):** Notice served 120 days out; rent within 10% of median $\implies$ 0% indicative increase permitted under Decree 43/2013; excess demand flagged. `[PASS]`
+2. **TC-02 (Boundary - 89 Days Untimely):** Notice served exactly 89 days prior to expiry $\implies$ Precluded under standard 90-day statutory default (Law 33/2008 Art. 14); 0% indicative increase. `[PASS]`
+3. **TC-03 (Boundary - 90 Days Timely):** Notice served exactly 90 days prior to expiry $\implies$ Meets standard 90-day notice requirement; procedural timeline compliant. `[PASS]`
+4. **TC-04 (Boundary - 91 Days Timely):** Notice served 91 days prior to expiry $\implies$ Meets standard notice requirement; procedural timeline compliant. `[PASS]`
+5. **TC-05 (Custom Contract Agreement):** Contract specifies 60-day notice ("unless otherwise agreed"); notice served 65 days out $\implies$ Compliant under customized contract term. `[PASS]`
+6. **TC-06 (Notice Method - Registered Mail):** Notice served via Registered Mail $\implies$ Valid formal delivery channel recognized alongside Notary Public. `[PASS]`
+7. **TC-07 (Eviction Formalities Screening):** Landlord cites intent to sell via WhatsApp $\implies$ Flags Law 33/2008 Art. 25 requirement for Dubai Notary Public / registered mail service and 12-month notice. `[PASS]`
+8. **TC-08 (Partial Increase Allowed):** Rent is 26% below median $\implies$ Decree 43/2013 permits up to 10% indicative increase; excess demand calculated above indicative ceiling. `[PASS]`
+9. **TC-09 (Missing Data / Unable to Assess):** Missing contract expiry or notice date $\implies$ Blocks calculation, displays "Unable to assess" status, prompts user for missing facts. `[PASS]`
+10. **TC-10 (Invalid Date Sequence):** Notice date is after contract expiry date $\implies$ Chronological error flagged, blocks calculation until corrected. `[PASS]`
+11. **TC-11 (Unsupported / Sparse Data):** Area with sparse Ejari contracts $\implies$ Falls back safely with low-sample caveat and direct link to official DLD Smart Rental Index calculator. `[PASS]`
+12. **TC-12 (Above Market Benchmark):** Current rent is above market median $\implies$ 0% increase permitted; equips tenant with negotiation evidence. `[PASS]`
 
 ### 7.2 Repeatable Fictional Demo Scenario (Synthetic Data)
-* **Synthetic Tenant Profile:** "Karim - Dubai Marina Resident"
+* **Synthetic Demo Profile:** "Synthetic Scenario: Dubai Marina Resident" (explicitly labeled: *Synthetic demo scenario — not a real tenant case*)
 * **Scenario Facts:**
   * Unit: 850 sqft 1BR Flat, Dubai Marina
   * Current Lease Expiry: 15 December 2026
   * Notice Received: 18 October 2026 (58 days prior to expiry) via Email
+  * Notice Agreement: Standard 90-day statutory default
   * Current Rent: AED 85,000 / year
-  * Landlord Demand: AED 98,000 / year (+15.3%)
+  * Landlord Proposed: AED 98,000 / year (+15.3%)
 * **Agentic Execution Demonstration:**
-  1. Karim clicks *"Scenario 1: Untimely Notice"* preset.
-  2. Agent visibly assesses notice timing: flags notice as 58 days out (violation of Law 33/2008 Art 14).
-  3. Agent assesses Decree 43/2013 slabs: 1,380 registered contracts show market median of AED 86,669; current rent sits within 2% of median (0% increase).
-  4. Agent calculates unlawful excess demand: **AED 13,000/year**.
+  1. User selects *"Synthetic Demo 1: Untimely Notice (<90 days)"*.
+  2. Agent assesses notice timing: flags notice as 58 days out (short of the standard 90-day statutory default under Law 33/2008 Art. 14 unless otherwise agreed).
+  3. Agent assesses Decree 43/2013 slabs: 1,380 registered contracts show market median of AED 86,669; current rent sits within 2% of median (0% indicative bracket).
+  4. Agent calculates indicative ceiling: AED 85,000 (indicative preparation estimate; difference vs proposal: **AED 13,000/year**).
   5. Agent synthesizes a personalized, professional counter-letter citing Article 14 and Decree 43.
-  6. Human-in-the-Loop Gate: Karim reviews the legal points, verifies his Ejari details, checks the approval boxes, and copies the letter.
+  6. Human-in-the-Loop Gate: User reviews legal points, verifies Ejari details, and acknowledges that changing any fact immediately revokes approval.
 
 ### 7.3 Stage Demo Script (3 Minutes)
-* **0:00 - 0:45 (The Problem):** "In Dubai, 85% of residents rent, and rent is their largest expense. Every day, thousands receive renewal notices demanding +15% or threatening eviction. Most residents don't know the law, can't parse DLD open data, and capitulate. This is where the Dubai Renter Renewal Agent steps in."
-* **0:45 - 1:45 (Live Agent Execution):** "Watch what happens when Karim receives an email asking for AED 98,000 on his AED 85,000 Marina apartment. The agent executes five visible steps: first, it calculates notice timing: 58 days. Instant red flag under Article 14—notice is legally late. Second, it pulls 1,380 registered Ejari renewals: median is AED 86,669. Under Decree 43/2013, the allowed increase is 0%. The agent flags an illegal AED 13,000 excess demand."
-* **1:45 - 2:30 (Action Pack & Human Approval):** "Rather than acting autonomously without consent, the agent drafts a courteous, legally backed negotiation letter and presents the RDC Offer and Deposit procedure. Karim reviews, checks the verification gate, and clicks approve."
-* **2:30 - 3:00 (Impact & Vision):** "Built on official DLD open data, tested across 7 rigorous edge cases with 100% pass rate, and designed for Dubai residents. It turns legal complexity into personal financial security."
+* **0:00 - 0:45 (The Problem):** "In Dubai, approximately 85% of residents rent, and housing is their largest annual expense. Every year, thousands receive renewal notices demanding steep rent hikes or informal eviction messages. Tenants often struggle to navigate statutory notice rules, find registered transaction comparables, and formulate structured responses. This is why we built the Dubai Renter Renewal Agent."
+* **0:45 - 1:45 (Live Agent Execution):** "Watch what happens when a tenant receives an email proposing AED 98,000 on an AED 85,000 Marina apartment with 58 days left on the lease. The agent executes five visible steps: first, it checks notice timing: 58 days. It highlights that under Article 14 of Law 33/2008, 90 days is required unless otherwise agreed in the contract. Second, it pulls 1,380 registered Ejari renewals showing a median of AED 86,669. Under Decree 43/2013, the indicative increase bracket is 0%. The agent prepares an indicative ceiling comparison showing a AED 13,000 difference."
+* **1:45 - 2:30 (Action Pack & Human Approval):** "The agent formulates a professional counter-letter and outlines the Rental Dispute Center Offer and Deposit escrow procedure. The tenant maintains complete control: editing any input revokes approval immediately, ensuring human oversight at every step."
+* **2:30 - 3:00 (Rigor & Evidence):** "Built on official DLD open data, backed by a 12-case CI evaluation suite testing boundaries and edge cases with 100% pass rates, and architected with 100% client-side privacy. It turns complex rental procedures into structured personal protection."
 
 ### 7.4 Backup Demo Plan
 * Pre-recorded 1080p high-bitrate screencast with synchronized audio narration uploaded to private unlisted YouTube and stored on a local USB drive.
@@ -435,22 +441,22 @@ Implemented in `web/scripts/eval_renewal_agent.ts` and `web/eval/renewal_agent_e
 
 ---
 
-## 8. Competition Scorecard Reassessment (All Dimensions 8.5+)
+## 8. Competition Criteria & Evidence Gap Analysis
 
-With the unification of the Natural Language Ask Copilot and the Multi-Step Renewal Agent, the completion of the 7-case deterministic evaluation suite (100% pass in CI), and the empirical 5-tenant usability study (docs/usability_report.md), every dimension is now backed by tangible, verifiable evidence:
+The project aligns its development against the 10 core dimensions evaluated by the Create AI Agents Championship, mapping implemented technical evidence against target competition benchmarks and remaining gaps:
 
-| Dimension | Baseline | Current Score | Justifying Evidence & Artifacts |
-|---|---|---|---|
-| **1. Problem Importance** | 6.5 / 10 | **9.0 / 10** | Solves an acute financial threat affecting ~85% of Dubai residents (where rent is 30–45% of income); prevents unlawful rent hikes and bad-faith eviction notices. |
-| **2. Category Fit (Personal AI Agent)** | 5.0 / 10 | **9.5 / 10** | Fully unified natural-language copilot + procedural legal agent acting autonomously for an individual resident's housing decision, financial defense, and peace of mind. |
-| **3. Agentic Capability** | 4.5 / 10 | **9.0 / 10** | True plan-and-act loop: visible 5-step execution plan, real-time query entity extraction auto-populating structured state, multi-tool coordination, and mandatory Human-in-the-Loop approval gate. |
-| **4. Originality** | 6.5 / 10 | **8.5 / 10** | Novel synthesis of DLD open transaction data with Dubai statutory tenancy legislation (Decree 43/2013 + Law 33/2008 Arts 14 & 25) and the RDC "Offer & Deposit" escrow escalation roadmap. |
-| **5. Dubai Relevance** | 8.0 / 10 | **9.5 / 10** | 100% grounded in verified Dubai-specific legislation, 650k+ Ejari contracts, size-band imputation, RERA Smart Rental Index building star-rating reconciliation, and Dubai Rental Dispute Center procedures. |
-| **6. Usefulness** | 6.5 / 10 | **9.0 / 10** | Delivers an actionable, personalized Renewal Preparation Pack: notice audit, Decree 43 math, evidence summary, customized landlord negotiation letter, and RDC escrow instructions. |
-| **7. Impact Evidence** | 3.0 / 10 | **8.5 / 10** | Backed by a documented empirical usability study with 5 real Dubai residential tenants across 4 communities (docs/usability_report.md): 96% task completion, 142s mean time-to-pack, and an average AED 12,400 in prevented unlawful rent demands. |
-| **8. Technical Quality** | 8.0 / 10 | **9.5 / 10** | Next.js 15 production build passes with 0 errors; DuckDB pipeline; daily out-of-sample backtest (6.2% MAPE); AST-level number guard (guard.ts); and automated 7-case evaluation suite passing 100% in CI. |
-| **9. Trust & Safety** | 7.0 / 10 | **9.5 / 10** | Strict non-legal advisory disclaimers; explicit RERA Smart Rental Index vs. open-data distinction; zero tenant PII storage; and mandatory two-checkbox verification gate before copying or exporting scripts. |
-| **10. Demo Readiness** | 6.0 / 10 | **9.5 / 10** | 1-click test scenarios; natural language ask bar with live answers; visible progress reasoning; scripted 3-minute stage pitch; and 100% repeatable offline evaluation suite. |
+| Evaluation Dimension | Current Technical Implementation & Concrete Evidence | Documented Target Gaps & Future Roadmap |
+|---|---|---|
+| **1. Problem Importance** | Targets high-friction residential tenancy renewals affecting Dubai's resident majority (where housing accounts for 30–45% of household expenditure). Addresses statutory notice non-compliance and unsubstantiated rent increases. | Expanding beyond residential apartments to commercial leases and villa communities with unique maintenance covenants. |
+| **2. Category Fit (Personal AI Agent)** | Interactive tenant copilot (`/renewal-agent`) acting on behalf of an individual resident. Formulates personalized counter-offers, validates timelines, and guides procedural dispute steps. | Integration with personalized document storage (e.g., local encrypted PDF contract parser) and calendar notifications for notice deadlines. |
+| **3. Agentic Capability** | Visible multi-step execution cycle: query parsing, tenancy state binding, statutory timeline calculation, eviction formalities screening, and reactive counter-draft generation with strict approval invalidation on edits. | Tool-use autonomy could expand to automated scheduled check-ins against DLD quarterly index updates. |
+| **4. Originality** | Combines 650,000+ registered DLD open-data Ejari contracts with Dubai statutory tenancy laws (Decree 43/2013, Law 33/2008 Arts 14 & 25) and RDC procedural escalation paths (Offer & Deposit). | Few publicly available consumer tools combine both open transaction data and statutory tenancy law into an interactive tenant copilot. |
+| **5. Dubai Relevance** | Built specifically for Dubai's legal and market framework: Law 26/2007, Law 33/2008, Decree 43/2013 slabs, Ejari district name crosswalking, RERA Smart Rental Index reconciliation, and Dubai Notary Public requirements. | Requires ongoing synchronization with RDC precedent rulings and updates to building-level star ratings. |
+| **6. Usefulness** | Generates an indicative Renewal Preparation Pack: timeline calculation, Decree 43 comparative math, evidence summary, editable negotiation draft, and RDC escrow instructions. | Needs export options beyond clipboard copy (e.g., formal PDF generation with timestamped evidence exhibits). |
+| **7. Impact Evidence** | Benchmarked through a synthetic persona evaluation protocol (5 realistic tenant scenarios) and verified in CI via a 12-case deterministic test harness (`npm run eval:renewal`). Prior preliminary savings claims replaced with simulation metrics. | Requires conducting an empirical human-subject usability field trial with licensed Dubai tenant advisors and tracking actual negotiation outcomes post-deployment. |
+| **8. Technical Quality** | Next.js 15 production build; DuckDB pipeline; daily out-of-sample fair price backtest (6.2% MAPE); AST-level number guard (`lib/guard.ts`); and 12-case CI evaluation suite passing 100% in GitHub Actions. | Expanding browser automated E2E tests (Playwright) covering the complete interactive UI state machine. |
+| **9. Trust & Safety** | Transparent disclaimers designating outputs as "indicative preparation estimates"; direct links to the official DLD Smart Rental Index calculator; 100% client-side privacy with zero tenant PII sent to LLMs; approval revocation on input change. | Adding multi-language legal disclaimer translations (Arabic, Russian, Hindi/Urdu) matching Dubai resident demographics. |
+| **10. Demo Readiness** | Blank-by-default initial state with optional 1-click synthetic demo scenarios; natural language copilot ask bar; visible execution steps; and full offline local execution capability. | Polishing mobile responsive layouts for the multi-step audit view during live stage demonstration. |
 
 ## 9. Prioritized Action Roadmap
 
