@@ -1,10 +1,10 @@
 # Data quality report
 
-_Generated 2026-10-11T09:09:08+00:00. Regenerated on every pipeline run._
+_Generated 2026-10-11T11:32:18+00:00. Regenerated on every pipeline run._
 
 | Check | Status | Detail |
 |---|---|---|
-| Transactions loaded | PASS | 171,244 rows, 2026-01-01 to 2026-10-11 |
+| Transactions loaded | PASS | 171,246 rows, 2026-01-01 to 2026-10-11 |
 | Rent contracts loaded | PASS | 655,049 rows, 2026-01-01 to 2026-10-10 |
 | Transactions fresh within 3 days | PASS | latest registration 0 day(s) old |
 | Rents fresh within 3 days | PASS | latest registration 0 day(s) old |
@@ -19,7 +19,7 @@ _Generated 2026-10-11T09:09:08+00:00. Regenerated on every pipeline run._
 | Rents ROOMS null (known gateway gap; size bands used instead) | PASS | 96% null |
 | Bulk leases share < 15% | PASS | 5.7% of contracts cover >1 property |
 | Benchmark-eligible share of residential rents >= 60% | PASS | 88.4% eligible |
-| Sales in communities with rent coverage >= 70% (after crosswalk) | PASS | 74.1% of sales can be matched to Ejari benchmarks |
+| Sales in communities with rent coverage >= 70% (after crosswalk) | PASS | 74.0% of sales can be matched to Ejari benchmarks |
 | Weekly volume within 50-200% of median (last full week) | PASS | last full week 2,907 vs median 2,988 |
 
 ## Profile
@@ -27,16 +27,16 @@ _Generated 2026-10-11T09:09:08+00:00. Regenerated on every pipeline run._
 ```json
 {
   "transactions": {
-    "rows": 171244,
-    "sales": 124395,
-    "mortgages": 36235,
+    "rows": 171246,
+    "sales": 124396,
+    "mortgages": 36236,
     "areas": 250,
     "projects": 3217,
-    "offplan_share_of_sales": 0.6810080791028579,
+    "offplan_share_of_sales": 0.6810026045853564,
     "procedures": {
       "Sell - Pre registration": 84714,
-      "Sale": 30195,
-      "Mortgage Registration": 24449,
+      "Sale": 30196,
+      "Mortgage Registration": 24450,
       "Delayed Sell": 9194,
       "Grant": 5424,
       "Delayed Mortgage": 3468,
