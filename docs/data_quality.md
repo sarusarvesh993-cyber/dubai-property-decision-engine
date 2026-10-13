@@ -1,21 +1,21 @@
 # Data quality report
 
-_Generated 2026-10-13T09:39:35+00:00. Regenerated on every pipeline run._
+_Generated 2026-10-13T12:52:15+00:00. Regenerated on every pipeline run._
 
 | Check | Status | Detail |
 |---|---|---|
-| Transactions loaded | PASS | 172,371 rows, 2026-01-01 to 2026-10-13 |
-| Rent contracts loaded | PASS | 660,190 rows, 2026-01-01 to 2026-10-12 |
+| Transactions loaded | PASS | 172,617 rows, 2026-01-01 to 2026-10-13 |
+| Rent contracts loaded | PASS | 660,191 rows, 2026-01-01 to 2026-10-12 |
 | Transactions fresh within 3 days | PASS | latest registration 0 day(s) old |
 | Rents fresh within 3 days | PASS | latest registration 0 day(s) old |
 | Transaction duplicates < 0.5% (outside multi-unit deals) | PASS | 0.00% duplicate rows on id+price+size+procedure among single-unit transactions |
 | No land plots in the pricing universe | PASS | 0.00% of eligible sales are land plots |
-| Partial-share transfers excluded from benchmarks (< 3% of sales) | PASS | 1.24% of sales transfer only a share of the unit (procedure area below unit area); kept in volumes, out of benchmarks |
+| Partial-share transfers excluded from benchmarks (< 3% of sales) | PASS | 1.23% of sales transfer only a share of the unit (procedure area below unit area); kept in volumes, out of benchmarks |
 | Portfolio blocks excluded from benchmarks (< 3% of sales) | PASS | 1.16% of sales sit in same-day blocks of 10+ ready units at one AED/sqft; kept in volumes, out of benchmarks |
 | Sale price completeness >= 99% | PASS | 0.00% sales without price |
 | Sale size completeness >= 95% | PASS | 0.00% sales without size |
 | Benchmark-eligible share of sales 60-100% | PASS | 88.2% of sales eligible after bulk/plausibility/outlier filters |
-| Sales outlier rate < 5% | PASS | 1.78% flagged by robust z-score |
+| Sales outlier rate < 5% | PASS | 1.77% flagged by robust z-score |
 | Rents ROOMS null (known gateway gap; size bands used instead) | PASS | 96% null |
 | Bulk leases share < 15% | PASS | 5.6% of contracts cover >1 property |
 | Benchmark-eligible share of residential rents >= 60% | PASS | 88.5% eligible |
@@ -27,32 +27,32 @@ _Generated 2026-10-13T09:39:35+00:00. Regenerated on every pipeline run._
 ```json
 {
   "transactions": {
-    "rows": 172371,
-    "sales": 125060,
-    "mortgages": 36574,
+    "rows": 172617,
+    "sales": 125203,
+    "mortgages": 36642,
     "areas": 250,
-    "projects": 3227,
-    "offplan_share_of_sales": 0.6807692307692308,
+    "projects": 3230,
+    "offplan_share_of_sales": 0.6807424742218637,
     "procedures": {
-      "Sell - Pre registration": 85137,
-      "Sale": 30378,
-      "Mortgage Registration": 24628,
-      "Delayed Sell": 9252,
-      "Grant": 5502,
-      "Delayed Mortgage": 3495,
+      "Sell - Pre registration": 85231,
+      "Sale": 30419,
+      "Mortgage Registration": 24680,
+      "Delayed Sell": 9260,
+      "Grant": 5530,
+      "Delayed Mortgage": 3502,
       "Portfolio Mortgage Registration": 3268,
-      "Development Registration Pre-Registration": 1858,
-      "Modify Mortgage": 1571,
+      "Development Registration Pre-Registration": 1859,
+      "Modify Mortgage": 1573,
       "Portfolio Mortgage Modification": 1097
     }
   },
   "rents": {
-    "rows": 660190,
-    "renewal_share": 0.5572320089671156,
+    "rows": 660191,
+    "renewal_share": 0.5572326796336212,
     "areas": 196,
     "usage": {
       "Residential": 499616,
-      "Commercial": 156188,
+      "Commercial": 156189,
       "Industrial": 1286,
       "Storage": 120,
       "Educational facility": 100,
@@ -60,7 +60,7 @@ _Generated 2026-10-13T09:39:35+00:00. Regenerated on every pipeline run._
     },
     "sub_types": {
       "Flat": 433306,
-      "Office": 90133,
+      "Office": 90134,
       "Shop": 48711,
       "Villa": 43680,
       "Labor Camps": 15505,
