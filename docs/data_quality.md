@@ -1,10 +1,10 @@
 # Data quality report
 
-_Generated 2026-10-15T07:39:40+00:00. Regenerated on every pipeline run._
+_Generated 2026-10-15T10:08:58+00:00. Regenerated on every pipeline run._
 
 | Check | Status | Detail |
 |---|---|---|
-| Transactions loaded | PASS | 173,696 rows, 2026-01-01 to 2026-10-15 |
+| Transactions loaded | PASS | 173,871 rows, 2026-01-01 to 2026-10-15 |
 | Rent contracts loaded | PASS | 668,819 rows, 2026-01-01 to 2026-10-14 |
 | Transactions fresh within 3 days | PASS | latest registration 0 day(s) old |
 | Rents fresh within 3 days | PASS | latest registration 0 day(s) old |
@@ -15,7 +15,7 @@ _Generated 2026-10-15T07:39:40+00:00. Regenerated on every pipeline run._
 | Sale price completeness >= 99% | PASS | 0.00% sales without price |
 | Sale size completeness >= 95% | PASS | 0.00% sales without size |
 | Benchmark-eligible share of sales 60-100% | PASS | 88.2% of sales eligible after bulk/plausibility/outlier filters |
-| Sales outlier rate < 5% | PASS | 1.76% flagged by robust z-score |
+| Sales outlier rate < 5% | PASS | 1.77% flagged by robust z-score |
 | Rents ROOMS null (known gateway gap; size bands used instead) | PASS | 96% null |
 | Bulk leases share < 15% | PASS | 5.6% of contracts cover >1 property |
 | Benchmark-eligible share of residential rents >= 60% | PASS | 88.5% eligible |
@@ -27,21 +27,21 @@ _Generated 2026-10-15T07:39:40+00:00. Regenerated on every pipeline run._
 ```json
 {
   "transactions": {
-    "rows": 173696,
-    "sales": 125955,
-    "mortgages": 36858,
+    "rows": 173871,
+    "sales": 126072,
+    "mortgages": 36900,
     "areas": 250,
-    "projects": 3241,
-    "offplan_share_of_sales": 0.6808701520384264,
+    "projects": 3242,
+    "offplan_share_of_sales": 0.6807776508661717,
     "procedures": {
-      "Sell - Pre registration": 85759,
-      "Sale": 30600,
-      "Mortgage Registration": 24852,
-      "Delayed Sell": 9300,
-      "Grant": 5572,
-      "Delayed Mortgage": 3525,
+      "Sell - Pre registration": 85827,
+      "Sale": 30644,
+      "Mortgage Registration": 24886,
+      "Delayed Sell": 9305,
+      "Grant": 5580,
+      "Delayed Mortgage": 3528,
       "Portfolio Mortgage Registration": 3268,
-      "Development Registration Pre-Registration": 1902,
+      "Development Registration Pre-Registration": 1904,
       "Modify Mortgage": 1579,
       "Portfolio Mortgage Modification": 1097
     }
