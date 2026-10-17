@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-10-17T07:08:23+00:00",
+  "generated_at_utc": "2026-10-17T09:33:48+00:00",
   "checks": [
     {
       "check": "Transactions loaded",
@@ -9,7 +9,7 @@
     {
       "check": "Rent contracts loaded",
       "status": "PASS",
-      "detail": "676,119 rows, 2026-01-01 to 2026-10-16"
+      "detail": "676,120 rows, 2026-01-01 to 2026-10-16"
     },
     {
       "check": "Transactions fresh within 3 days",
@@ -109,11 +109,11 @@
       }
     },
     "rents": {
-      "rows": 676119,
-      "renewal_share": 0.5561284330125318,
+      "rows": 676120,
+      "renewal_share": 0.5561276104833461,
       "areas": 196,
       "usage": {
-        "Residential": 511762,
+        "Residential": 511763,
         "Commercial": 159880,
         "Industrial": 1319,
         "Storage": 122,
@@ -121,7 +121,7 @@
         "Health Facility": 86
       },
       "sub_types": {
-        "Flat": 443821,
+        "Flat": 443822,
         "Office": 92318,
         "Shop": 49795,
         "Villa": 44725,

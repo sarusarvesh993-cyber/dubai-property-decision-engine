@@ -1,11 +1,11 @@
 # Data quality report
 
-_Generated 2026-10-17T07:08:23+00:00. Regenerated on every pipeline run._
+_Generated 2026-10-17T09:33:48+00:00. Regenerated on every pipeline run._
 
 | Check | Status | Detail |
 |---|---|---|
 | Transactions loaded | PASS | 175,135 rows, 2026-01-01 to 2026-10-16 |
-| Rent contracts loaded | PASS | 676,119 rows, 2026-01-01 to 2026-10-16 |
+| Rent contracts loaded | PASS | 676,120 rows, 2026-01-01 to 2026-10-16 |
 | Transactions fresh within 3 days | PASS | latest registration 0 day(s) old |
 | Rents fresh within 3 days | PASS | latest registration 0 day(s) old |
 | Transaction duplicates < 0.5% (outside multi-unit deals) | PASS | 0.00% duplicate rows on id+price+size+procedure among single-unit transactions |
@@ -47,11 +47,11 @@ _Generated 2026-10-17T07:08:23+00:00. Regenerated on every pipeline run._
     }
   },
   "rents": {
-    "rows": 676119,
-    "renewal_share": 0.5561284330125318,
+    "rows": 676120,
+    "renewal_share": 0.5561276104833461,
     "areas": 196,
     "usage": {
-      "Residential": 511762,
+      "Residential": 511763,
       "Commercial": 159880,
       "Industrial": 1319,
       "Storage": 122,
@@ -59,7 +59,7 @@ _Generated 2026-10-17T07:08:23+00:00. Regenerated on every pipeline run._
       "Health Facility": 86
     },
     "sub_types": {
-      "Flat": 443821,
+      "Flat": 443822,
       "Office": 92318,
       "Shop": 49795,
       "Villa": 44725,
