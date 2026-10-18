@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-10-17T09:33:48+00:00",
+  "generated_at_utc": "2026-10-18T07:22:50+00:00",
   "checks": [
     {
       "check": "Transactions loaded",
@@ -9,12 +9,12 @@
     {
       "check": "Rent contracts loaded",
       "status": "PASS",
-      "detail": "676,120 rows, 2026-01-01 to 2026-10-16"
+      "detail": "677,891 rows, 2026-01-01 to 2026-10-17"
     },
     {
       "check": "Transactions fresh within 3 days",
       "status": "PASS",
-      "detail": "latest registration 0 day(s) old"
+      "detail": "latest registration 1 day(s) old"
     },
     {
       "check": "Rents fresh within 3 days",
@@ -74,7 +74,7 @@
     {
       "check": "Benchmark-eligible share of residential rents >= 60%",
       "status": "PASS",
-      "detail": "88.4% eligible"
+      "detail": "88.5% eligible"
     },
     {
       "check": "Sales in communities with rent coverage >= 70% (after crosswalk)",
@@ -109,26 +109,26 @@
       }
     },
     "rents": {
-      "rows": 676120,
-      "renewal_share": 0.5561276104833461,
+      "rows": 677891,
+      "renewal_share": 0.5559064805403818,
       "areas": 196,
       "usage": {
-        "Residential": 511763,
-        "Commercial": 159880,
-        "Industrial": 1319,
+        "Residential": 513190,
+        "Commercial": 160220,
+        "Industrial": 1323,
         "Storage": 122,
         "Educational facility": 107,
         "Health Facility": 86
       },
       "sub_types": {
-        "Flat": 443822,
-        "Office": 92318,
-        "Shop": 49795,
-        "Villa": 44725,
-        "Labor Camps": 15894,
-        "Warehouse": 6992,
-        "Hotel": 5530,
-        "Studio ": 5209
+        "Flat": 445068,
+        "Office": 92550,
+        "Shop": 49878,
+        "Villa": 44843,
+        "Labor Camps": 15940,
+        "Warehouse": 7004,
+        "Hotel": 5538,
+        "Studio ": 5224
       }
     }
   },
