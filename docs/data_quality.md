@@ -1,12 +1,12 @@
 # Data quality report
 
-_Generated 2026-10-18T09:47:09+00:00. Regenerated on every pipeline run._
+_Generated 2026-10-19T08:00:13+00:00. Regenerated on every pipeline run._
 
 | Check | Status | Detail |
 |---|---|---|
 | Transactions loaded | PASS | 175,135 rows, 2026-01-01 to 2026-10-16 |
-| Rent contracts loaded | PASS | 677,891 rows, 2026-01-01 to 2026-10-17 |
-| Transactions fresh within 3 days | PASS | latest registration 1 day(s) old |
+| Rent contracts loaded | PASS | 678,585 rows, 2026-01-01 to 2026-10-18 |
+| Transactions fresh within 3 days | PASS | latest registration 2 day(s) old |
 | Rents fresh within 3 days | PASS | latest registration 0 day(s) old |
 | Transaction duplicates < 0.5% (outside multi-unit deals) | PASS | 0.00% duplicate rows on id+price+size+procedure among single-unit transactions |
 | No land plots in the pricing universe | PASS | 0.00% of eligible sales are land plots |
@@ -47,26 +47,26 @@ _Generated 2026-10-18T09:47:09+00:00. Regenerated on every pipeline run._
     }
   },
   "rents": {
-    "rows": 677891,
-    "renewal_share": 0.5559064805403818,
+    "rows": 678585,
+    "renewal_share": 0.5559318287318464,
     "areas": 196,
     "usage": {
-      "Residential": 513190,
-      "Commercial": 160220,
+      "Residential": 513840,
+      "Commercial": 160264,
       "Industrial": 1323,
       "Storage": 122,
       "Educational facility": 107,
       "Health Facility": 86
     },
     "sub_types": {
-      "Flat": 445068,
-      "Office": 92550,
-      "Shop": 49878,
-      "Villa": 44843,
+      "Flat": 445652,
+      "Office": 92566,
+      "Shop": 49898,
+      "Villa": 44898,
       "Labor Camps": 15940,
-      "Warehouse": 7004,
-      "Hotel": 5538,
-      "Studio ": 5224
+      "Warehouse": 7005,
+      "Hotel": 5544,
+      "Studio ": 5228
     }
   }
 }
