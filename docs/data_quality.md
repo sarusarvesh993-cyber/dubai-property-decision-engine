@@ -1,11 +1,11 @@
 # Data quality report
 
-_Generated 2026-10-20T07:50:10+00:00. Regenerated on every pipeline run._
+_Generated 2026-10-20T10:14:47+00:00. Regenerated on every pipeline run._
 
 | Check | Status | Detail |
 |---|---|---|
-| Transactions loaded | PASS | 175,976 rows, 2026-01-01 to 2026-10-20 |
-| Rent contracts loaded | PASS | 682,388 rows, 2026-01-01 to 2026-10-19 |
+| Transactions loaded | PASS | 176,180 rows, 2026-01-01 to 2026-10-20 |
+| Rent contracts loaded | PASS | 682,389 rows, 2026-01-01 to 2026-10-19 |
 | Transactions fresh within 3 days | PASS | latest registration 0 day(s) old |
 | Rents fresh within 3 days | PASS | latest registration 0 day(s) old |
 | Transaction duplicates < 0.5% (outside multi-unit deals) | PASS | 0.00% duplicate rows on id+price+size+procedure among single-unit transactions |
@@ -27,31 +27,31 @@ _Generated 2026-10-20T07:50:10+00:00. Regenerated on every pipeline run._
 ```json
 {
   "transactions": {
-    "rows": 175976,
-    "sales": 127395,
-    "mortgages": 37492,
+    "rows": 176180,
+    "sales": 127506,
+    "mortgages": 37572,
     "areas": 250,
     "projects": 3262,
-    "offplan_share_of_sales": 0.680034538247184,
+    "offplan_share_of_sales": 0.6798817310557934,
     "procedures": {
-      "Sell - Pre registration": 86633,
-      "Sale": 31032,
-      "Mortgage Registration": 25262,
-      "Delayed Sell": 9433,
-      "Grant": 5658,
-      "Delayed Mortgage": 3578,
+      "Sell - Pre registration": 86689,
+      "Sale": 31080,
+      "Mortgage Registration": 25319,
+      "Delayed Sell": 9440,
+      "Grant": 5663,
+      "Delayed Mortgage": 3588,
       "Portfolio Mortgage Registration": 3292,
       "Development Registration Pre-Registration": 1948,
-      "Modify Mortgage": 1601,
-      "Portfolio Mortgage Modification": 1189
+      "Modify Mortgage": 1604,
+      "Portfolio Mortgage Modification": 1194
     }
   },
   "rents": {
-    "rows": 682388,
-    "renewal_share": 0.5559725552031982,
+    "rows": 682389,
+    "renewal_share": 0.5559717404588879,
     "areas": 196,
     "usage": {
-      "Residential": 516989,
+      "Residential": 516990,
       "Commercial": 160910,
       "Industrial": 1327,
       "Storage": 122,
@@ -59,7 +59,7 @@ _Generated 2026-10-20T07:50:10+00:00. Regenerated on every pipeline run._
       "Health Facility": 87
     },
     "sub_types": {
-      "Flat": 448411,
+      "Flat": 448412,
       "Office": 92892,
       "Shop": 50134,
       "Villa": 45172,
