@@ -1,21 +1,21 @@
 # Data quality report
 
-_Generated 2026-10-20T10:14:47+00:00. Regenerated on every pipeline run._
+_Generated 2026-10-21T07:55:10+00:00. Regenerated on every pipeline run._
 
 | Check | Status | Detail |
 |---|---|---|
-| Transactions loaded | PASS | 176,180 rows, 2026-01-01 to 2026-10-20 |
-| Rent contracts loaded | PASS | 682,389 rows, 2026-01-01 to 2026-10-19 |
+| Transactions loaded | PASS | 176,701 rows, 2026-01-01 to 2026-10-21 |
+| Rent contracts loaded | PASS | 686,161 rows, 2026-01-01 to 2026-10-20 |
 | Transactions fresh within 3 days | PASS | latest registration 0 day(s) old |
 | Rents fresh within 3 days | PASS | latest registration 0 day(s) old |
 | Transaction duplicates < 0.5% (outside multi-unit deals) | PASS | 0.00% duplicate rows on id+price+size+procedure among single-unit transactions |
 | No land plots in the pricing universe | PASS | 0.00% of eligible sales are land plots |
-| Partial-share transfers excluded from benchmarks (< 3% of sales) | PASS | 1.23% of sales transfer only a share of the unit (procedure area below unit area); kept in volumes, out of benchmarks |
+| Partial-share transfers excluded from benchmarks (< 3% of sales) | PASS | 1.22% of sales transfer only a share of the unit (procedure area below unit area); kept in volumes, out of benchmarks |
 | Portfolio blocks excluded from benchmarks (< 3% of sales) | PASS | 1.14% of sales sit in same-day blocks of 10+ ready units at one AED/sqft; kept in volumes, out of benchmarks |
 | Sale price completeness >= 99% | PASS | 0.00% sales without price |
 | Sale size completeness >= 95% | PASS | 0.00% sales without size |
 | Benchmark-eligible share of sales 60-100% | PASS | 88.2% of sales eligible after bulk/plausibility/outlier filters |
-| Sales outlier rate < 5% | PASS | 1.75% flagged by robust z-score |
+| Sales outlier rate < 5% | PASS | 1.74% flagged by robust z-score |
 | Rents ROOMS null (known gateway gap; size bands used instead) | PASS | 96% null |
 | Bulk leases share < 15% | PASS | 5.6% of contracts cover >1 property |
 | Benchmark-eligible share of residential rents >= 60% | PASS | 88.5% eligible |
@@ -27,46 +27,46 @@ _Generated 2026-10-20T10:14:47+00:00. Regenerated on every pipeline run._
 ```json
 {
   "transactions": {
-    "rows": 176180,
-    "sales": 127506,
-    "mortgages": 37572,
+    "rows": 176701,
+    "sales": 127859,
+    "mortgages": 37700,
     "areas": 250,
-    "projects": 3262,
-    "offplan_share_of_sales": 0.6798817310557934,
+    "projects": 3266,
+    "offplan_share_of_sales": 0.6798113546954067,
     "procedures": {
-      "Sell - Pre registration": 86689,
-      "Sale": 31080,
-      "Mortgage Registration": 25319,
-      "Delayed Sell": 9440,
-      "Grant": 5663,
-      "Delayed Mortgage": 3588,
-      "Portfolio Mortgage Registration": 3292,
+      "Sell - Pre registration": 86920,
+      "Sale": 31186,
+      "Mortgage Registration": 25413,
+      "Delayed Sell": 9456,
+      "Grant": 5690,
+      "Delayed Mortgage": 3602,
+      "Portfolio Mortgage Registration": 3296,
       "Development Registration Pre-Registration": 1948,
-      "Modify Mortgage": 1604,
+      "Modify Mortgage": 1609,
       "Portfolio Mortgage Modification": 1194
     }
   },
   "rents": {
-    "rows": 682389,
-    "renewal_share": 0.5559717404588879,
-    "areas": 196,
+    "rows": 686161,
+    "renewal_share": 0.5559803019990935,
+    "areas": 197,
     "usage": {
-      "Residential": 516990,
-      "Commercial": 160910,
-      "Industrial": 1327,
-      "Storage": 122,
+      "Residential": 519970,
+      "Commercial": 161682,
+      "Industrial": 1338,
+      "Storage": 123,
       "Educational facility": 107,
       "Health Facility": 87
     },
     "sub_types": {
-      "Flat": 448412,
-      "Office": 92892,
-      "Shop": 50134,
-      "Villa": 45172,
-      "Labor Camps": 15999,
-      "Warehouse": 7033,
-      "Hotel": 5567,
-      "Studio ": 5271
+      "Flat": 450994,
+      "Office": 93232,
+      "Shop": 50432,
+      "Villa": 45423,
+      "Labor Camps": 16107,
+      "Warehouse": 7087,
+      "Hotel": 5593,
+      "Studio ": 5308
     }
   }
 }
