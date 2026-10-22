@@ -1,11 +1,11 @@
 # Data quality report
 
-_Generated 2026-10-21T10:23:16+00:00. Regenerated on every pipeline run._
+_Generated 2026-10-22T07:50:28+00:00. Regenerated on every pipeline run._
 
 | Check | Status | Detail |
 |---|---|---|
-| Transactions loaded | PASS | 177,054 rows, 2026-01-01 to 2026-10-21 |
-| Rent contracts loaded | PASS | 686,163 rows, 2026-01-01 to 2026-10-20 |
+| Transactions loaded | PASS | 177,394 rows, 2026-01-01 to 2026-10-22 |
+| Rent contracts loaded | PASS | 690,193 rows, 2026-01-01 to 2026-10-21 |
 | Transactions fresh within 3 days | PASS | latest registration 0 day(s) old |
 | Rents fresh within 3 days | PASS | latest registration 0 day(s) old |
 | Transaction duplicates < 0.5% (outside multi-unit deals) | PASS | 0.00% duplicate rows on id+price+size+procedure among single-unit transactions |
@@ -27,46 +27,46 @@ _Generated 2026-10-21T10:23:16+00:00. Regenerated on every pipeline run._
 ```json
 {
   "transactions": {
-    "rows": 177054,
-    "sales": 128083,
-    "mortgages": 37811,
+    "rows": 177394,
+    "sales": 128326,
+    "mortgages": 37882,
     "areas": 250,
-    "projects": 3270,
-    "offplan_share_of_sales": 0.6794422366746563,
+    "projects": 3273,
+    "offplan_share_of_sales": 0.6795972756884809,
     "procedures": {
-      "Sell - Pre registration": 87025,
-      "Sale": 31280,
-      "Mortgage Registration": 25495,
-      "Delayed Sell": 9481,
-      "Grant": 5699,
-      "Delayed Mortgage": 3616,
+      "Sell - Pre registration": 87210,
+      "Sale": 31329,
+      "Mortgage Registration": 25555,
+      "Delayed Sell": 9490,
+      "Grant": 5712,
+      "Delayed Mortgage": 3618,
       "Portfolio Mortgage Registration": 3303,
-      "Development Registration Pre-Registration": 1948,
-      "Modify Mortgage": 1611,
-      "Portfolio Mortgage Modification": 1194
+      "Development Registration Pre-Registration": 1954,
+      "Modify Mortgage": 1617,
+      "Portfolio Mortgage Modification": 1196
     }
   },
   "rents": {
-    "rows": 686163,
-    "renewal_share": 0.5559786814503259,
+    "rows": 690193,
+    "renewal_share": 0.5555721370689068,
     "areas": 197,
     "usage": {
-      "Residential": 519972,
-      "Commercial": 161682,
-      "Industrial": 1338,
+      "Residential": 522967,
+      "Commercial": 162695,
+      "Industrial": 1346,
       "Storage": 123,
       "Educational facility": 107,
       "Health Facility": 87
     },
     "sub_types": {
-      "Flat": 450995,
-      "Office": 93232,
-      "Shop": 50432,
-      "Villa": 45424,
-      "Labor Camps": 16107,
-      "Warehouse": 7087,
-      "Hotel": 5593,
-      "Studio ": 5308
+      "Flat": 453529,
+      "Office": 93848,
+      "Shop": 50692,
+      "Villa": 45677,
+      "Labor Camps": 16276,
+      "Warehouse": 7139,
+      "Hotel": 5647,
+      "Studio ": 5338
     }
   }
 }
