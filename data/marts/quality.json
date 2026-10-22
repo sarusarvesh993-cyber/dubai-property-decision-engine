@@ -1,15 +1,15 @@
 {
-  "generated_at_utc": "2026-10-22T07:50:28+00:00",
+  "generated_at_utc": "2026-10-22T10:23:59+00:00",
   "checks": [
     {
       "check": "Transactions loaded",
       "status": "PASS",
-      "detail": "177,394 rows, 2026-01-01 to 2026-10-22"
+      "detail": "177,817 rows, 2026-01-01 to 2026-10-22"
     },
     {
       "check": "Rent contracts loaded",
       "status": "PASS",
-      "detail": "690,193 rows, 2026-01-01 to 2026-10-21"
+      "detail": "690,194 rows, 2026-01-01 to 2026-10-21"
     },
     {
       "check": "Transactions fresh within 3 days",
@@ -84,36 +84,36 @@
     {
       "check": "Weekly volume within 50-200% of median (last full week)",
       "status": "PASS",
-      "detail": "last full week 2,518 vs median 2,967"
+      "detail": "last full week 2,520 vs median 2,967"
     }
   ],
   "profile": {
     "transactions": {
-      "rows": 177394,
-      "sales": 128326,
-      "mortgages": 37882,
+      "rows": 177817,
+      "sales": 128561,
+      "mortgages": 38016,
       "areas": 250,
-      "projects": 3273,
-      "offplan_share_of_sales": 0.6795972756884809,
+      "projects": 3277,
+      "offplan_share_of_sales": 0.6793195448075233,
       "procedures": {
-        "Sell - Pre registration": 87210,
-        "Sale": 31329,
-        "Mortgage Registration": 25555,
-        "Delayed Sell": 9490,
-        "Grant": 5712,
-        "Delayed Mortgage": 3618,
+        "Sell - Pre registration": 87334,
+        "Sale": 31415,
+        "Mortgage Registration": 25659,
+        "Delayed Sell": 9515,
+        "Grant": 5723,
+        "Delayed Mortgage": 3636,
         "Portfolio Mortgage Registration": 3303,
         "Development Registration Pre-Registration": 1954,
-        "Modify Mortgage": 1617,
+        "Modify Mortgage": 1623,
         "Portfolio Mortgage Modification": 1196
       }
     },
     "rents": {
-      "rows": 690193,
-      "renewal_share": 0.5555721370689068,
+      "rows": 690194,
+      "renewal_share": 0.5555727809862154,
       "areas": 197,
       "usage": {
-        "Residential": 522967,
+        "Residential": 522968,
         "Commercial": 162695,
         "Industrial": 1346,
         "Storage": 123,
@@ -121,7 +121,7 @@
         "Health Facility": 87
       },
       "sub_types": {
-        "Flat": 453529,
+        "Flat": 453530,
         "Office": 93848,
         "Shop": 50692,
         "Villa": 45677,
