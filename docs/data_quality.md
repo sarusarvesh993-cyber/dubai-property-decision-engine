@@ -1,10 +1,10 @@
 # Data quality report
 
-_Generated 2026-10-23T07:49:13+00:00. Regenerated on every pipeline run._
+_Generated 2026-10-23T10:20:49+00:00. Regenerated on every pipeline run._
 
 | Check | Status | Detail |
 |---|---|---|
-| Transactions loaded | PASS | 178,242 rows, 2026-01-01 to 2026-10-23 |
+| Transactions loaded | PASS | 180,676 rows, 2026-01-01 to 2026-10-23 |
 | Rent contracts loaded | PASS | 694,034 rows, 2026-01-01 to 2026-10-22 |
 | Transactions fresh within 3 days | PASS | latest registration 0 day(s) old |
 | Rents fresh within 3 days | PASS | latest registration 0 day(s) old |
@@ -14,36 +14,36 @@ _Generated 2026-10-23T07:49:13+00:00. Regenerated on every pipeline run._
 | Portfolio blocks excluded from benchmarks (< 3% of sales) | PASS | 1.14% of sales sit in same-day blocks of 10+ ready units at one AED/sqft; kept in volumes, out of benchmarks |
 | Sale price completeness >= 99% | PASS | 0.00% sales without price |
 | Sale size completeness >= 95% | PASS | 0.00% sales without size |
-| Benchmark-eligible share of sales 60-100% | PASS | 88.1% of sales eligible after bulk/plausibility/outlier filters |
-| Sales outlier rate < 5% | PASS | 1.85% flagged by robust z-score |
+| Benchmark-eligible share of sales 60-100% | PASS | 86.4% of sales eligible after bulk/plausibility/outlier filters |
+| Sales outlier rate < 5% | PASS | 1.82% flagged by robust z-score |
 | Rents ROOMS null (known gateway gap; size bands used instead) | PASS | 96% null |
 | Bulk leases share < 15% | PASS | 5.6% of contracts cover >1 property |
 | Benchmark-eligible share of residential rents >= 60% | PASS | 88.5% eligible |
 | Sales in communities with rent coverage >= 70% (after crosswalk) | PASS | 74.1% of sales can be matched to Ejari benchmarks |
-| Weekly volume within 50-200% of median (last full week) | PASS | last full week 2,520 vs median 2,967 |
+| Weekly volume within 50-200% of median (last full week) | PASS | last full week 3,179 vs median 2,988 |
 
 ## Profile
 
 ```json
 {
   "transactions": {
-    "rows": 178242,
-    "sales": 128836,
-    "mortgages": 38132,
+    "rows": 180676,
+    "sales": 130267,
+    "mortgages": 38743,
     "areas": 250,
-    "projects": 3279,
-    "offplan_share_of_sales": 0.6792977118196777,
+    "projects": 3281,
+    "offplan_share_of_sales": 0.6765259044884737,
     "procedures": {
-      "Sell - Pre registration": 87518,
-      "Sale": 31474,
-      "Mortgage Registration": 25716,
-      "Delayed Sell": 9547,
-      "Grant": 5731,
-      "Delayed Mortgage": 3646,
-      "Portfolio Mortgage Registration": 3337,
-      "Development Registration Pre-Registration": 1971,
-      "Modify Mortgage": 1628,
-      "Portfolio Mortgage Modification": 1196
+      "Sell - Pre registration": 88129,
+      "Sale": 32118,
+      "Mortgage Registration": 25976,
+      "Delayed Sell": 9715,
+      "Grant": 5932,
+      "Delayed Mortgage": 3712,
+      "Portfolio Mortgage Registration": 3406,
+      "Development Registration Pre-Registration": 1975,
+      "Modify Mortgage": 1685,
+      "Portfolio Mortgage Modification": 1295
     }
   },
   "rents": {
