@@ -1,5 +1,5 @@
 {
-  "computed_at_utc": "2026-10-25T07:44:48+00:00",
+  "computed_at_utc": "2026-10-25T09:58:33+00:00",
   "test_window": {
     "from": "2026-09-28",
     "to": "2026-10-25",
@@ -12,14 +12,14 @@
     "n_test": 6913,
     "n_covered": 6896,
     "coverage": 0.9975,
-    "mdape": 0.0646,
+    "mdape": 0.0644,
     "mape": 0.1104,
     "within_p25_p75": 0.4611,
-    "within_p10_p90": 0.7432,
+    "within_p10_p90": 0.7436,
     "median_bias": 0.0044,
-    "share_within_10pct": 0.636,
-    "share_within_20pct": 0.8464,
-    "baseline_mdape": 0.2049,
+    "share_within_10pct": 0.6366,
+    "share_within_20pct": 0.8466,
+    "baseline_mdape": 0.2048,
     "baseline_mape": 0.2988
   },
   "by_level": {
@@ -29,12 +29,12 @@
       "coverage": 1.0,
       "mdape": 0.0443,
       "mape": 0.0699,
-      "within_p25_p75": 0.4683,
-      "within_p10_p90": 0.7465,
-      "median_bias": 0.0029,
-      "share_within_10pct": 0.7746,
+      "within_p25_p75": 0.4685,
+      "within_p10_p90": 0.747,
+      "median_bias": 0.0031,
+      "share_within_10pct": 0.7751,
       "share_within_20pct": 0.9348,
-      "baseline_mdape": 0.1795,
+      "baseline_mdape": 0.1797,
       "baseline_mape": 0.2665
     },
     "L1 area x type x bedrooms": {
@@ -42,13 +42,13 @@
       "n_covered": 2765,
       "coverage": 1.0,
       "mdape": 0.1152,
-      "mape": 0.1668,
-      "within_p25_p75": 0.4521,
-      "within_p10_p90": 0.7392,
+      "mape": 0.1669,
+      "within_p25_p75": 0.4517,
+      "within_p10_p90": 0.7396,
       "median_bias": 0.0103,
-      "share_within_10pct": 0.442,
-      "share_within_20pct": 0.7226,
-      "baseline_mdape": 0.2419,
+      "share_within_10pct": 0.4427,
+      "share_within_20pct": 0.723,
+      "baseline_mdape": 0.2418,
       "baseline_mape": 0.3361
     },
     "L2 area x type": {
@@ -70,14 +70,14 @@
       "n_covered": 5,
       "coverage": 1.0,
       "mdape": 0.2806,
-      "mape": 0.434,
+      "mape": 0.4337,
       "within_p25_p75": 0.4,
       "within_p10_p90": 0.6,
       "median_bias": -0.2191,
       "share_within_10pct": 0.2,
       "share_within_20pct": 0.4,
       "baseline_mdape": 0.6176,
-      "baseline_mape": 0.8526
+      "baseline_mape": 0.8528
     }
   },
   "by_sub_type": {
@@ -88,26 +88,26 @@
       "mdape": 0.0628,
       "mape": 0.1067,
       "within_p25_p75": 0.4649,
-      "within_p10_p90": 0.7464,
-      "median_bias": 0.006,
+      "within_p10_p90": 0.7469,
+      "median_bias": 0.0059,
       "share_within_10pct": 0.6458,
-      "share_within_20pct": 0.8518,
+      "share_within_20pct": 0.852,
       "baseline_mdape": 0.2051,
-      "baseline_mape": 0.3012
+      "baseline_mape": 0.3013
     },
     "Villa": {
       "n_test": 613,
       "n_covered": 606,
       "coverage": 0.9886,
-      "mdape": 0.0915,
+      "mdape": 0.0912,
       "mape": 0.1486,
       "within_p25_p75": 0.4224,
       "within_p10_p90": 0.7096,
       "median_bias": -0.0185,
-      "share_within_10pct": 0.5347,
+      "share_within_10pct": 0.5413,
       "share_within_20pct": 0.7904,
-      "baseline_mdape": 0.2018,
-      "baseline_mape": 0.2733
+      "baseline_mdape": 0.202,
+      "baseline_mape": 0.2734
     }
   },
   "by_offplan": {
@@ -115,13 +115,13 @@
       "n_test": 2025,
       "n_covered": 2010,
       "coverage": 0.9926,
-      "mdape": 0.0911,
+      "mdape": 0.0912,
       "mape": 0.1426,
       "within_p25_p75": 0.4786,
-      "within_p10_p90": 0.7607,
+      "within_p10_p90": 0.7617,
       "median_bias": 0.0023,
-      "share_within_10pct": 0.5274,
-      "share_within_20pct": 0.7781,
+      "share_within_10pct": 0.5269,
+      "share_within_20pct": 0.7786,
       "baseline_mdape": 0.281,
       "baseline_mape": 0.3686
     },
@@ -132,11 +132,11 @@
       "mdape": 0.0543,
       "mape": 0.0971,
       "within_p25_p75": 0.454,
-      "within_p10_p90": 0.736,
-      "median_bias": 0.0048,
-      "share_within_10pct": 0.6807,
+      "within_p10_p90": 0.7362,
+      "median_bias": 0.0047,
+      "share_within_10pct": 0.6817,
       "share_within_20pct": 0.8745,
-      "baseline_mdape": 0.1824,
+      "baseline_mdape": 0.1825,
       "baseline_mape": 0.2701
     }
   },

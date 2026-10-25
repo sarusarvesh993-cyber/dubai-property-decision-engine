@@ -1,8 +1,8 @@
 {
-  "generated_at_utc": "2026-10-25T07:44:53+00:00",
+  "generated_at_utc": "2026-10-25T09:58:38+00:00",
   "as_of": "2026-10-25",
-  "source": "groq | qwen/qwen3.8-27b | 1.4s",
-  "text": "Registered residential sales reached 11,041 units in the last four weeks, totaling AED 32,077,251,613. This volume represents a 9.2 percent increase compared to the previous four weeks. Mortgage registrations were recorded separately at 4,312. The off-plan share of these sales stood at 58.7 percent, down from 64.7 percent in the prior period.\n\nThe median residential price per square foot was AED 1,672, marking a 1.3 percent decline from the previous four-week median of AED 1,694. Top performing areas by sales volume over the last twelve weeks include Dubai South with 3,836 units and Jumeirah Village Circle with 2,252 units. Median prices in Dubai South held steady at AED 1,701 per square foot, while Jumeirah Village Circle recorded a median of AED 1,428 per square foot.\n\nRental activity showed 93,471 registered contracts with a renewal share of 50.3 percent. The median annual residential rent was AED 70,000. Estimated gross yields vary significantly by location, with Zaabeel First leading at 9.0 percent for flats. International City Phase 1 followed at 8.6 percent, and Town Square recorded 7.0 percent. These yield figures are based on specific property types and require a minimum of thirty rent contracts for calculation.\n\nThe watch list highlights Al Yufrah 1 with a 41.7 percent increase in median price over twelve weeks. Conversely, Palm Jumeirah saw an 18.4 percent decrease in median price. Anomaly monitoring identified 975 sales in the last sixty days priced more than 35 percent away from their comparable cell median. These figures are derived from registered DLD data and Ejari contracts. Medians are used for pricing and rent, and benchmark filters exclude bulk deals, partial-share transfers, portfolio blocks, mortgages, gifts, and statistical outliers.",
+  "source": "groq | qwen/qwen3.8-27b | 1.3s",
+  "text": "Registered residential sales reached 11,041 units valued at AED 32,077,251,613 in the last four weeks, representing a 9.2 percent increase in volume and a 16.5 percent rise in value compared to the prior period. Mortgage registrations totaled 4,312, which are recorded separately from sales. The off-plan segment accounted for 58.7 percent of all transactions during this timeframe.\n\nThe median residential price per square foot stood at AED 1,672, marking a 1.3 percent decline from the previous four-week median of AED 1,694. Top performing areas by sales volume included Dubai South with 3,836 units and Jumeirah Village Circle with 2,252 units over the last twelve weeks. Business Bay recorded a median of AED 2,121 per square foot, while Majan showed a 1.8 percent price increase over the same twelve-week window.\n\nRental activity remained robust with 93,471 Ejari contracts registered, where renewals constituted 50.3 percent of the total. The median annual residential rent was AED 70,000. Estimated gross yields were highest in Zaabeel First at 9.0 percent for flats, followed by International City Phase 1 at 8.6 percent and Town Square at 7.0 percent. Dubai South offered an estimated yield of 4.6 percent despite leading in sales volume.\n\nMarket dynamics show distinct divergence across communities. Al Yufrah 1 heated up with a 41.7 percent price increase, while Palm Jumeirah cooled by 18.4 percent over twelve weeks. Al Hebiah First saw an 11.1 percent decline with 100 percent of its benchmark sales being off-plan. The anomaly monitor flagged 972 sales in the last 60 days priced more than 35 percent away from comparable medians. Figures are derived from registered DLD data and Ejari contracts, using medians and benchmark filters that exclude bulk deals and outliers.",
   "facts": {
     "as_of": "2026-10-25",
     "coverage_from": "2026-01-01",
@@ -78,7 +78,7 @@
       },
       {
         "area": "Al Hebiah Fifth",
-        "sales_12w": 1036,
+        "sales_12w": 1037,
         "median_ppsqft_12w": 1715.3,
         "ppsqft_change_12w": -0.006,
         "gross_yield_est": 0.043
@@ -193,7 +193,7 @@
         "median_ppsqft_12w": 1404.0
       }
     ],
-    "anomaly_count_60d": 975,
+    "anomaly_count_60d": 972,
     "top_projects": [
       {
         "project": "Binghatti Skyterraces",
