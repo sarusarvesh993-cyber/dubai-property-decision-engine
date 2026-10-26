@@ -1,11 +1,11 @@
 # Data quality report
 
-_Generated 2026-10-26T07:59:42+00:00. Regenerated on every pipeline run._
+_Generated 2026-10-26T11:20:42+00:00. Regenerated on every pipeline run._
 
 | Check | Status | Detail |
 |---|---|---|
-| Transactions loaded | PASS | 181,287 rows, 2026-01-01 to 2026-10-26 |
-| Rent contracts loaded | PASS | 699,423 rows, 2026-01-01 to 2026-10-25 |
+| Transactions loaded | PASS | 181,657 rows, 2026-01-01 to 2026-10-26 |
+| Rent contracts loaded | PASS | 699,424 rows, 2026-01-01 to 2026-10-25 |
 | Transactions fresh within 3 days | PASS | latest registration 0 day(s) old |
 | Rents fresh within 3 days | PASS | latest registration 0 day(s) old |
 | Transaction duplicates < 0.5% (outside multi-unit deals) | PASS | 0.00% duplicate rows on id+price+size+procedure among single-unit transactions |
@@ -15,11 +15,11 @@ _Generated 2026-10-26T07:59:42+00:00. Regenerated on every pipeline run._
 | Sale price completeness >= 99% | PASS | 0.00% sales without price |
 | Sale size completeness >= 95% | PASS | 0.00% sales without size |
 | Benchmark-eligible share of sales 60-100% | PASS | 86.3% of sales eligible after bulk/plausibility/outlier filters |
-| Sales outlier rate < 5% | PASS | 1.84% flagged by robust z-score |
+| Sales outlier rate < 5% | PASS | 1.83% flagged by robust z-score |
 | Rents ROOMS null (known gateway gap; size bands used instead) | PASS | 96% null |
 | Bulk leases share < 15% | PASS | 5.6% of contracts cover >1 property |
 | Benchmark-eligible share of residential rents >= 60% | PASS | 88.5% eligible |
-| Sales in communities with rent coverage >= 70% (after crosswalk) | PASS | 74.1% of sales can be matched to Ejari benchmarks |
+| Sales in communities with rent coverage >= 70% (after crosswalk) | PASS | 74.2% of sales can be matched to Ejari benchmarks |
 | Weekly volume within 50-200% of median (last full week) | PASS | last full week 3,084 vs median 3,000 |
 
 ## Profile
@@ -27,31 +27,31 @@ _Generated 2026-10-26T07:59:42+00:00. Regenerated on every pipeline run._
 ```json
 {
   "transactions": {
-    "rows": 181287,
-    "sales": 130698,
-    "mortgages": 38864,
+    "rows": 181657,
+    "sales": 130914,
+    "mortgages": 38986,
     "areas": 250,
     "projects": 3285,
-    "offplan_share_of_sales": 0.6762995608195994,
+    "offplan_share_of_sales": 0.6759246528255191,
     "procedures": {
-      "Sell - Pre registration": 88391,
-      "Sale": 32242,
-      "Mortgage Registration": 26066,
-      "Delayed Sell": 9757,
-      "Grant": 5952,
-      "Delayed Mortgage": 3728,
-      "Portfolio Mortgage Registration": 3406,
-      "Development Registration Pre-Registration": 1987,
-      "Modify Mortgage": 1693,
+      "Sell - Pre registration": 88488,
+      "Sale": 32340,
+      "Mortgage Registration": 26136,
+      "Delayed Sell": 9778,
+      "Grant": 5961,
+      "Delayed Mortgage": 3739,
+      "Portfolio Mortgage Registration": 3438,
+      "Development Registration Pre-Registration": 1988,
+      "Modify Mortgage": 1697,
       "Portfolio Mortgage Modification": 1295
     }
   },
   "rents": {
-    "rows": 699423,
-    "renewal_share": 0.5548359147468699,
+    "rows": 699424,
+    "renewal_share": 0.554836551219289,
     "areas": 197,
     "usage": {
-      "Residential": 530358,
+      "Residential": 530359,
       "Commercial": 164482,
       "Industrial": 1359,
       "Storage": 123,
@@ -59,7 +59,7 @@ _Generated 2026-10-26T07:59:42+00:00. Regenerated on every pipeline run._
       "Health Facility": 87
     },
     "sub_types": {
-      "Flat": 460020,
+      "Flat": 460021,
       "Office": 94895,
       "Shop": 51255,
       "Villa": 46331,

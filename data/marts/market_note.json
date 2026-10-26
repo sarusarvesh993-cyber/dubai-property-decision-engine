@@ -1,8 +1,8 @@
 {
-  "generated_at_utc": "2026-10-26T07:59:46+00:00",
+  "generated_at_utc": "2026-10-26T11:20:45+00:00",
   "as_of": "2026-10-26",
-  "source": "groq | qwen/qwen3.8-27b | 1.4s",
-  "text": "Registered residential sales reached 11,604 units in the last four weeks, totaling AED 34,318,709,982. This represents an 11.4 percent increase in volume and a 25.5 percent rise in value compared to the previous four weeks. Mortgage registrations were recorded separately at 4,629, reflecting distinct financial transactions rather than a subset of sales. The off-plan share of these sales stood at 57.2 percent, down from 65.4 percent in the prior period.\n\nThe median residential price per square foot rose to AED 1,688, marking a 0.8 percent increase from the previous four-week median of AED 1,675. Top performing areas by sales volume include Dubai South with 3,834 units and Jumeirah Village Circle with 2,251 units over the last twelve weeks. Business Bay recorded a median price of AED 2,125 per square foot, while Majan showed a 1.8 percent price increase over the same twelve-week window.\n\nRental activity remained robust with 93,471 contracts registered, of which 50.3 percent were renewals. The median annual residential rent is AED 70,000. Estimated gross yields vary significantly by location, with Zaabeel First leading at 9.0 percent for flats. International City Phase 1 follows at 8.6 percent, and Town Square records 7.0 percent. These yield figures are based on median rents and prices for specific property types within the benchmark filters.\n\nThe watch list highlights Al Yufrah 1 with a 41.7 percent price increase and Dubai Industrial City at 12.8 percent over twelve weeks. Conversely, Palm Jumeirah cooled by 18.5 percent and Palm Deira by 13.0 percent. An anomaly monitor flagged 965 sales in the last 60 days priced more than 35 percent away from comparable medians. These figures are derived from registered DLD data and Ejari contracts, using medians and excluding bulk deals, partial shares, and statistical outliers.",
+  "source": "groq | qwen/qwen3.8-27b | 1.2s",
+  "text": "Registered residential sales reached 11,604 units in the last four weeks, totaling AED 34.32bn. This volume represents an 11.4 percent increase compared to the previous four weeks. Mortgage registrations were recorded separately at 4,630 during the same period. The off-plan share of sales stood at 57.2 percent, down from 65.4 percent in the prior period.\n\nThe median residential price per square foot was AED 1,688, marking a 0.8 percent rise from the previous four-week median of AED 1,675. Top performing areas by sales volume include Dubai South with 3,836 units and Jumeirah Village Circle with 2,275 units over the last twelve weeks. Business Bay recorded a 5.3 percent decline in median price per square foot over the same twelve-week window.\n\nRental activity showed 93,471 Ejari contracts registered, with renewals accounting for 50.3 percent of the total. The median annual residential rent was AED 70,000. Estimated gross yields for flats were highest in Zaabeel First at 9.0 percent and International City Phase 1 at 8.6 percent. Town Square followed with a 7.0 percent yield.\n\nThe watch list highlights Al Yufrah 1 with a 41.7 percent increase in median price per square foot over twelve weeks. Palm Jumeirah cooled by 18.5 percent in the same metric. The anomaly monitor flagged 956 sales in the last 60 days priced more than 35 percent away from their comparable cell median. Figures are based on registered DLD data and medians, excluding bulk deals, partial shares, and statistical outliers.",
   "facts": {
     "as_of": "2026-10-26",
     "coverage_from": "2026-01-01",
@@ -11,7 +11,7 @@
       "sales": 11604,
       "value_aed": 34318709982,
       "value_aed_bn": 34.32,
-      "mortgages": 4629,
+      "mortgages": 4630,
       "offplan_share": 0.572,
       "median_ppsqft_res": 1688
     },
@@ -36,58 +36,58 @@
     "top_areas_by_sales": [
       {
         "area": "Dubai South",
-        "sales_12w": 3834,
+        "sales_12w": 3836,
         "median_ppsqft_12w": 1701.1,
         "ppsqft_change_12w": 0.002,
         "gross_yield_est": 0.046
       },
       {
         "area": "Jumeirah Village Circle",
-        "sales_12w": 2251,
-        "median_ppsqft_12w": 1427.55,
-        "ppsqft_change_12w": 0.0,
+        "sales_12w": 2275,
+        "median_ppsqft_12w": 1430.1,
+        "ppsqft_change_12w": 0.003,
         "gross_yield_est": 0.063
       },
       {
         "area": "Down Town Jabal Ali",
-        "sales_12w": 1801,
-        "median_ppsqft_12w": 1739.2,
+        "sales_12w": 1789,
+        "median_ppsqft_12w": 1739.5,
         "ppsqft_change_12w": 0.004,
         "gross_yield_est": 0.058
       },
       {
+        "area": "Business Bay",
+        "sales_12w": 1288,
+        "median_ppsqft_12w": 2087.2,
+        "ppsqft_change_12w": -0.053,
+        "gross_yield_est": 0.053
+      },
+      {
         "area": "City Of Arabia",
-        "sales_12w": 1280,
-        "median_ppsqft_12w": 1693.9,
-        "ppsqft_change_12w": -0.016,
+        "sales_12w": 1269,
+        "median_ppsqft_12w": 1693.1,
+        "ppsqft_change_12w": -0.017,
         "gross_yield_est": null
       },
       {
-        "area": "Business Bay",
-        "sales_12w": 1268,
-        "median_ppsqft_12w": 2125.1,
-        "ppsqft_change_12w": -0.035,
-        "gross_yield_est": 0.052
-      },
-      {
         "area": "Majan",
-        "sales_12w": 1100,
+        "sales_12w": 1091,
         "median_ppsqft_12w": 1416.5,
         "ppsqft_change_12w": 0.018,
         "gross_yield_est": null
       },
       {
         "area": "Al Hebiah Fifth",
-        "sales_12w": 1039,
-        "median_ppsqft_12w": 1715.3,
+        "sales_12w": 1040,
+        "median_ppsqft_12w": 1715.7,
         "ppsqft_change_12w": -0.006,
         "gross_yield_est": 0.043
       },
       {
         "area": "Dubai Land Residence Complex",
-        "sales_12w": 981,
-        "median_ppsqft_12w": 1391.6,
-        "ppsqft_change_12w": -0.009,
+        "sales_12w": 985,
+        "median_ppsqft_12w": 1392.6,
+        "ppsqft_change_12w": -0.006,
         "gross_yield_est": null
       }
     ],
@@ -96,8 +96,8 @@
       {
         "area": "Al Yufrah 1",
         "ppsqft_change_12w": 0.417,
-        "n_bench_12w": 289,
-        "offplan_share_12w": 0.445
+        "n_bench_12w": 293,
+        "offplan_share_12w": 0.446
       },
       {
         "area": "Dubai Industrial City",
@@ -107,20 +107,20 @@
       },
       {
         "area": "International City Ph 1",
-        "ppsqft_change_12w": 0.074,
-        "n_bench_12w": 288,
-        "offplan_share_12w": 0.132
+        "ppsqft_change_12w": 0.072,
+        "n_bench_12w": 291,
+        "offplan_share_12w": 0.138
       },
       {
         "area": "Motor City",
-        "ppsqft_change_12w": 0.067,
-        "n_bench_12w": 207,
-        "offplan_share_12w": 0.622
+        "ppsqft_change_12w": 0.066,
+        "n_bench_12w": 210,
+        "offplan_share_12w": 0.623
       },
       {
         "area": "Al Hebiah Sixth",
-        "ppsqft_change_12w": 0.056,
-        "n_bench_12w": 103,
+        "ppsqft_change_12w": 0.06,
+        "n_bench_12w": 104,
         "offplan_share_12w": 0.068
       }
     ],
@@ -128,14 +128,14 @@
       {
         "area": "Palm Jumeirah",
         "ppsqft_change_12w": -0.185,
-        "n_bench_12w": 146,
-        "offplan_share_12w": 0.154
+        "n_bench_12w": 149,
+        "offplan_share_12w": 0.152
       },
       {
         "area": "Palm Deira",
-        "ppsqft_change_12w": -0.13,
+        "ppsqft_change_12w": -0.132,
         "n_bench_12w": 339,
-        "offplan_share_12w": 0.947
+        "offplan_share_12w": 0.945
       },
       {
         "area": "Liwan",
@@ -146,14 +146,14 @@
       {
         "area": "Al Hebiah First",
         "ppsqft_change_12w": -0.106,
-        "n_bench_12w": 519,
+        "n_bench_12w": 513,
         "offplan_share_12w": 1.0
       },
       {
         "area": "Dubai Healthcare City - Phase 2",
-        "ppsqft_change_12w": -0.103,
-        "n_bench_12w": 136,
-        "offplan_share_12w": 0.389
+        "ppsqft_change_12w": -0.105,
+        "n_bench_12w": 133,
+        "offplan_share_12w": 0.373
       }
     ],
     "best_yield": [
@@ -176,48 +176,48 @@
         "gross_yield_est": 0.07,
         "yield_sub_type": "Flat",
         "median_rent_12w": 75000.0,
-        "median_ppsqft_12w": 1400.0
+        "median_ppsqft_12w": 1390.0
       },
       {
         "area": "Dubai Sports City",
-        "gross_yield_est": 0.067,
+        "gross_yield_est": 0.066,
         "yield_sub_type": "Flat",
         "median_rent_12w": 55000.0,
-        "median_ppsqft_12w": 1186.0
+        "median_ppsqft_12w": 1199.0
       },
       {
         "area": "Dubai Production City",
         "gross_yield_est": 0.065,
         "yield_sub_type": "Flat",
         "median_rent_12w": 65000.0,
-        "median_ppsqft_12w": 1401.0
+        "median_ppsqft_12w": 1404.0
       }
     ],
-    "anomaly_count_60d": 965,
+    "anomaly_count_60d": 956,
     "top_projects": [
       {
         "project": "Binghatti Skyterraces",
         "area": "Al Hebiah First",
-        "sales": 538,
+        "sales": 531,
         "median_ppsqft": 1701.0
       },
       {
         "project": "RAW DISTRICT 2 BY IMTIAZ",
         "area": "Down Town Jabal Ali",
         "sales": 517,
-        "median_ppsqft": 1837.0
+        "median_ppsqft": 1836.0
       },
       {
         "project": "AZIZI VENICE 7",
         "area": "Dubai South",
-        "sales": 512,
-        "median_ppsqft": 1854.0
+        "sales": 511,
+        "median_ppsqft": 1856.0
       },
       {
         "project": "Azizi Venice 15",
         "area": "Dubai South",
-        "sales": 470,
-        "median_ppsqft": 1737.0
+        "sales": 471,
+        "median_ppsqft": 1738.0
       },
       {
         "project": "Valia",
