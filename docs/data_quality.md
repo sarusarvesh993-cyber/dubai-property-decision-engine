@@ -1,21 +1,21 @@
 # Data quality report
 
-_Generated 2026-10-26T11:20:42+00:00. Regenerated on every pipeline run._
+_Generated 2026-10-27T08:08:04+00:00. Regenerated on every pipeline run._
 
 | Check | Status | Detail |
 |---|---|---|
-| Transactions loaded | PASS | 181,657 rows, 2026-01-01 to 2026-10-26 |
-| Rent contracts loaded | PASS | 699,424 rows, 2026-01-01 to 2026-10-25 |
+| Transactions loaded | PASS | 182,049 rows, 2026-01-01 to 2026-10-27 |
+| Rent contracts loaded | PASS | 703,481 rows, 2026-01-01 to 2026-10-26 |
 | Transactions fresh within 3 days | PASS | latest registration 0 day(s) old |
 | Rents fresh within 3 days | PASS | latest registration 0 day(s) old |
 | Transaction duplicates < 0.5% (outside multi-unit deals) | PASS | 0.00% duplicate rows on id+price+size+procedure among single-unit transactions |
 | No land plots in the pricing universe | PASS | 0.00% of eligible sales are land plots |
 | Partial-share transfers excluded from benchmarks (< 3% of sales) | PASS | 1.22% of sales transfer only a share of the unit (procedure area below unit area); kept in volumes, out of benchmarks |
-| Portfolio blocks excluded from benchmarks (< 3% of sales) | PASS | 1.14% of sales sit in same-day blocks of 10+ ready units at one AED/sqft; kept in volumes, out of benchmarks |
+| Portfolio blocks excluded from benchmarks (< 3% of sales) | PASS | 1.13% of sales sit in same-day blocks of 10+ ready units at one AED/sqft; kept in volumes, out of benchmarks |
 | Sale price completeness >= 99% | PASS | 0.00% sales without price |
 | Sale size completeness >= 95% | PASS | 0.00% sales without size |
 | Benchmark-eligible share of sales 60-100% | PASS | 86.3% of sales eligible after bulk/plausibility/outlier filters |
-| Sales outlier rate < 5% | PASS | 1.83% flagged by robust z-score |
+| Sales outlier rate < 5% | PASS | 1.82% flagged by robust z-score |
 | Rents ROOMS null (known gateway gap; size bands used instead) | PASS | 96% null |
 | Bulk leases share < 15% | PASS | 5.6% of contracts cover >1 property |
 | Benchmark-eligible share of residential rents >= 60% | PASS | 88.5% eligible |
@@ -27,46 +27,46 @@ _Generated 2026-10-26T11:20:42+00:00. Regenerated on every pipeline run._
 ```json
 {
   "transactions": {
-    "rows": 181657,
-    "sales": 130914,
-    "mortgages": 38986,
+    "rows": 182049,
+    "sales": 131191,
+    "mortgages": 39052,
     "areas": 250,
-    "projects": 3285,
-    "offplan_share_of_sales": 0.6759246528255191,
+    "projects": 3287,
+    "offplan_share_of_sales": 0.6760600955858252,
     "procedures": {
-      "Sell - Pre registration": 88488,
-      "Sale": 32340,
-      "Mortgage Registration": 26136,
-      "Delayed Sell": 9778,
-      "Grant": 5961,
-      "Delayed Mortgage": 3739,
+      "Sell - Pre registration": 88693,
+      "Sale": 32395,
+      "Mortgage Registration": 26182,
+      "Delayed Sell": 9795,
+      "Grant": 5985,
+      "Delayed Mortgage": 3748,
       "Portfolio Mortgage Registration": 3438,
-      "Development Registration Pre-Registration": 1988,
-      "Modify Mortgage": 1697,
+      "Development Registration Pre-Registration": 2004,
+      "Modify Mortgage": 1701,
       "Portfolio Mortgage Modification": 1295
     }
   },
   "rents": {
-    "rows": 699424,
-    "renewal_share": 0.554836551219289,
+    "rows": 703481,
+    "renewal_share": 0.5545693487101997,
     "areas": 197,
     "usage": {
-      "Residential": 530359,
-      "Commercial": 164482,
-      "Industrial": 1359,
+      "Residential": 533566,
+      "Commercial": 165302,
+      "Industrial": 1364,
       "Storage": 123,
       "Educational facility": 108,
       "Health Facility": 87
     },
     "sub_types": {
-      "Flat": 460021,
-      "Office": 94895,
-      "Shop": 51255,
-      "Villa": 46331,
-      "Labor Camps": 16412,
-      "Warehouse": 7203,
-      "Hotel": 5713,
-      "Studio ": 5406
+      "Flat": 462850,
+      "Office": 95402,
+      "Shop": 51495,
+      "Villa": 46604,
+      "Labor Camps": 16464,
+      "Warehouse": 7227,
+      "Hotel": 5741,
+      "Studio ": 5443
     }
   }
 }
