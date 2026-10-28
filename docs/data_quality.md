@@ -1,10 +1,10 @@
 # Data quality report
 
-_Generated 2026-10-28T08:49:49+00:00. Regenerated on every pipeline run._
+_Generated 2026-10-28T11:31:58+00:00. Regenerated on every pipeline run._
 
 | Check | Status | Detail |
 |---|---|---|
-| Transactions loaded | PASS | 182,829 rows, 2026-01-01 to 2026-10-28 |
+| Transactions loaded | PASS | 182,977 rows, 2026-01-01 to 2026-10-28 |
 | Rent contracts loaded | PASS | 707,604 rows, 2026-01-01 to 2026-10-27 |
 | Transactions fresh within 3 days | PASS | latest registration 0 day(s) old |
 | Rents fresh within 3 days | PASS | latest registration 0 day(s) old |
@@ -27,22 +27,22 @@ _Generated 2026-10-28T08:49:49+00:00. Regenerated on every pipeline run._
 ```json
 {
   "transactions": {
-    "rows": 182829,
-    "sales": 131705,
-    "mortgages": 39251,
+    "rows": 182977,
+    "sales": 131789,
+    "mortgages": 39300,
     "areas": 250,
     "projects": 3291,
-    "offplan_share_of_sales": 0.6755628108272275,
+    "offplan_share_of_sales": 0.6754205586202187,
     "procedures": {
-      "Sell - Pre registration": 88975,
-      "Sale": 32562,
-      "Mortgage Registration": 26335,
-      "Delayed Sell": 9860,
-      "Grant": 6018,
-      "Delayed Mortgage": 3773,
+      "Sell - Pre registration": 89013,
+      "Sale": 32594,
+      "Mortgage Registration": 26368,
+      "Delayed Sell": 9874,
+      "Grant": 6025,
+      "Delayed Mortgage": 3781,
       "Portfolio Mortgage Registration": 3438,
-      "Development Registration Pre-Registration": 2006,
-      "Modify Mortgage": 1711,
+      "Development Registration Pre-Registration": 2010,
+      "Modify Mortgage": 1714,
       "Portfolio Mortgage Modification": 1295
     }
   },
