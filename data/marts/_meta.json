@@ -1,21 +1,21 @@
 {
-  "built_at_utc": "2026-10-28T11:31:56+00:00",
+  "built_at_utc": "2026-10-29T08:45:04+00:00",
   "tx_first_date": "2026-01-01",
-  "tx_last_date": "2026-10-28",
+  "tx_last_date": "2026-10-29",
   "rt_first_date": "2026-01-01",
-  "rt_last_date": "2026-10-27",
-  "tx_rows": 182977,
-  "rt_rows": 707604,
+  "rt_last_date": "2026-10-28",
+  "tx_rows": 183495,
+  "rt_rows": 711720,
   "mart_rows": {
     "mart_weekly_sales": 44,
     "mart_weekly_rents": 44,
-    "mart_area_month": 2850,
+    "mart_area_month": 2852,
     "mart_area_summary": 225,
-    "mart_price_bands": 2320,
-    "mart_rent_benchmarks": 3343,
-    "mart_anomalies": 1012,
-    "mart_top_projects": 1241,
-    "dim_area": 278
+    "mart_price_bands": 2319,
+    "mart_rent_benchmarks": 3348,
+    "mart_anomalies": 1037,
+    "mart_top_projects": 1239,
+    "dim_area": 279
   },
   "params": {
     "min_cell_n": 8,
