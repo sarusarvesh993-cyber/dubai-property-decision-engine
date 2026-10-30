@@ -1,11 +1,11 @@
 # Data quality report
 
-_Generated 2026-10-30T08:51:25+00:00. Regenerated on every pipeline run._
+_Generated 2026-10-30T11:31:46+00:00. Regenerated on every pipeline run._
 
 | Check | Status | Detail |
 |---|---|---|
-| Transactions loaded | PASS | 184,451 rows, 2026-01-01 to 2026-10-30 |
-| Rent contracts loaded | PASS | 715,900 rows, 2026-01-01 to 2026-10-29 |
+| Transactions loaded | PASS | 184,452 rows, 2026-01-01 to 2026-10-30 |
+| Rent contracts loaded | PASS | 715,901 rows, 2026-01-01 to 2026-10-29 |
 | Transactions fresh within 3 days | PASS | latest registration 0 day(s) old |
 | Rents fresh within 3 days | PASS | latest registration 0 day(s) old |
 | Transaction duplicates < 0.5% (outside multi-unit deals) | PASS | 0.00% duplicate rows on id+price+size+procedure among single-unit transactions |
@@ -27,7 +27,7 @@ _Generated 2026-10-30T08:51:25+00:00. Regenerated on every pipeline run._
 ```json
 {
   "transactions": {
-    "rows": 184451,
+    "rows": 184452,
     "sales": 132799,
     "mortgages": 39667,
     "areas": 250,
@@ -38,7 +38,7 @@ _Generated 2026-10-30T08:51:25+00:00. Regenerated on every pipeline run._
       "Sale": 33029,
       "Mortgage Registration": 26651,
       "Delayed Sell": 9963,
-      "Grant": 6059,
+      "Grant": 6060,
       "Delayed Mortgage": 3811,
       "Portfolio Mortgage Registration": 3438,
       "Development Registration Pre-Registration": 2039,
@@ -47,11 +47,11 @@ _Generated 2026-10-30T08:51:25+00:00. Regenerated on every pipeline run._
     }
   },
   "rents": {
-    "rows": 715900,
-    "renewal_share": 0.5534865204637519,
+    "rows": 715901,
+    "renewal_share": 0.5534857473309857,
     "areas": 198,
     "usage": {
-      "Residential": 543015,
+      "Residential": 543016,
       "Commercial": 168176,
       "Industrial": 1396,
       "Storage": 123,
@@ -66,7 +66,7 @@ _Generated 2026-10-30T08:51:25+00:00. Regenerated on every pipeline run._
       "Labor Camps": 16782,
       "Warehouse": 7366,
       "Hotel": 5884,
-      "Studio ": 5537
+      "Studio ": 5538
     }
   }
 }

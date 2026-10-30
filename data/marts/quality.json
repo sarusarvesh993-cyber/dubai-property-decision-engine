@@ -1,15 +1,15 @@
 {
-  "generated_at_utc": "2026-10-30T08:51:25+00:00",
+  "generated_at_utc": "2026-10-30T11:31:46+00:00",
   "checks": [
     {
       "check": "Transactions loaded",
       "status": "PASS",
-      "detail": "184,451 rows, 2026-01-01 to 2026-10-30"
+      "detail": "184,452 rows, 2026-01-01 to 2026-10-30"
     },
     {
       "check": "Rent contracts loaded",
       "status": "PASS",
-      "detail": "715,900 rows, 2026-01-01 to 2026-10-29"
+      "detail": "715,901 rows, 2026-01-01 to 2026-10-29"
     },
     {
       "check": "Transactions fresh within 3 days",
@@ -89,7 +89,7 @@
   ],
   "profile": {
     "transactions": {
-      "rows": 184451,
+      "rows": 184452,
       "sales": 132799,
       "mortgages": 39667,
       "areas": 250,
@@ -100,7 +100,7 @@
         "Sale": 33029,
         "Mortgage Registration": 26651,
         "Delayed Sell": 9963,
-        "Grant": 6059,
+        "Grant": 6060,
         "Delayed Mortgage": 3811,
         "Portfolio Mortgage Registration": 3438,
         "Development Registration Pre-Registration": 2039,
@@ -109,11 +109,11 @@
       }
     },
     "rents": {
-      "rows": 715900,
-      "renewal_share": 0.5534865204637519,
+      "rows": 715901,
+      "renewal_share": 0.5534857473309857,
       "areas": 198,
       "usage": {
-        "Residential": 543015,
+        "Residential": 543016,
         "Commercial": 168176,
         "Industrial": 1396,
         "Storage": 123,
@@ -128,7 +128,7 @@
         "Labor Camps": 16782,
         "Warehouse": 7366,
         "Hotel": 5884,
-        "Studio ": 5537
+        "Studio ": 5538
       }
     }
   },

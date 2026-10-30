@@ -1,11 +1,11 @@
 {
-  "built_at_utc": "2026-10-30T08:51:23+00:00",
+  "built_at_utc": "2026-10-30T11:31:44+00:00",
   "tx_first_date": "2026-01-01",
   "tx_last_date": "2026-10-30",
   "rt_first_date": "2026-01-01",
   "rt_last_date": "2026-10-29",
-  "tx_rows": 184451,
-  "rt_rows": 715900,
+  "tx_rows": 184452,
+  "rt_rows": 715901,
   "mart_rows": {
     "mart_weekly_sales": 44,
     "mart_weekly_rents": 44,
