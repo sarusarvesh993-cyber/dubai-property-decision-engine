@@ -1,8 +1,8 @@
 {
-  "generated_at_utc": "2026-11-01T09:29:31+00:00",
+  "generated_at_utc": "2026-11-01T11:58:30+00:00",
   "as_of": "2026-11-01",
-  "source": "groq | qwen/qwen3.8-27b | 1.2s",
-  "text": "Registered residential sales reached 11,608 units valued at AED 34,328,091,812 over the last four weeks, representing an 11.4 percent increase in volume and a 25.6 percent rise in value compared to the previous period. The median residential price per square foot stood at AED 1,688, up 0.8 percent from the prior four-week median of AED 1,675. Off-plan transactions accounted for 57.2 percent of total sales, while 4,630 mortgage registrations were recorded separately from the sales count.\n\nThe rental market recorded 91,552 Ejari contracts with a renewal share of 51.3 percent. The median annual residential rent was AED 69,769. In the top performing areas by sales volume, Dubai South led with 3,540 sales over twelve weeks at a median of AED 1,695 per square foot, followed by Jumeirah Village Circle with 2,325 sales at AED 1,431 per square foot. Down Town Jabal Ali recorded 1,542 sales with a median price of AED 1,742 per square foot.\n\nTwelve-week median price changes highlight distinct regional trends. Al Yufrah 1 showed the strongest heating at 43.3 percent, followed by Dubai Industrial City at 12.6 percent and Burj Khalifa at 7.7 percent. Conversely, Liwan and Palm Deira both cooled by 13.6 percent, while Jumeirah Lakes Towers declined by 13.2 percent. Estimated gross yields remain highest in Zaabeel First at 8.9 percent and International City Phase 1 at 8.6 percent for flats.\n\nInvestors should note that 1,063 sales in the last 60 days deviated significantly from comparable medians. These figures are derived from registered DLD data and Ejari contracts using medians and benchmark filters that exclude bulk deals, partial shares, and statistical outliers.",
+  "source": "groq | qwen/qwen3.8-27b | 1.3s",
+  "text": "Registered residential sales reached 11,608 units in the last four weeks, totaling AED 34,328,091,812. This volume represents an 11.4% increase compared to the previous four-week period. Mortgage registrations were recorded separately at 4,630, distinct from the sales count. The off-plan share of these transactions stood at 57.2%, down from 65.4% in the prior period.\n\nThe median residential price per square foot rose to AED 1,688, marking a 0.8% increase from the previous benchmark of AED 1,675. Top performing areas by sales volume include Dubai South with 3,542 units and Jumeirah Village Circle with 2,325 units over the last 12 weeks. Business Bay recorded a 3.8% decline in median price, while Al Hebiah Fifth saw a 0.8% rise.\n\nRental activity shows 91,552 registered contracts with a renewal share of 51.3%. The median annual residential rent is AED 69,769. Estimated gross yields remain highest in Zaabeel First at 8.9% for flats, followed by International City Phase 1 at 8.6%. In terms of price momentum, Al Yufrah 1 leads with a 43.3% increase in median price, while Liwan and Palm Deira both show a 13.6% decline.\n\nInvestors should monitor the 1,051 anomalous sales recorded in the last 60 days, which deviate significantly from comparable medians. The data reflects registered DLD transactions and Ejari contracts, using medians and specific benchmark filters to exclude bulk deals and outliers.",
   "facts": {
     "as_of": "2026-11-01",
     "coverage_from": "2026-01-01",
@@ -36,7 +36,7 @@
     "top_areas_by_sales": [
       {
         "area": "Dubai South",
-        "sales_12w": 3540,
+        "sales_12w": 3542,
         "median_ppsqft_12w": 1695.3,
         "ppsqft_change_12w": -0.004,
         "gross_yield_est": 0.046
@@ -66,7 +66,7 @@
         "area": "Majan",
         "sales_12w": 1096,
         "median_ppsqft_12w": 1417.0,
-        "ppsqft_change_12w": -0.021,
+        "ppsqft_change_12w": -0.028,
         "gross_yield_est": null
       },
       {
@@ -115,7 +115,7 @@
         "area": "International City Ph 1",
         "ppsqft_change_12w": 0.068,
         "n_bench_12w": 287,
-        "offplan_share_12w": 0.138
+        "offplan_share_12w": 0.139
       },
       {
         "area": "Al Hebiah Sixth",
@@ -193,7 +193,7 @@
         "median_ppsqft_12w": 1413.0
       }
     ],
-    "anomaly_count_60d": 1063,
+    "anomaly_count_60d": 1051,
     "top_projects": [
       {
         "project": "RAW DISTRICT 2 BY IMTIAZ",
