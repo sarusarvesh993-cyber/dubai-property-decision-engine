@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-11-06T09:38:32+00:00",
+  "generated_at_utc": "2026-11-06T13:08:04+00:00",
   "checks": [
     {
       "check": "Transactions loaded",
@@ -9,7 +9,7 @@
     {
       "check": "Rent contracts loaded",
       "status": "PASS",
-      "detail": "738,126 rows, 2026-01-01 to 2026-11-05"
+      "detail": "738,127 rows, 2026-01-01 to 2026-11-05"
     },
     {
       "check": "Transactions fresh within 3 days",
@@ -109,12 +109,12 @@
       }
     },
     "rents": {
-      "rows": 738126,
-      "renewal_share": 0.5524774902929852,
+      "rows": 738127,
+      "renewal_share": 0.5524767418073042,
       "areas": 198,
       "usage": {
         "Residential": 559971,
-        "Commercial": 173295,
+        "Commercial": 173296,
         "Industrial": 1432,
         "Storage": 126,
         "Educational facility": 116,
@@ -123,7 +123,7 @@
       "sub_types": {
         "Flat": 485877,
         "Office": 100265,
-        "Shop": 53616,
+        "Shop": 53617,
         "Villa": 48776,
         "Labor Camps": 17302,
         "Warehouse": 7563,
