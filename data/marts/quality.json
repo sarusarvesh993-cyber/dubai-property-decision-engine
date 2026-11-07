@@ -1,15 +1,15 @@
 {
-  "generated_at_utc": "2026-11-06T13:08:04+00:00",
+  "generated_at_utc": "2026-11-07T09:02:25+00:00",
   "checks": [
     {
       "check": "Transactions loaded",
       "status": "PASS",
-      "detail": "188,685 rows, 2026-01-01 to 2026-11-06"
+      "detail": "189,129 rows, 2026-01-01 to 2026-11-07"
     },
     {
       "check": "Rent contracts loaded",
       "status": "PASS",
-      "detail": "738,127 rows, 2026-01-01 to 2026-11-05"
+      "detail": "741,171 rows, 2026-01-01 to 2026-11-06"
     },
     {
       "check": "Transactions fresh within 3 days",
@@ -34,12 +34,12 @@
     {
       "check": "Partial-share transfers excluded from benchmarks (< 3% of sales)",
       "status": "PASS",
-      "detail": "1.20% of sales transfer only a share of the unit (procedure area below unit area); kept in volumes, out of benchmarks"
+      "detail": "1.21% of sales transfer only a share of the unit (procedure area below unit area); kept in volumes, out of benchmarks"
     },
     {
       "check": "Portfolio blocks excluded from benchmarks (< 3% of sales)",
       "status": "PASS",
-      "detail": "1.24% of sales sit in same-day blocks of 10+ ready units at one AED/sqft; kept in volumes, out of benchmarks"
+      "detail": "1.25% of sales sit in same-day blocks of 10+ ready units at one AED/sqft; kept in volumes, out of benchmarks"
     },
     {
       "check": "Sale price completeness >= 99%",
@@ -59,7 +59,7 @@
     {
       "check": "Sales outlier rate < 5%",
       "status": "PASS",
-      "detail": "1.79% flagged by robust z-score"
+      "detail": "1.80% flagged by robust z-score"
     },
     {
       "check": "Rents ROOMS null (known gateway gap; size bands used instead)",
@@ -74,7 +74,7 @@
     {
       "check": "Benchmark-eligible share of residential rents >= 60%",
       "status": "PASS",
-      "detail": "88.5% eligible"
+      "detail": "88.4% eligible"
     },
     {
       "check": "Sales in communities with rent coverage >= 70% (after crosswalk)",
@@ -89,46 +89,46 @@
   ],
   "profile": {
     "transactions": {
-      "rows": 188685,
-      "sales": 135450,
-      "mortgages": 40823,
+      "rows": 189129,
+      "sales": 135760,
+      "mortgages": 40936,
       "areas": 250,
-      "projects": 3314,
-      "offplan_share_of_sales": 0.6720118124769288,
+      "projects": 3315,
+      "offplan_share_of_sales": 0.672031526222746,
       "procedures": {
-        "Sell - Pre registration": 91024,
-        "Sale": 33818,
-        "Mortgage Registration": 27327,
-        "Delayed Sell": 10296,
-        "Grant": 6249,
-        "Delayed Mortgage": 3925,
-        "Portfolio Mortgage Registration": 3614,
+        "Sell - Pre registration": 91235,
+        "Sale": 33891,
+        "Mortgage Registration": 27413,
+        "Delayed Sell": 10322,
+        "Grant": 6258,
+        "Delayed Mortgage": 3935,
+        "Portfolio Mortgage Registration": 3619,
         "Development Registration Pre-Registration": 2064,
-        "Modify Mortgage": 1782,
-        "Grant Pre-Registration": 1345
+        "Modify Mortgage": 1788,
+        "Grant Pre-Registration": 1351
       }
     },
     "rents": {
-      "rows": 738127,
-      "renewal_share": 0.5524767418073042,
+      "rows": 741171,
+      "renewal_share": 0.5524447124887509,
       "areas": 198,
       "usage": {
-        "Residential": 559971,
-        "Commercial": 173296,
-        "Industrial": 1432,
+        "Residential": 562290,
+        "Commercial": 174000,
+        "Industrial": 1434,
         "Storage": 126,
         "Educational facility": 116,
         "Health Facility": 89
       },
       "sub_types": {
-        "Flat": 485877,
-        "Office": 100265,
-        "Shop": 53617,
-        "Villa": 48776,
-        "Labor Camps": 17302,
-        "Warehouse": 7563,
-        "Hotel": 6120,
-        "Studio ": 5728
+        "Flat": 487860,
+        "Office": 100692,
+        "Shop": 53796,
+        "Villa": 48945,
+        "Labor Camps": 17369,
+        "Warehouse": 7590,
+        "Hotel": 6151,
+        "Studio ": 5748
       }
     }
   },
