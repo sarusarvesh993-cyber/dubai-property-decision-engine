@@ -1,6 +1,6 @@
 # Data quality report
 
-_Generated 2026-11-08T09:17:33+00:00. Regenerated on every pipeline run._
+_Generated 2026-11-08T12:04:10+00:00. Regenerated on every pipeline run._
 
 | Check | Status | Detail |
 |---|---|---|
