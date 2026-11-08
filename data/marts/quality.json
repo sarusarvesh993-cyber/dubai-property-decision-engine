@@ -1,15 +1,15 @@
 {
-  "generated_at_utc": "2026-11-07T11:53:12+00:00",
+  "generated_at_utc": "2026-11-08T09:17:33+00:00",
   "checks": [
     {
       "check": "Transactions loaded",
       "status": "PASS",
-      "detail": "189,166 rows, 2026-01-01 to 2026-11-07"
+      "detail": "189,203 rows, 2026-01-01 to 2026-11-08"
     },
     {
       "check": "Rent contracts loaded",
       "status": "PASS",
-      "detail": "741,171 rows, 2026-01-01 to 2026-11-06"
+      "detail": "742,496 rows, 2026-01-01 to 2026-11-07"
     },
     {
       "check": "Transactions fresh within 3 days",
@@ -89,46 +89,46 @@
   ],
   "profile": {
     "transactions": {
-      "rows": 189166,
-      "sales": 135788,
-      "mortgages": 40939,
+      "rows": 189203,
+      "sales": 135812,
+      "mortgages": 40943,
       "areas": 250,
       "projects": 3315,
-      "offplan_share_of_sales": 0.6720476036174036,
+      "offplan_share_of_sales": 0.6720540158454333,
       "procedures": {
-        "Sell - Pre registration": 91256,
-        "Sale": 33895,
-        "Mortgage Registration": 27414,
+        "Sell - Pre registration": 91273,
+        "Sale": 33902,
+        "Mortgage Registration": 27417,
         "Delayed Sell": 10325,
-        "Grant": 6264,
+        "Grant": 6271,
         "Delayed Mortgage": 3937,
         "Portfolio Mortgage Registration": 3619,
         "Development Registration Pre-Registration": 2064,
         "Modify Mortgage": 1788,
-        "Grant Pre-Registration": 1351
+        "Grant Pre-Registration": 1353
       }
     },
     "rents": {
-      "rows": 741171,
-      "renewal_share": 0.5524447124887509,
+      "rows": 742496,
+      "renewal_share": 0.5523302482437615,
       "areas": 198,
       "usage": {
-        "Residential": 562290,
-        "Commercial": 174000,
+        "Residential": 563412,
+        "Commercial": 174203,
         "Industrial": 1434,
         "Storage": 126,
         "Educational facility": 116,
         "Health Facility": 89
       },
       "sub_types": {
-        "Flat": 487860,
-        "Office": 100692,
-        "Shop": 53796,
-        "Villa": 48945,
-        "Labor Camps": 17369,
-        "Warehouse": 7590,
-        "Hotel": 6151,
-        "Studio ": 5748
+        "Flat": 488871,
+        "Office": 100817,
+        "Shop": 53857,
+        "Villa": 49030,
+        "Labor Camps": 17380,
+        "Warehouse": 7592,
+        "Hotel": 6159,
+        "Studio ": 5761
       }
     }
   },
