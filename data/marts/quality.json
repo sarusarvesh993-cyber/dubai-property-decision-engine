@@ -1,15 +1,15 @@
 {
-  "generated_at_utc": "2026-11-10T13:40:41+00:00",
+  "generated_at_utc": "2026-11-11T09:42:17+00:00",
   "checks": [
     {
       "check": "Transactions loaded",
       "status": "PASS",
-      "detail": "194,726 rows, 2026-01-01 to 2026-11-10"
+      "detail": "195,701 rows, 2026-01-01 to 2026-11-11"
     },
     {
       "check": "Rent contracts loaded",
       "status": "PASS",
-      "detail": "770,377 rows, 2026-01-01 to 2026-11-09"
+      "detail": "774,267 rows, 2026-01-01 to 2026-11-10"
     },
     {
       "check": "Transactions fresh within 3 days",
@@ -34,12 +34,12 @@
     {
       "check": "Partial-share transfers excluded from benchmarks (< 3% of sales)",
       "status": "PASS",
-      "detail": "1.20% of sales transfer only a share of the unit (procedure area below unit area); kept in volumes, out of benchmarks"
+      "detail": "1.19% of sales transfer only a share of the unit (procedure area below unit area); kept in volumes, out of benchmarks"
     },
     {
       "check": "Portfolio blocks excluded from benchmarks (< 3% of sales)",
       "status": "PASS",
-      "detail": "1.28% of sales sit in same-day blocks of 10+ ready units at one AED/sqft; kept in volumes, out of benchmarks"
+      "detail": "1.29% of sales sit in same-day blocks of 10+ ready units at one AED/sqft; kept in volumes, out of benchmarks"
     },
     {
       "check": "Sale price completeness >= 99%",
@@ -54,12 +54,12 @@
     {
       "check": "Benchmark-eligible share of sales 60-100%",
       "status": "PASS",
-      "detail": "82.9% of sales eligible after bulk/plausibility/outlier filters"
+      "detail": "82.5% of sales eligible after bulk/plausibility/outlier filters"
     },
     {
       "check": "Sales outlier rate < 5%",
       "status": "PASS",
-      "detail": "1.74% flagged by robust z-score"
+      "detail": "1.72% flagged by robust z-score"
     },
     {
       "check": "Rents ROOMS null (known gateway gap; size bands used instead)",
@@ -84,33 +84,33 @@
     {
       "check": "Weekly volume within 50-200% of median (last full week)",
       "status": "PASS",
-      "detail": "last full week 5,069 vs median 3,000"
+      "detail": "last full week 5,069 vs median 3,071"
     }
   ],
   "profile": {
     "transactions": {
-      "rows": 194726,
-      "sales": 139307,
-      "mortgages": 42436,
+      "rows": 195701,
+      "sales": 139961,
+      "mortgages": 42645,
       "areas": 250,
-      "projects": 3317,
-      "offplan_share_of_sales": 0.6695140947691071,
+      "projects": 3318,
+      "offplan_share_of_sales": 0.6690506641135745,
       "procedures": {
-        "Sell - Pre registration": 93268,
-        "Sale": 34928,
-        "Mortgage Registration": 28355,
-        "Delayed Sell": 10796,
-        "Grant": 6554,
-        "Delayed Mortgage": 4090,
+        "Sell - Pre registration": 93641,
+        "Sale": 35143,
+        "Mortgage Registration": 28501,
+        "Delayed Sell": 10861,
+        "Grant": 6630,
+        "Delayed Mortgage": 4114,
         "Portfolio Mortgage Registration": 3800,
-        "Development Registration Pre-Registration": 2095,
-        "Modify Mortgage": 1847,
-        "Grant Pre-Registration": 1488
+        "Development Registration Pre-Registration": 2098,
+        "Modify Mortgage": 1861,
+        "Grant Pre-Registration": 1502
       }
     },
     "rents": {
-      "rows": 770377,
-      "renewal_share": 0.5514741483715117,
+      "rows": 774267,
+      "renewal_share": 0.5514854694827495,
       "areas": 198,
       "usage": {
         "Residential": 563412,
@@ -121,14 +121,14 @@
         "Health Facility": 89
       },
       "sub_types": {
-        "Flat": 507496,
-        "Office": 104796,
-        "Shop": 55551,
-        "Villa": 50795,
-        "Labor Camps": 18001,
-        "Warehouse": 7822,
-        "Hotel": 6446,
-        "Studio ": 5998
+        "Flat": 510053,
+        "Office": 105295,
+        "Shop": 55839,
+        "Villa": 51048,
+        "Labor Camps": 18076,
+        "Warehouse": 7883,
+        "Hotel": 6483,
+        "Studio ": 6040
       }
     }
   },
