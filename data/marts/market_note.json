@@ -1,8 +1,8 @@
 {
-  "generated_at_utc": "2026-11-13T09:51:28+00:00",
+  "generated_at_utc": "2026-11-13T13:18:13+00:00",
   "as_of": "2026-11-13",
-  "source": "groq | qwen/qwen3.8-27b | 1.4s",
-  "text": "Registered residential sales reached 14,433 units valued at AED 42.64bn in the last four weeks, representing a 41.6% increase in volume and a 54.1% rise in value compared to the prior period. Mortgage registrations totaled 5,985, which are recorded separately from sales transactions. The off-plan segment accounted for 57.7% of all sales, slightly down from 59.4% in the previous four weeks.\n\nThe median residential price per square foot rose to AED 1,689, marking a 1.4% increase from the previous four-week median of AED 1,665. Top selling areas by volume over the last 12 weeks include Dubai South with 3,100 sales and Jumeirah Village Circle with 2,513 sales. Dubai Creek Harbour recorded the highest median price at AED 2,539 per square foot among the top volume areas, while Majan showed the lowest at AED 1,415 per square foot.\n\nRental activity remained robust with 110,329 Ejari contracts registered, of which 51.6% were renewals. The median annual residential rent stood at AED 68,729. Estimated gross yields for flats were highest in Zaabeel First at 8.8% and International City Phase 1 at 8.6%. Town Square followed at 7.0%, while Dubai Sports City and Dubai Production City recorded yields of 6.7% and 6.5% respectively.\n\nPrice momentum varied significantly across communities. Al Yufrah 1 showed the strongest 12-week price increase at 41.5%, followed by Dubai Industrial City at 9.4%. Conversely, Jumeirah Lakes Towers experienced the sharpest decline at 18.8%, with Palm Jumeirah down 16.7% and Al Hebiah First down 15.0%. The anomaly monitor flagged 979 sales in the last 60 days priced more than 35% away from comparable medians. Figures are based on registered DLD data and Ejari contracts, using medians and benchmark filters that exclude bulk deals, partial shares, and statistical outliers.",
+  "source": "groq | qwen/qwen3.8-27b | 1.8s",
+  "text": "Registered residential sales reached 14,433 units in the last four weeks, totaling AED 42,636,636,091. This volume represents a 41.6 percent increase compared to the previous four-week period. Mortgage registrations were recorded separately at 5,985. The off-plan share of sales stood at 57.7 percent, slightly lower than the 59.4 percent observed in the prior period.\n\nThe median residential price per square foot rose to AED 1,689, marking a 1.4 percent increase from the previous benchmark of AED 1,665. Top performing areas by sales volume include Dubai South with 3,100 units and Jumeirah Village Circle with 2,513 units over the last twelve weeks. Dubai Creek Harbour showed the strongest price momentum among major communities, with a 7.5 percent rise in median price per square foot.\n\nRental activity remained robust with 110,329 contracts registered. Renewals accounted for 51.6 percent of these transactions. The median annual residential rent was AED 68,729. In terms of yield, Zaabeel First led with an estimated gross yield of 8.8 percent for flats, followed by International City Phase 1 at 8.6 percent. Town Square, Dubai Sports City, and Dubai Production City also recorded yields above 6.5 percent.\n\nMarket watchers should note significant price divergence in specific communities. Al Yufrah 1 saw a 41.5 percent increase in median price per square foot, while Jumeirah Lakes Towers cooled by 18.8 percent. An anomaly monitor flagged 979 sales in the last 60 days that deviated more than 35 percent from comparable medians. These figures are derived from registered DLD data and Ejari contracts, using medians and benchmark filters that exclude bulk deals, partial shares, and statistical outliers.",
   "facts": {
     "as_of": "2026-11-13",
     "coverage_from": "2026-01-01",
@@ -145,8 +145,8 @@
       },
       {
         "area": "Sama Al Jadaf",
-        "ppsqft_change_12w": -0.129,
-        "n_bench_12w": 259,
+        "ppsqft_change_12w": -0.128,
+        "n_bench_12w": 258,
         "offplan_share_12w": 0.987
       },
       {

@@ -1,15 +1,15 @@
 {
-  "generated_at_utc": "2026-11-13T09:51:24+00:00",
+  "generated_at_utc": "2026-11-13T13:18:09+00:00",
   "checks": [
     {
       "check": "Transactions loaded",
       "status": "PASS",
-      "detail": "197,183 rows, 2026-01-01 to 2026-11-13"
+      "detail": "197,184 rows, 2026-01-01 to 2026-11-13"
     },
     {
       "check": "Rent contracts loaded",
       "status": "PASS",
-      "detail": "781,711 rows, 2026-01-01 to 2026-11-12"
+      "detail": "781,712 rows, 2026-01-01 to 2026-11-12"
     },
     {
       "check": "Transactions fresh within 3 days",
@@ -89,14 +89,14 @@
   ],
   "profile": {
     "transactions": {
-      "rows": 197183,
-      "sales": 140843,
+      "rows": 197184,
+      "sales": 140844,
       "mortgages": 42993,
       "areas": 250,
       "projects": 3322,
-      "offplan_share_of_sales": 0.6681624219876032,
+      "offplan_share_of_sales": 0.6681647780523132,
       "procedures": {
-        "Sell - Pre registration": 94106,
+        "Sell - Pre registration": 94107,
         "Sale": 35459,
         "Mortgage Registration": 28769,
         "Delayed Sell": 10962,
@@ -109,8 +109,8 @@
       }
     },
     "rents": {
-      "rows": 781711,
-      "renewal_share": 0.5513815207922109,
+      "rows": 781712,
+      "renewal_share": 0.5513808154409808,
       "areas": 198,
       "usage": {
         "Residential": 563412,
@@ -123,7 +123,7 @@
       "sub_types": {
         "Flat": 514896,
         "Office": 106353,
-        "Shop": 56331,
+        "Shop": 56332,
         "Villa": 51523,
         "Labor Camps": 18275,
         "Warehouse": 7962,

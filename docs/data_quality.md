@@ -1,11 +1,11 @@
 # Data quality report
 
-_Generated 2026-11-13T09:51:24+00:00. Regenerated on every pipeline run._
+_Generated 2026-11-13T13:18:09+00:00. Regenerated on every pipeline run._
 
 | Check | Status | Detail |
 |---|---|---|
-| Transactions loaded | PASS | 197,183 rows, 2026-01-01 to 2026-11-13 |
-| Rent contracts loaded | PASS | 781,711 rows, 2026-01-01 to 2026-11-12 |
+| Transactions loaded | PASS | 197,184 rows, 2026-01-01 to 2026-11-13 |
+| Rent contracts loaded | PASS | 781,712 rows, 2026-01-01 to 2026-11-12 |
 | Transactions fresh within 3 days | PASS | latest registration 0 day(s) old |
 | Rents fresh within 3 days | PASS | latest registration 0 day(s) old |
 | Transaction duplicates < 0.5% (outside multi-unit deals) | PASS | 0.00% duplicate rows on id+price+size+procedure among single-unit transactions |
@@ -27,14 +27,14 @@ _Generated 2026-11-13T09:51:24+00:00. Regenerated on every pipeline run._
 ```json
 {
   "transactions": {
-    "rows": 197183,
-    "sales": 140843,
+    "rows": 197184,
+    "sales": 140844,
     "mortgages": 42993,
     "areas": 250,
     "projects": 3322,
-    "offplan_share_of_sales": 0.6681624219876032,
+    "offplan_share_of_sales": 0.6681647780523132,
     "procedures": {
-      "Sell - Pre registration": 94106,
+      "Sell - Pre registration": 94107,
       "Sale": 35459,
       "Mortgage Registration": 28769,
       "Delayed Sell": 10962,
@@ -47,8 +47,8 @@ _Generated 2026-11-13T09:51:24+00:00. Regenerated on every pipeline run._
     }
   },
   "rents": {
-    "rows": 781711,
-    "renewal_share": 0.5513815207922109,
+    "rows": 781712,
+    "renewal_share": 0.5513808154409808,
     "areas": 198,
     "usage": {
       "Residential": 563412,
@@ -61,7 +61,7 @@ _Generated 2026-11-13T09:51:24+00:00. Regenerated on every pipeline run._
     "sub_types": {
       "Flat": 514896,
       "Office": 106353,
-      "Shop": 56331,
+      "Shop": 56332,
       "Villa": 51523,
       "Labor Camps": 18275,
       "Warehouse": 7962,
