@@ -1,11 +1,11 @@
 # Data quality report
 
-_Generated 2026-11-14T12:22:03+00:00. Regenerated on every pipeline run._
+_Generated 2026-11-15T09:41:34+00:00. Regenerated on every pipeline run._
 
 | Check | Status | Detail |
 |---|---|---|
-| Transactions loaded | PASS | 197,594 rows, 2026-01-01 to 2026-11-14 |
-| Rent contracts loaded | PASS | 784,216 rows, 2026-01-01 to 2026-11-13 |
+| Transactions loaded | PASS | 197,648 rows, 2026-01-01 to 2026-11-15 |
+| Rent contracts loaded | PASS | 785,531 rows, 2026-01-01 to 2026-11-14 |
 | Transactions fresh within 3 days | PASS | latest registration 0 day(s) old |
 | Rents fresh within 3 days | PASS | latest registration 0 day(s) old |
 | Transaction duplicates < 0.5% (outside multi-unit deals) | PASS | 0.00% duplicate rows on id+price+size+procedure among single-unit transactions |
@@ -27,18 +27,18 @@ _Generated 2026-11-14T12:22:03+00:00. Regenerated on every pipeline run._
 ```json
 {
   "transactions": {
-    "rows": 197594,
-    "sales": 141143,
-    "mortgages": 43082,
+    "rows": 197648,
+    "sales": 141191,
+    "mortgages": 43085,
     "areas": 250,
     "projects": 3325,
-    "offplan_share_of_sales": 0.6680458825446532,
+    "offplan_share_of_sales": 0.6681233223080791,
     "procedures": {
-      "Sell - Pre registration": 94290,
-      "Sale": 35550,
-      "Mortgage Registration": 28834,
-      "Delayed Sell": 10987,
-      "Grant": 6843,
+      "Sell - Pre registration": 94333,
+      "Sale": 35552,
+      "Mortgage Registration": 28837,
+      "Delayed Sell": 10990,
+      "Grant": 6846,
       "Delayed Mortgage": 4165,
       "Portfolio Mortgage Registration": 3806,
       "Development Registration Pre-Registration": 2114,
@@ -47,8 +47,8 @@ _Generated 2026-11-14T12:22:03+00:00. Regenerated on every pipeline run._
     }
   },
   "rents": {
-    "rows": 784216,
-    "renewal_share": 0.5511466228692095,
+    "rows": 785531,
+    "renewal_share": 0.5510081715425617,
     "areas": 198,
     "usage": {
       "Residential": 563412,
@@ -59,14 +59,14 @@ _Generated 2026-11-14T12:22:03+00:00. Regenerated on every pipeline run._
       "Health Facility": 89
     },
     "sub_types": {
-      "Flat": 516606,
-      "Office": 106681,
-      "Shop": 56449,
-      "Villa": 51721,
-      "Labor Camps": 18300,
-      "Warehouse": 7991,
-      "Hotel": 6612,
-      "Studio ": 6123
+      "Flat": 517512,
+      "Office": 106852,
+      "Shop": 56525,
+      "Villa": 51813,
+      "Labor Camps": 18315,
+      "Warehouse": 7997,
+      "Hotel": 6629,
+      "Studio ": 6138
     }
   }
 }
