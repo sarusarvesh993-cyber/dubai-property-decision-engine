@@ -1,11 +1,11 @@
 # Data quality report
 
-_Generated 2026-11-17T14:44:11+00:00. Regenerated on every pipeline run._
+_Generated 2026-11-18T10:28:28+00:00. Regenerated on every pipeline run._
 
 | Check | Status | Detail |
 |---|---|---|
-| Transactions loaded | PASS | 199,232 rows, 2026-01-01 to 2026-11-17 |
-| Rent contracts loaded | PASS | 789,988 rows, 2026-01-01 to 2026-11-16 |
+| Transactions loaded | PASS | 199,797 rows, 2026-01-01 to 2026-11-18 |
+| Rent contracts loaded | PASS | 793,983 rows, 2026-01-01 to 2026-11-17 |
 | Transactions fresh within 3 days | PASS | latest registration 0 day(s) old |
 | Rents fresh within 3 days | PASS | latest registration 0 day(s) old |
 | Transaction duplicates < 0.5% (outside multi-unit deals) | PASS | 0.00% duplicate rows on id+price+size+procedure among single-unit transactions |
@@ -20,35 +20,35 @@ _Generated 2026-11-17T14:44:11+00:00. Regenerated on every pipeline run._
 | Bulk leases share < 15% | PASS | 5.5% of contracts cover >1 property |
 | Benchmark-eligible share of residential rents >= 60% | PASS | 88.4% eligible |
 | Sales in communities with rent coverage >= 70% (after crosswalk) | PASS | 74.3% of sales can be matched to Ejari benchmarks |
-| Weekly volume within 50-200% of median (last full week) | PASS | last full week 2,448 vs median 3,036 |
+| Weekly volume within 50-200% of median (last full week) | PASS | last full week 2,452 vs median 3,036 |
 
 ## Profile
 
 ```json
 {
   "transactions": {
-    "rows": 199232,
-    "sales": 142075,
-    "mortgages": 43646,
+    "rows": 199797,
+    "sales": 142413,
+    "mortgages": 43810,
     "areas": 251,
-    "projects": 3331,
-    "offplan_share_of_sales": 0.6678585254267112,
+    "projects": 3335,
+    "offplan_share_of_sales": 0.6676005701726668,
     "procedures": {
-      "Sell - Pre registration": 94886,
-      "Sale": 35826,
-      "Mortgage Registration": 29080,
-      "Delayed Sell": 11047,
-      "Grant": 6949,
-      "Delayed Mortgage": 4185,
-      "Portfolio Mortgage Registration": 3806,
+      "Sell - Pre registration": 95075,
+      "Sale": 35936,
+      "Mortgage Registration": 29188,
+      "Delayed Sell": 11086,
+      "Grant": 7004,
+      "Delayed Mortgage": 4205,
+      "Portfolio Mortgage Registration": 3823,
       "Development Registration Pre-Registration": 2116,
-      "Modify Mortgage": 1883,
+      "Modify Mortgage": 1886,
       "Portfolio Mortgage Modification": 1583
     }
   },
   "rents": {
-    "rows": 789988,
-    "renewal_share": 0.5510919153202327,
+    "rows": 793983,
+    "renewal_share": 0.5511843452567624,
     "areas": 198,
     "usage": {
       "Residential": 563412,
@@ -59,14 +59,14 @@ _Generated 2026-11-17T14:44:11+00:00. Regenerated on every pipeline run._
       "Health Facility": 89
     },
     "sub_types": {
-      "Flat": 520517,
-      "Office": 107456,
-      "Shop": 56818,
-      "Villa": 52118,
-      "Labor Camps": 18378,
-      "Warehouse": 8039,
-      "Hotel": 6670,
-      "Studio ": 6173
+      "Flat": 522993,
+      "Office": 108125,
+      "Shop": 57105,
+      "Villa": 52385,
+      "Labor Camps": 18455,
+      "Warehouse": 8077,
+      "Hotel": 6712,
+      "Studio ": 6194
     }
   }
 }
