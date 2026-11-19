@@ -1,15 +1,15 @@
 {
-  "generated_at_utc": "2026-11-19T10:35:32+00:00",
+  "generated_at_utc": "2026-11-19T14:34:49+00:00",
   "checks": [
     {
       "check": "Transactions loaded",
       "status": "PASS",
-      "detail": "200,523 rows, 2026-01-01 to 2026-11-19"
+      "detail": "200,594 rows, 2026-01-01 to 2026-11-19"
     },
     {
       "check": "Rent contracts loaded",
       "status": "PASS",
-      "detail": "797,918 rows, 2026-01-01 to 2026-11-18"
+      "detail": "797,920 rows, 2026-01-01 to 2026-11-18"
     },
     {
       "check": "Transactions fresh within 3 days",
@@ -34,7 +34,7 @@
     {
       "check": "Partial-share transfers excluded from benchmarks (< 3% of sales)",
       "status": "PASS",
-      "detail": "1.19% of sales transfer only a share of the unit (procedure area below unit area); kept in volumes, out of benchmarks"
+      "detail": "1.20% of sales transfer only a share of the unit (procedure area below unit area); kept in volumes, out of benchmarks"
     },
     {
       "check": "Portfolio blocks excluded from benchmarks (< 3% of sales)",
@@ -89,28 +89,28 @@
   ],
   "profile": {
     "transactions": {
-      "rows": 200523,
-      "sales": 142905,
-      "mortgages": 43995,
+      "rows": 200594,
+      "sales": 142957,
+      "mortgages": 44010,
       "areas": 251,
       "projects": 3337,
-      "offplan_share_of_sales": 0.6671355096042826,
+      "offplan_share_of_sales": 0.6670397392222837,
       "procedures": {
-        "Sell - Pre registration": 95337,
-        "Sale": 36101,
-        "Mortgage Registration": 29330,
-        "Delayed Sell": 11149,
-        "Grant": 7034,
+        "Sell - Pre registration": 95358,
+        "Sale": 36127,
+        "Mortgage Registration": 29341,
+        "Delayed Sell": 11154,
+        "Grant": 7036,
         "Delayed Mortgage": 4227,
         "Portfolio Mortgage Registration": 3823,
         "Development Registration Pre-Registration": 2117,
-        "Modify Mortgage": 1895,
+        "Modify Mortgage": 1897,
         "Portfolio Mortgage Modification": 1583
       }
     },
     "rents": {
-      "rows": 797918,
-      "renewal_share": 0.551116781423655,
+      "rows": 797920,
+      "renewal_share": 0.5511154000401043,
       "areas": 198,
       "usage": {
         "Residential": 563412,
@@ -121,7 +121,7 @@
         "Health Facility": 89
       },
       "sub_types": {
-        "Flat": 525464,
+        "Flat": 525466,
         "Office": 108712,
         "Shop": 57392,
         "Villa": 52662,

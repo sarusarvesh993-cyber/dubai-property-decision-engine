@@ -1,16 +1,16 @@
 # Data quality report
 
-_Generated 2026-11-19T10:35:32+00:00. Regenerated on every pipeline run._
+_Generated 2026-11-19T14:34:49+00:00. Regenerated on every pipeline run._
 
 | Check | Status | Detail |
 |---|---|---|
-| Transactions loaded | PASS | 200,523 rows, 2026-01-01 to 2026-11-19 |
-| Rent contracts loaded | PASS | 797,918 rows, 2026-01-01 to 2026-11-18 |
+| Transactions loaded | PASS | 200,594 rows, 2026-01-01 to 2026-11-19 |
+| Rent contracts loaded | PASS | 797,920 rows, 2026-01-01 to 2026-11-18 |
 | Transactions fresh within 3 days | PASS | latest registration 0 day(s) old |
 | Rents fresh within 3 days | PASS | latest registration 0 day(s) old |
 | Transaction duplicates < 0.5% (outside multi-unit deals) | PASS | 0.00% duplicate rows on id+price+size+procedure among single-unit transactions |
 | No land plots in the pricing universe | PASS | 0.00% of eligible sales are land plots |
-| Partial-share transfers excluded from benchmarks (< 3% of sales) | PASS | 1.19% of sales transfer only a share of the unit (procedure area below unit area); kept in volumes, out of benchmarks |
+| Partial-share transfers excluded from benchmarks (< 3% of sales) | PASS | 1.20% of sales transfer only a share of the unit (procedure area below unit area); kept in volumes, out of benchmarks |
 | Portfolio blocks excluded from benchmarks (< 3% of sales) | PASS | 1.27% of sales sit in same-day blocks of 10+ ready units at one AED/sqft; kept in volumes, out of benchmarks |
 | Sale price completeness >= 99% | PASS | 0.00% sales without price |
 | Sale size completeness >= 95% | PASS | 0.00% sales without size |
@@ -27,28 +27,28 @@ _Generated 2026-11-19T10:35:32+00:00. Regenerated on every pipeline run._
 ```json
 {
   "transactions": {
-    "rows": 200523,
-    "sales": 142905,
-    "mortgages": 43995,
+    "rows": 200594,
+    "sales": 142957,
+    "mortgages": 44010,
     "areas": 251,
     "projects": 3337,
-    "offplan_share_of_sales": 0.6671355096042826,
+    "offplan_share_of_sales": 0.6670397392222837,
     "procedures": {
-      "Sell - Pre registration": 95337,
-      "Sale": 36101,
-      "Mortgage Registration": 29330,
-      "Delayed Sell": 11149,
-      "Grant": 7034,
+      "Sell - Pre registration": 95358,
+      "Sale": 36127,
+      "Mortgage Registration": 29341,
+      "Delayed Sell": 11154,
+      "Grant": 7036,
       "Delayed Mortgage": 4227,
       "Portfolio Mortgage Registration": 3823,
       "Development Registration Pre-Registration": 2117,
-      "Modify Mortgage": 1895,
+      "Modify Mortgage": 1897,
       "Portfolio Mortgage Modification": 1583
     }
   },
   "rents": {
-    "rows": 797918,
-    "renewal_share": 0.551116781423655,
+    "rows": 797920,
+    "renewal_share": 0.5511154000401043,
     "areas": 198,
     "usage": {
       "Residential": 563412,
@@ -59,7 +59,7 @@ _Generated 2026-11-19T10:35:32+00:00. Regenerated on every pipeline run._
       "Health Facility": 89
     },
     "sub_types": {
-      "Flat": 525464,
+      "Flat": 525466,
       "Office": 108712,
       "Shop": 57392,
       "Villa": 52662,
