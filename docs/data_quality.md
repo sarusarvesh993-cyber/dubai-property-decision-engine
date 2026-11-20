@@ -1,11 +1,11 @@
 # Data quality report
 
-_Generated 2026-11-20T10:16:02+00:00. Regenerated on every pipeline run._
+_Generated 2026-11-20T14:14:21+00:00. Regenerated on every pipeline run._
 
 | Check | Status | Detail |
 |---|---|---|
-| Transactions loaded | PASS | 201,203 rows, 2026-01-01 to 2026-11-20 |
-| Rent contracts loaded | PASS | 801,726 rows, 2026-01-01 to 2026-11-19 |
+| Transactions loaded | PASS | 201,204 rows, 2026-01-01 to 2026-11-20 |
+| Rent contracts loaded | PASS | 801,737 rows, 2026-01-01 to 2026-11-19 |
 | Transactions fresh within 3 days | PASS | latest registration 0 day(s) old |
 | Rents fresh within 3 days | PASS | latest registration 0 day(s) old |
 | Transaction duplicates < 0.5% (outside multi-unit deals) | PASS | 0.00% duplicate rows on id+price+size+procedure among single-unit transactions |
@@ -27,9 +27,9 @@ _Generated 2026-11-20T10:16:02+00:00. Regenerated on every pipeline run._
 ```json
 {
   "transactions": {
-    "rows": 201203,
+    "rows": 201204,
     "sales": 143356,
-    "mortgages": 44188,
+    "mortgages": 44189,
     "areas": 251,
     "projects": 3340,
     "offplan_share_of_sales": 0.6667945534194593,
@@ -47,8 +47,8 @@ _Generated 2026-11-20T10:16:02+00:00. Regenerated on every pipeline run._
     }
   },
   "rents": {
-    "rows": 801726,
-    "renewal_share": 0.5511920531453389,
+    "rows": 801737,
+    "renewal_share": 0.5511844906746227,
     "areas": 198,
     "usage": {
       "Residential": 563412,
@@ -61,11 +61,11 @@ _Generated 2026-11-20T10:16:02+00:00. Regenerated on every pipeline run._
     "sub_types": {
       "Flat": 527984,
       "Office": 109230,
-      "Shop": 57667,
+      "Shop": 57671,
       "Villa": 52879,
       "Labor Camps": 18656,
       "Warehouse": 8176,
-      "Hotel": 6763,
+      "Hotel": 6770,
       "Studio ": 6265
     }
   }

@@ -1,8 +1,8 @@
 {
-  "generated_at_utc": "2026-11-20T10:16:05+00:00",
+  "generated_at_utc": "2026-11-20T14:14:24+00:00",
   "as_of": "2026-11-20",
-  "source": "groq | openai/gpt-oss-120b | 1.9s",
-  "text": "Activity in the last four full weeks showed 13,707 registered residential sales totalling AED 39,487,272,167, a rise of 24.1% on the prior four-week period. Mortgage registrations reached 5,555, reflecting separate financing activity.\n\nPricing saw the median residential price at AED 1",
+  "source": "groq | qwen/qwen3.8-27b | 1.0s",
+  "text": "Registered residential sales reached 13,707 units valued at AED 39.49bn in the last four weeks, a 24.1% increase in volume and 23.1% in value compared to the prior period. Mortgage registrations totaled 5,556, tracked separately from sales. The median residential price rose 3.4% to AED 1,727 per square foot. Off-plan transactions accounted for 56.7% of the total, slightly down from 58.7% in the previous four weeks.\n\nRental activity remained robust with 107,552 Ejari contracts registered. Renewals represented 51.9% of these contracts, while the median residential rent stood at AED 68,000 annually. Top performing areas by sales volume over twelve weeks include Dubai South with 2,713 sales and Jumeirah Village Circle with 2,495 sales. Dubai Creek Harbour recorded 846 sales with a median price of AED 2,527 per square foot.\n\nPricing momentum varied significantly across communities. Al Yufrah 1 saw the strongest 12-week price increase at 33.9%, followed by Dubai Industrial City at 10.1%. Conversely, Saih Shuaib 1 experienced the sharpest decline at 29.6%, with Sama Al Jadaf and Jumeirah Lakes Towers also cooling by 14.0% and 13.2% respectively. International City Phase 1 offered the highest estimated gross yield at 8.6% for flats, followed by Zaabeel First at 8.0%.\n\nInvestors should monitor the 989 anomalous sales recorded in the last 60 days that deviated more than 35% from comparable medians. Key projects driving volume include Binghatti Skyterraces and RAW DISTRICT 2 BY IMTIAZ. These figures are derived from registered DLD data and Ejari contracts, using medians and benchmark filters that exclude bulk deals, partial shares, and statistical outliers.",
   "facts": {
     "as_of": "2026-11-20",
     "coverage_from": "2026-01-01",
@@ -11,7 +11,7 @@
       "sales": 13707,
       "value_aed": 39487272167,
       "value_aed_bn": 39.49,
-      "mortgages": 5555,
+      "mortgages": 5556,
       "offplan_share": 0.567,
       "median_ppsqft_res": 1727
     },
