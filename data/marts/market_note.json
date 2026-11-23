@@ -1,8 +1,8 @@
 {
-  "generated_at_utc": "2026-11-23T10:59:31+00:00",
+  "generated_at_utc": "2026-11-23T16:15:09+00:00",
   "as_of": "2026-11-23",
-  "source": "groq | qwen/qwen3.8-27b | 1.4s",
-  "text": "Registered residential sales totaled 13,074 units valued at AED 37,743,569,161 over the last four weeks, representing a 12.6 percent increase in volume and a 9.9 percent rise in value compared to the previous period. Mortgage registrations recorded 5,489 separate entries during the same window. The off-plan share of transactions stood at 56.8 percent, slightly below the 57.2 percent recorded in the prior four weeks.\n\nThe median residential price per square foot reached AED 1,734, marking a 2.7 percent increase from the previous four-week median of AED 1,688. Top volume areas include Dubai South with 2,718 sales and Jumeirah Village Circle with 2,522 sales over the last 12 weeks. Dubai Creek Harbour recorded the highest median price among top areas at AED 2,531 per square foot, while Majan showed the lowest at AED 1,416 per square foot.\n\nRental activity comprised 107,552 Ejari contracts with a renewal share of 51.9 percent. The median residential rent was AED 68,000 annually. Estimated gross yields for flats were highest in International City Ph 1 at 8.6 percent, followed by Zaabeel First at 7.5 percent and Town Square at 6.9 percent. Dubai Production City and Dubai Sports City followed with yields of 6.4 percent and 6.6 percent respectively.\n\nPrice momentum varied significantly across communities. Al Yufrah 1 showed the strongest 12-week price increase at 31.7 percent, while Saih Shuaib 1 experienced the largest decline at 29.6 percent. Other notable cooling areas included Sama Al Jadaf and Al Hebiah First, both down over 12 percent. The anomaly monitor flagged 934 sales in the last 60 days priced more than 35 percent away from comparable medians. Figures are based on registered DLD data and Ejari contracts using median benchmarks that exclude bulk deals, partial shares, mortgages, gifts, and statistical outliers.",
+  "source": "groq | qwen/qwen3.8-27b | 2.1s",
+  "text": "Registered residential sales reached 13,074 units valued at AED 37,743,569,161 in the last four weeks, marking a 12.6 percent increase in volume and a 9.9 percent rise in value compared to the previous period. Mortgage registrations totaled 5,489, recorded separately from sales transactions. The median residential price per square foot climbed to AED 1,734, up 2.7 percent from the prior four-week median of AED 1,688. Off-plan transactions accounted for 56.8 percent of total sales, slightly below the 57.2 percent share seen in the preceding period.\n\nRental activity remained robust with 107,552 Ejari contracts registered over the last four weeks. Renewals represented 51.9 percent of these contracts, while the median annual residential rent stood at AED 68,000. In the secondary market, Dubai South led with 2,708 sales over twelve weeks at a median of AED 1,641 per square foot, showing a 4.1 percent decline. Jumeirah Village Circle followed with 2,526 sales at AED 1,434 per square foot, remaining stable with a 0.2 percent change. Business Bay recorded 1,538 sales at AED 2,146 per square foot, down 1.1 percent.\n\nPrice momentum varied significantly across communities. Al Yufrah 1 saw the strongest heating with a 29.6 percent increase in median price per square foot over twelve weeks, based on 331 benchmark sales. Dubai Industrial City rose 10.4 percent, while Dubai Production City gained 7.2 percent. Conversely, Saih Shuaib 1 cooled by 29.6 percent, and Sama Al Jadaf fell 14.1 percent. Al Hebiah First declined 12.8 percent, and Palm Jumeirah dropped 10.1 percent. Dubai Creek Harbour showed a 5.7 percent increase, supported by 657 benchmark sales.\n\nInvestors should note that International City Phase 1 offers the highest estimated gross yield at 8.6 percent for flats, with a median rent of AED 38,000. Zaabeel First follows at 7.5 percent, and Town Square at 6.9 percent. The anomaly monitor flagged 936 residential sales in the last 60 days priced more than 35 percent away from their comparable cell median. These figures are derived from registered DLD data and Ejari contracts, using medians and benchmark filters that exclude bulk deals, partial shares, and statistical outliers.",
   "facts": {
     "as_of": "2026-11-23",
     "coverage_from": "2026-01-01",
@@ -36,22 +36,22 @@
     "top_areas_by_sales": [
       {
         "area": "Dubai South",
-        "sales_12w": 2718,
-        "median_ppsqft_12w": 1641.35,
-        "ppsqft_change_12w": -0.04,
+        "sales_12w": 2708,
+        "median_ppsqft_12w": 1641.1,
+        "ppsqft_change_12w": -0.041,
         "gross_yield_est": 0.047
       },
       {
         "area": "Jumeirah Village Circle",
-        "sales_12w": 2522,
+        "sales_12w": 2526,
         "median_ppsqft_12w": 1433.8,
-        "ppsqft_change_12w": 0.003,
+        "ppsqft_change_12w": 0.002,
         "gross_yield_est": 0.063
       },
       {
         "area": "Business Bay",
-        "sales_12w": 1535,
-        "median_ppsqft_12w": 2145.0,
+        "sales_12w": 1538,
+        "median_ppsqft_12w": 2145.9,
         "ppsqft_change_12w": -0.011,
         "gross_yield_est": 0.052
       },
@@ -64,30 +64,30 @@
       },
       {
         "area": "Al Hebiah Fifth",
-        "sales_12w": 1246,
-        "median_ppsqft_12w": 1754.1,
-        "ppsqft_change_12w": 0.035,
+        "sales_12w": 1248,
+        "median_ppsqft_12w": 1755.95,
+        "ppsqft_change_12w": 0.036,
         "gross_yield_est": 0.041
       },
       {
         "area": "Majan",
-        "sales_12w": 1177,
+        "sales_12w": 1178,
         "median_ppsqft_12w": 1416.1,
         "ppsqft_change_12w": -0.054,
         "gross_yield_est": null
       },
       {
         "area": "Dubai Land Residence Complex",
-        "sales_12w": 1133,
-        "median_ppsqft_12w": 1408.5,
+        "sales_12w": 1134,
+        "median_ppsqft_12w": 1409.4,
         "ppsqft_change_12w": 0.022,
         "gross_yield_est": null
       },
       {
         "area": "Dubai Creek Harbour",
-        "sales_12w": 846,
-        "median_ppsqft_12w": 2531.0,
-        "ppsqft_change_12w": 0.058,
+        "sales_12w": 848,
+        "median_ppsqft_12w": 2530.2,
+        "ppsqft_change_12w": 0.057,
         "gross_yield_est": 0.048
       }
     ],
@@ -95,9 +95,9 @@
     "heating": [
       {
         "area": "Al Yufrah 1",
-        "ppsqft_change_12w": 0.317,
-        "n_bench_12w": 334,
-        "offplan_share_12w": 0.544
+        "ppsqft_change_12w": 0.296,
+        "n_bench_12w": 331,
+        "offplan_share_12w": 0.546
       },
       {
         "area": "Dubai Industrial City",
@@ -107,20 +107,20 @@
       },
       {
         "area": "Dubai Production City",
-        "ppsqft_change_12w": 0.073,
-        "n_bench_12w": 431,
-        "offplan_share_12w": 0.58
+        "ppsqft_change_12w": 0.072,
+        "n_bench_12w": 432,
+        "offplan_share_12w": 0.582
       },
       {
         "area": "International City Ph 1",
         "ppsqft_change_12w": 0.065,
-        "n_bench_12w": 279,
-        "offplan_share_12w": 0.121
+        "n_bench_12w": 281,
+        "offplan_share_12w": 0.12
       },
       {
         "area": "Dubai Creek Harbour",
-        "ppsqft_change_12w": 0.058,
-        "n_bench_12w": 655,
+        "ppsqft_change_12w": 0.057,
+        "n_bench_12w": 657,
         "offplan_share_12w": 0.638
       }
     ],
@@ -128,13 +128,13 @@
       {
         "area": "Saih Shuaib 1",
         "ppsqft_change_12w": -0.296,
-        "n_bench_12w": 166,
+        "n_bench_12w": 168,
         "offplan_share_12w": 1.0
       },
       {
         "area": "Sama Al Jadaf",
         "ppsqft_change_12w": -0.141,
-        "n_bench_12w": 334,
+        "n_bench_12w": 321,
         "offplan_share_12w": 0.989
       },
       {
@@ -151,7 +151,7 @@
       },
       {
         "area": "Palm Jumeirah",
-        "ppsqft_change_12w": -0.122,
+        "ppsqft_change_12w": -0.101,
         "n_bench_12w": 138,
         "offplan_share_12w": 0.172
       }
@@ -190,10 +190,10 @@
         "gross_yield_est": 0.064,
         "yield_sub_type": "Flat",
         "median_rent_12w": 63000.0,
-        "median_ppsqft_12w": 1436.0
+        "median_ppsqft_12w": 1434.0
       }
     ],
-    "anomaly_count_60d": 934,
+    "anomaly_count_60d": 936,
     "top_projects": [
       {
         "project": "Binghatti Skyterraces",
@@ -210,7 +210,7 @@
       {
         "project": "DAMAC LAGOONS - LAGOON VIEWS 13",
         "area": "Al Hebiah Fifth",
-        "sales": 457,
+        "sales": 459,
         "median_ppsqft": 1820.0
       },
       {
