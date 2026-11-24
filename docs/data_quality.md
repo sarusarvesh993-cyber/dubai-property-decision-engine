@@ -1,10 +1,10 @@
 # Data quality report
 
-_Generated 2026-11-24T12:46:02+00:00. Regenerated on every pipeline run._
+_Generated 2026-11-24T16:04:18+00:00. Regenerated on every pipeline run._
 
 | Check | Status | Detail |
 |---|---|---|
-| Transactions loaded | PASS | 203,058 rows, 2026-01-01 to 2026-11-24 |
+| Transactions loaded | PASS | 203,060 rows, 2026-01-01 to 2026-11-24 |
 | Rent contracts loaded | PASS | 811,252 rows, 2026-01-01 to 2026-11-23 |
 | Transactions fresh within 3 days | PASS | latest registration 0 day(s) old |
 | Rents fresh within 3 days | PASS | latest registration 0 day(s) old |
@@ -27,14 +27,14 @@ _Generated 2026-11-24T12:46:02+00:00. Regenerated on every pipeline run._
 ```json
 {
   "transactions": {
-    "rows": 203058,
-    "sales": 144529,
+    "rows": 203060,
+    "sales": 144531,
     "mortgages": 44761,
     "areas": 251,
     "projects": 3345,
-    "offplan_share_of_sales": 0.6659978274256377,
+    "offplan_share_of_sales": 0.666002449301534,
     "procedures": {
-      "Sell - Pre registration": 96256,
+      "Sell - Pre registration": 96258,
       "Sale": 36620,
       "Mortgage Registration": 29714,
       "Delayed Sell": 11322,

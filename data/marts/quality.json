@@ -1,10 +1,10 @@
 {
-  "generated_at_utc": "2026-11-24T12:46:02+00:00",
+  "generated_at_utc": "2026-11-24T16:04:18+00:00",
   "checks": [
     {
       "check": "Transactions loaded",
       "status": "PASS",
-      "detail": "203,058 rows, 2026-01-01 to 2026-11-24"
+      "detail": "203,060 rows, 2026-01-01 to 2026-11-24"
     },
     {
       "check": "Rent contracts loaded",
@@ -89,14 +89,14 @@
   ],
   "profile": {
     "transactions": {
-      "rows": 203058,
-      "sales": 144529,
+      "rows": 203060,
+      "sales": 144531,
       "mortgages": 44761,
       "areas": 251,
       "projects": 3345,
-      "offplan_share_of_sales": 0.6659978274256377,
+      "offplan_share_of_sales": 0.666002449301534,
       "procedures": {
-        "Sell - Pre registration": 96256,
+        "Sell - Pre registration": 96258,
         "Sale": 36620,
         "Mortgage Registration": 29714,
         "Delayed Sell": 11322,
