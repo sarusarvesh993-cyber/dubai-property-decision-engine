@@ -1,15 +1,15 @@
 {
-  "generated_at_utc": "2026-11-25T11:34:54+00:00",
+  "generated_at_utc": "2026-11-26T11:14:54+00:00",
   "checks": [
     {
       "check": "Transactions loaded",
       "status": "PASS",
-      "detail": "203,803 rows, 2026-01-01 to 2026-11-25"
+      "detail": "204,530 rows, 2026-01-01 to 2026-11-26"
     },
     {
       "check": "Rent contracts loaded",
       "status": "PASS",
-      "detail": "815,023 rows, 2026-01-01 to 2026-11-24"
+      "detail": "819,046 rows, 2026-01-01 to 2026-11-25"
     },
     {
       "check": "Transactions fresh within 3 days",
@@ -39,7 +39,7 @@
     {
       "check": "Portfolio blocks excluded from benchmarks (< 3% of sales)",
       "status": "PASS",
-      "detail": "1.27% of sales sit in same-day blocks of 10+ ready units at one AED/sqft; kept in volumes, out of benchmarks"
+      "detail": "1.28% of sales sit in same-day blocks of 10+ ready units at one AED/sqft; kept in volumes, out of benchmarks"
     },
     {
       "check": "Sale price completeness >= 99%",
@@ -59,7 +59,7 @@
     {
       "check": "Sales outlier rate < 5%",
       "status": "PASS",
-      "detail": "1.74% flagged by robust z-score"
+      "detail": "1.73% flagged by robust z-score"
     },
     {
       "check": "Rents ROOMS null (known gateway gap; size bands used instead)",
@@ -89,28 +89,28 @@
   ],
   "profile": {
     "transactions": {
-      "rows": 203803,
-      "sales": 144924,
-      "mortgages": 45059,
+      "rows": 204530,
+      "sales": 145367,
+      "mortgages": 45289,
       "areas": 251,
-      "projects": 3347,
-      "offplan_share_of_sales": 0.6658041456211532,
+      "projects": 3349,
+      "offplan_share_of_sales": 0.6653710952279404,
       "procedures": {
-        "Sell - Pre registration": 96491,
-        "Sale": 36749,
-        "Mortgage Registration": 29845,
-        "Delayed Sell": 11353,
-        "Grant": 7135,
-        "Delayed Mortgage": 4303,
+        "Sell - Pre registration": 96723,
+        "Sale": 36904,
+        "Mortgage Registration": 30016,
+        "Delayed Sell": 11409,
+        "Grant": 7175,
+        "Delayed Mortgage": 4330,
         "Portfolio Mortgage Registration": 4215,
         "Development Registration Pre-Registration": 2146,
-        "Modify Mortgage": 1915,
+        "Modify Mortgage": 1934,
         "Portfolio Mortgage Modification": 1583
       }
     },
     "rents": {
-      "rows": 815023,
-      "renewal_share": 0.5508801592102309,
+      "rows": 819046,
+      "renewal_share": 0.5506870187999209,
       "areas": 198,
       "usage": {
         "Residential": 563412,
@@ -121,14 +121,14 @@
         "Health Facility": 89
       },
       "sub_types": {
-        "Flat": 537035,
-        "Office": 110851,
-        "Shop": 58553,
-        "Villa": 53794,
-        "Labor Camps": 18915,
-        "Warehouse": 8303,
-        "Hotel": 6902,
-        "Studio ": 6361
+        "Flat": 539667,
+        "Office": 111475,
+        "Shop": 58844,
+        "Villa": 54024,
+        "Labor Camps": 18988,
+        "Warehouse": 8350,
+        "Hotel": 6942,
+        "Studio ": 6389
       }
     }
   },
