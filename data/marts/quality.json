@@ -1,15 +1,15 @@
 {
-  "generated_at_utc": "2026-11-27T11:05:42+00:00",
+  "generated_at_utc": "2026-11-27T15:22:58+00:00",
   "checks": [
     {
       "check": "Transactions loaded",
       "status": "PASS",
-      "detail": "205,191 rows, 2026-01-01 to 2026-11-27"
+      "detail": "205,193 rows, 2026-01-01 to 2026-11-27"
     },
     {
       "check": "Rent contracts loaded",
       "status": "PASS",
-      "detail": "822,903 rows, 2026-01-01 to 2026-11-26"
+      "detail": "822,904 rows, 2026-01-01 to 2026-11-26"
     },
     {
       "check": "Transactions fresh within 3 days",
@@ -84,19 +84,19 @@
     {
       "check": "Weekly volume within 50-200% of median (last full week)",
       "status": "PASS",
-      "detail": "last full week 2,455 vs median 3,000"
+      "detail": "last full week 2,456 vs median 3,000"
     }
   ],
   "profile": {
     "transactions": {
-      "rows": 205191,
-      "sales": 145774,
+      "rows": 205193,
+      "sales": 145776,
       "mortgages": 45469,
       "areas": 251,
       "projects": 3350,
-      "offplan_share_of_sales": 0.6652009274630593,
+      "offplan_share_of_sales": 0.6652055207990342,
       "procedures": {
-        "Sell - Pre registration": 96969,
+        "Sell - Pre registration": 96971,
         "Sale": 37035,
         "Mortgage Registration": 30144,
         "Delayed Sell": 11439,
@@ -109,8 +109,8 @@
       }
     },
     "rents": {
-      "rows": 822903,
-      "renewal_share": 0.5504938006059037,
+      "rows": 822904,
+      "renewal_share": 0.5504931316411149,
       "areas": 198,
       "usage": {
         "Residential": 563412,
@@ -121,7 +121,7 @@
         "Health Facility": 89
       },
       "sub_types": {
-        "Flat": 542247,
+        "Flat": 542248,
         "Office": 111924,
         "Shop": 59118,
         "Villa": 54280,

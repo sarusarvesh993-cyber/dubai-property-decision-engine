@@ -1,11 +1,11 @@
 # Data quality report
 
-_Generated 2026-11-27T11:05:42+00:00. Regenerated on every pipeline run._
+_Generated 2026-11-27T15:22:58+00:00. Regenerated on every pipeline run._
 
 | Check | Status | Detail |
 |---|---|---|
-| Transactions loaded | PASS | 205,191 rows, 2026-01-01 to 2026-11-27 |
-| Rent contracts loaded | PASS | 822,903 rows, 2026-01-01 to 2026-11-26 |
+| Transactions loaded | PASS | 205,193 rows, 2026-01-01 to 2026-11-27 |
+| Rent contracts loaded | PASS | 822,904 rows, 2026-01-01 to 2026-11-26 |
 | Transactions fresh within 3 days | PASS | latest registration 0 day(s) old |
 | Rents fresh within 3 days | PASS | latest registration 0 day(s) old |
 | Transaction duplicates < 0.5% (outside multi-unit deals) | PASS | 0.00% duplicate rows on id+price+size+procedure among single-unit transactions |
@@ -20,21 +20,21 @@ _Generated 2026-11-27T11:05:42+00:00. Regenerated on every pipeline run._
 | Bulk leases share < 15% | PASS | 5.6% of contracts cover >1 property |
 | Benchmark-eligible share of residential rents >= 60% | PASS | 88.4% eligible |
 | Sales in communities with rent coverage >= 70% (after crosswalk) | PASS | 74.4% of sales can be matched to Ejari benchmarks |
-| Weekly volume within 50-200% of median (last full week) | PASS | last full week 2,455 vs median 3,000 |
+| Weekly volume within 50-200% of median (last full week) | PASS | last full week 2,456 vs median 3,000 |
 
 ## Profile
 
 ```json
 {
   "transactions": {
-    "rows": 205191,
-    "sales": 145774,
+    "rows": 205193,
+    "sales": 145776,
     "mortgages": 45469,
     "areas": 251,
     "projects": 3350,
-    "offplan_share_of_sales": 0.6652009274630593,
+    "offplan_share_of_sales": 0.6652055207990342,
     "procedures": {
-      "Sell - Pre registration": 96969,
+      "Sell - Pre registration": 96971,
       "Sale": 37035,
       "Mortgage Registration": 30144,
       "Delayed Sell": 11439,
@@ -47,8 +47,8 @@ _Generated 2026-11-27T11:05:42+00:00. Regenerated on every pipeline run._
     }
   },
   "rents": {
-    "rows": 822903,
-    "renewal_share": 0.5504938006059037,
+    "rows": 822904,
+    "renewal_share": 0.5504931316411149,
     "areas": 198,
     "usage": {
       "Residential": 563412,
@@ -59,7 +59,7 @@ _Generated 2026-11-27T11:05:42+00:00. Regenerated on every pipeline run._
       "Health Facility": 89
     },
     "sub_types": {
-      "Flat": 542247,
+      "Flat": 542248,
       "Office": 111924,
       "Shop": 59118,
       "Villa": 54280,

@@ -1,5 +1,5 @@
 {
-  "computed_at_utc": "2026-11-27T11:05:41+00:00",
+  "computed_at_utc": "2026-11-27T15:22:57+00:00",
   "test_window": {
     "from": "2026-10-31",
     "to": "2026-11-27",
@@ -9,47 +9,47 @@
   "min_cell_n": 8,
   "history_days_available": 329,
   "overall": {
-    "n_test": 5338,
-    "n_covered": 5322,
+    "n_test": 5336,
+    "n_covered": 5320,
     "coverage": 0.997,
     "mdape": 0.0716,
     "mape": 0.1157,
     "within_p25_p75": 0.4459,
-    "within_p10_p90": 0.7176,
-    "median_bias": 0.0027,
-    "share_within_10pct": 0.6142,
-    "share_within_20pct": 0.8191,
-    "baseline_mdape": 0.2164,
-    "baseline_mape": 0.3204
+    "within_p10_p90": 0.7175,
+    "median_bias": 0.0028,
+    "share_within_10pct": 0.6141,
+    "share_within_20pct": 0.819,
+    "baseline_mdape": 0.2165,
+    "baseline_mape": 0.3205
   },
   "by_level": {
     "L0 project": {
-      "n_test": 2795,
-      "n_covered": 2795,
+      "n_test": 2794,
+      "n_covered": 2794,
       "coverage": 1.0,
       "mdape": 0.048,
       "mape": 0.0718,
-      "within_p25_p75": 0.4526,
-      "within_p10_p90": 0.7213,
+      "within_p25_p75": 0.4528,
+      "within_p10_p90": 0.7212,
       "median_bias": 0.0,
-      "share_within_10pct": 0.7689,
+      "share_within_10pct": 0.7688,
       "share_within_20pct": 0.9399,
-      "baseline_mdape": 0.1962,
-      "baseline_mape": 0.3024
+      "baseline_mdape": 0.1965,
+      "baseline_mape": 0.3025
     },
     "L1 area x type x bedrooms": {
-      "n_test": 2266,
-      "n_covered": 2266,
+      "n_test": 2265,
+      "n_covered": 2265,
       "coverage": 1.0,
       "mdape": 0.1087,
-      "mape": 0.1546,
-      "within_p25_p75": 0.4673,
-      "within_p10_p90": 0.7555,
-      "median_bias": 0.0101,
-      "share_within_10pct": 0.47,
-      "share_within_20pct": 0.7273,
-      "baseline_mdape": 0.2464,
-      "baseline_mape": 0.3374
+      "mape": 0.1547,
+      "within_p25_p75": 0.4671,
+      "within_p10_p90": 0.7554,
+      "median_bias": 0.0102,
+      "share_within_10pct": 0.4698,
+      "share_within_20pct": 0.7272,
+      "baseline_mdape": 0.2465,
+      "baseline_mape": 0.3375
     },
     "L2 area x type": {
       "n_test": 116,
@@ -82,18 +82,18 @@
   },
   "by_sub_type": {
     "Flat": {
-      "n_test": 4930,
-      "n_covered": 4915,
+      "n_test": 4928,
+      "n_covered": 4913,
       "coverage": 0.997,
       "mdape": 0.0714,
       "mape": 0.1143,
       "within_p25_p75": 0.4494,
-      "within_p10_p90": 0.7178,
+      "within_p10_p90": 0.7177,
       "median_bias": 0.0031,
-      "share_within_10pct": 0.6155,
-      "share_within_20pct": 0.8216,
-      "baseline_mdape": 0.2139,
-      "baseline_mape": 0.3221
+      "share_within_10pct": 0.6153,
+      "share_within_20pct": 0.8215,
+      "baseline_mdape": 0.214,
+      "baseline_mape": 0.3222
     },
     "Villa": {
       "n_test": 408,
@@ -126,18 +126,18 @@
       "baseline_mape": 0.3884
     },
     "off-plan": {
-      "n_test": 3406,
-      "n_covered": 3401,
+      "n_test": 3404,
+      "n_covered": 3399,
       "coverage": 0.9985,
       "mdape": 0.0621,
       "mape": 0.0978,
-      "within_p25_p75": 0.4302,
-      "within_p10_p90": 0.6939,
+      "within_p25_p75": 0.4301,
+      "within_p10_p90": 0.6937,
       "median_bias": 0.0059,
-      "share_within_10pct": 0.6654,
-      "share_within_20pct": 0.8562,
+      "share_within_10pct": 0.6652,
+      "share_within_20pct": 0.8561,
       "baseline_mdape": 0.1846,
-      "baseline_mape": 0.2819
+      "baseline_mape": 0.2821
     }
   },
   "notes": [

@@ -1,15 +1,15 @@
 {
-  "generated_at_utc": "2026-11-27T11:05:45+00:00",
+  "generated_at_utc": "2026-11-27T15:23:02+00:00",
   "as_of": "2026-11-27",
-  "source": "groq | qwen/qwen3.8-27b | 1.0s",
-  "text": "Activity in the Dubai residential market accelerated over the last four weeks, with 13,074 registered sales totaling AED 37,743,569,161. This volume represents a 12.6 percent increase compared to the previous four-week period. Mortgage registrations were recorded separately at 5,491, indicating distinct financing activity alongside direct sales transactions.\n\nPricing metrics show a median residential price of AED 1,734 per square foot, up 2.7 percent from the prior period. Off-plan transactions accounted for 56.8 percent of the total sales volume. In the rental segment, 107,790 contracts were registered with a median residential rent of AED 67,144 per year. Renewals made up 52.6 percent of these contracts, reflecting the current balance between new leases and existing tenancies.\n\nThe watch list highlights specific areas with notable price movements over twelve weeks. Al Yufrah 1 saw the strongest heating at 27.2 percent, followed by Dubai Industrial City at 9.2 percent. Conversely, Saih Shuaib 1 experienced the sharpest cooling at minus 29.6 percent, while Al Hebiah First declined by 16.7 percent. International City Phase 1 offers the highest estimated gross yield at 8.6 percent for flats, with Zaabeel First following at 7.6 percent.\n\nFigures are derived from registered DLD data and Ejari contracts, using medians and benchmark filters that exclude bulk deals, partial-share transfers, portfolio blocks, mortgages, gifts, and statistical outliers.",
+  "source": "groq | qwen/qwen3.8-27b | 1.4s",
+  "text": "Registered residential sales reached 13,075 units in the last four weeks, totaling AED 37,744,906,472. This volume represents a 12.6% increase compared to the previous four-week period. The median residential price per square foot rose to AED 1,734, marking a 2.7% gain over the prior period. Off-plan transactions accounted for 56.8% of the total sales volume. Mortgage registrations were recorded separately, with 5,491 new entries during the same timeframe.\n\nThe rental market registered 107,790 Ejari contracts, with renewals comprising 52.6% of the total. The median annual residential rent stood at AED 67,144. Estimated gross yields vary significantly by community. International City Phase 1 leads with an 8.6% yield for flats, followed by Zaabeel First at 7.6% and Town Square at 7.0%. Dubai Sports City and Dubai Production City follow with yields of 6.7% and 6.4% respectively.\n\nPrice momentum is uneven across the city. Al Yufrah 1 shows the strongest heating with a 27.2% increase in median price per square foot over twelve weeks. Dubai Industrial City and Tecom Site A also show positive momentum at 9.2% and 8.3% respectively. Conversely, Saih Shuaib 1 experienced a 29.6% decline, while Wadi Al Safa 4 and Al Hebiah First dropped by 18.8% and 16.7% respectively. Jumeirah Lakes Towers and Sama Al Jadaf also cooled by 12.9% and 12.8%.\n\nInvestors should monitor the 1,008 residential sales in the last 60 days that deviated more than 35% from their comparable cell median. Top projects by volume include Binghatti Skyterraces with 688 sales and RAW DISTRICT 2 BY IMTIAZ with 570 sales. All figures are derived from registered DLD data and Ejari contracts, using medians and benchmark filters that exclude bulk deals, partial-share transfers, portfolio blocks, mortgages, gifts, and statistical outliers.",
   "facts": {
     "as_of": "2026-11-27",
     "coverage_from": "2026-01-01",
     "weeks_available": 48,
     "last4w": {
-      "sales": 13074,
-      "value_aed": 37743569161,
+      "sales": 13075,
+      "value_aed": 37744906472,
       "value_aed_bn": 37.74,
       "mortgages": 5491,
       "offplan_share": 0.568,
@@ -25,7 +25,7 @@
     },
     "delta": {
       "sales": 0.126,
-      "value_aed": 0.099,
+      "value_aed": 0.1,
       "median_ppsqft_res": 0.027
     },
     "rent_last4w": {
