@@ -1,8 +1,8 @@
 {
-  "generated_at_utc": "2026-11-28T10:43:09+00:00",
+  "generated_at_utc": "2026-11-28T14:24:35+00:00",
   "as_of": "2026-11-28",
-  "source": "groq | qwen/qwen3.8-27b | 1.4s",
-  "text": "Registered residential sales reached 13,075 units in the last four weeks, totaling AED 37,744,906,472. This represents a 12.6 percent increase in volume compared to the previous four-week period. Mortgage registrations were recorded as separate transactions, totaling 5,491, and are not included in the sales count. The off-plan share of sales remained stable at 56.8 percent, slightly down from 57.2 percent in the prior period.\n\nThe median residential price per square foot rose to AED 1,734, marking a 2.7 percent increase from the previous four-week median of AED 1,688. This pricing trend aligns with the overall value growth of 10.0 percent observed in the market. The data reflects registered transactions only, excluding bulk deals and partial-share transfers that might skew averages.\n\nRental activity showed 107,791 Ejari contracts registered, with renewals accounting for 52.6 percent of the total. The median annual residential rent stood at AED 67,144. In terms of yields, International City Phase 1 led with an estimated gross yield of 8.7 percent for flats, followed by Zaabeel First at 7.6 percent. Town Square, Dubai Sports City, and Dubai Studio City also recorded yields above 6.0 percent.\n\nThe watch-list highlights significant divergence in community performance. Al Yufrah 1 saw the strongest 12-week price appreciation at 24.3 percent, while Saih Shuaib 1 experienced the steepest decline at 29.2 percent. Jumeirah Lakes Towers cooled by 11.9 percent, contrasting with the broader market uptick. Anomaly monitoring flagged 993 sales in the last 60 days priced more than 35 percent away from comparable medians. These figures are derived from registered DLD data and Ejari contracts, using medians and benchmark filters to exclude outliers.",
+  "source": "groq | qwen/qwen3.8-27b | 1.7s",
+  "text": "Registered residential sales reached 13,075 units valued at AED 37,744,906,472 in the last four weeks, representing a 12.6 percent increase in volume and a 10.0 percent rise in value compared to the previous period. Mortgage registrations totaled 5,491, which are recorded separately from sales transactions. The off-plan share of sales stood at 56.8 percent, slightly below the 57.2 percent recorded in the prior four weeks.\n\nThe median residential price per square foot rose to AED 1,734, marking a 2.7 percent increase from the previous four-week median of AED 1,688. Rental activity showed 107,791 Ejari contracts with a renewal share of 52.6 percent. The median annual residential rent was AED 67,144. Estimated gross yields remain highest in International City Ph 1 at 8.7 percent for flats, followed by Zaabeel First at 7.6 percent and Town Square at 7.0 percent.\n\nAl Yufrah 1 led price appreciation with a 24.3 percent increase in median price per square foot over twelve weeks. Tecom Site A and Dubai Industrial City followed with gains of 9.5 percent and 8.2 percent respectively. Conversely, Saih Shuaib 1 saw the steepest decline at 29.2 percent, while Wadi Al Safa 4 and Al Hebiah First dropped by 18.8 percent and 16.9 percent. Jumeirah Lakes Towers also cooled with a 12.5 percent decrease in median pricing.\n\nInvestors should monitor the 994 sales flagged as anomalies in the last 60 days, which deviated more than 35 percent from comparable medians. Top performing projects include Binghatti Skyterraces with 684 sales and RAW DISTRICT 2 BY IMTIAZ with 559 sales. These figures are derived from registered DLD data and Ejari contracts, using medians and benchmark filters that exclude bulk deals, partial shares, mortgages, gifts, and statistical outliers.",
   "facts": {
     "as_of": "2026-11-28",
     "coverage_from": "2026-01-01",
@@ -50,9 +50,9 @@
       },
       {
         "area": "Business Bay",
-        "sales_12w": 1576,
-        "median_ppsqft_12w": 2108.2,
-        "ppsqft_change_12w": -0.028,
+        "sales_12w": 1577,
+        "median_ppsqft_12w": 2105.3,
+        "ppsqft_change_12w": -0.03,
         "gross_yield_est": 0.053
       },
       {
@@ -73,7 +73,7 @@
         "area": "Dubai Land Residence Complex",
         "sales_12w": 1149,
         "median_ppsqft_12w": 1429.75,
-        "ppsqft_change_12w": 0.037,
+        "ppsqft_change_12w": 0.036,
         "gross_yield_est": null
       },
       {
@@ -85,9 +85,9 @@
       },
       {
         "area": "Palm Deira",
-        "sales_12w": 882,
-        "median_ppsqft_12w": 2426.1,
-        "ppsqft_change_12w": -0.034,
+        "sales_12w": 881,
+        "median_ppsqft_12w": 2427.5,
+        "ppsqft_change_12w": -0.032,
         "gross_yield_est": 0.036
       }
     ],
@@ -151,8 +151,8 @@
       },
       {
         "area": "Jumeirah Lakes Towers",
-        "ppsqft_change_12w": -0.119,
-        "n_bench_12w": 273,
+        "ppsqft_change_12w": -0.125,
+        "n_bench_12w": 274,
         "offplan_share_12w": 0.338
       }
     ],
@@ -193,7 +193,7 @@
         "median_ppsqft_12w": 1454.0
       }
     ],
-    "anomaly_count_60d": 993,
+    "anomaly_count_60d": 994,
     "top_projects": [
       {
         "project": "Binghatti Skyterraces",
